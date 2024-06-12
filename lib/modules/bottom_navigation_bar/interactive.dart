@@ -1,5 +1,6 @@
-import "package:binh_thuan/modules/bottom_navigation_bar/home_screen.dart";
+import "package:binh_thuan/modules/bottom_navigation_bar/home/home_screen.dart";
 import "package:flutter/material.dart";
+import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart";
 
 class InteractiveExample extends StatefulWidget {
@@ -18,25 +19,25 @@ class _InteractiveExampleState extends State<InteractiveExample> {
           item: ItemConfig(
             icon: const Icon(Icons.home),
             title: "Trang chủ",
-            activeForegroundColor: Colors.blue,
+            activeForegroundColor: Colors.white,
             inactiveForegroundColor: Colors.grey,
           ),
         ),
         PersistentTabConfig(
           screen: const HomeScreen(),
           item: ItemConfig(
-            icon: const Icon(Icons.message),
-            title: "Messages",
-            activeForegroundColor: Colors.deepOrange,
+            icon: const Icon(Icons.school),
+            title: "Khóa học",
+            activeForegroundColor: Colors.white,
             inactiveForegroundColor: Colors.grey,
           ),
         ),
         PersistentTabConfig(
           screen: const HomeScreen(),
           item: ItemConfig(
-            icon: const Icon(Icons.settings),
-            title: "Settings",
-            activeForegroundColor: Colors.indigo,
+            icon: const Icon(Icons.person),
+            title: "Hồ sơ",
+            activeForegroundColor: Colors.white,
             inactiveForegroundColor: Colors.grey,
           ),
         ),
@@ -49,12 +50,12 @@ class _InteractiveExampleState extends State<InteractiveExample> {
         navBarBuilder: (navBarConfig) => Style8BottomNavBar(
           navBarConfig: navBarConfig,
           navBarDecoration: NavBarDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(10),
+            color: const Color(0xff4659B9),
+            borderRadius: BorderRadius.circular(38.r),
           ),
           itemAnimationProperties: const ItemAnimation(),
         ),
-        backgroundColor: Colors.green,
+        backgroundColor: Colors.white,
         onWillPop: (context) async {
           await showDialog(
             context: context,

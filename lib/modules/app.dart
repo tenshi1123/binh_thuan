@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'package:binh_thuan/modules/notification/another_page.dart';
+import 'package:binh_thuan/modules/notification/local_notification.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'auth/splash/splash_screen.dart';
@@ -23,6 +25,13 @@ class _AppState extends State<App> with WidgetsBindingObserver {
     WidgetsBinding.instance.addObserver(this);
   }
 
+  //  to listen to any notification clicked or not
+  listenToNotifications() {
+    LocalNotifications.onClickNotification.stream.listen((event) {
+      Navigator.pushNamed(context, '/another', arguments: event);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
@@ -39,22 +48,13 @@ class _AppState extends State<App> with WidgetsBindingObserver {
             primarySwatch: Colors.blue,
             textTheme: Typography.englishLike2018.apply(fontSizeFactor: 1.sp),
           ),
-          home: child,
+          //home: const SplashScreenApp(),
+          routes: {
+            '/': (context) => const SplashScreenApp(),
+            '/another': (context) => const AnotherPage(),
+          },
         );
       },
-      child: MaterialApp(
-        navigatorKey: navigatorKey,
-        title: '',
-        debugShowCheckedModeBanner: false,
-        supportedLocales: const [
-          Locale('en', ''),
-          //Locale('vi', ''),
-        ],
-        // routes: <String, WidgetBuilder>{
-        //   '/login': (context) => const LoginScreen(),
-        // },
-        home: const SplashScreenApp(),
-      ),
     );
   }
 }

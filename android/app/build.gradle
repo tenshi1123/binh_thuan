@@ -22,7 +22,11 @@ def flutterVersionName = localProperties.getProperty("flutter.versionName")
 if (flutterVersionName == null) {
     flutterVersionName = "1.0"
 }
-
+def keystoreProperties = new Properties()
+def keystorePropertiesFile = rootProject.file('key.properties')
+if (keystorePropertiesFile.exists()) {
+    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+}
 android {
     namespace = "binh.thuan.binh_thuan"
     compileSdk = 34
@@ -45,9 +49,17 @@ android {
         versionCode = flutterVersionCode.toInteger()
         versionName = flutterVersionName
     }
-
+    signingConfigs {
+        release {
+            keyAlias keystoreProperties['keyAlias']
+            keyPassword keystoreProperties['keyPassword']
+            storeFile keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null
+            storePassword keystoreProperties['storePassword']
+            }
+        }
     buildTypes {
         debug {
+            minifyEnabled true
             // TODO: Add your own signing config for the release build.
             // Signing with the debug keys for now, so `flutter run --release` works.
             signingConfig = signingConfigs.debug
@@ -56,7 +68,8 @@ android {
 }
 
 dependencies {
-  coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.2.2'
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.2.2'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
 
 flutter {

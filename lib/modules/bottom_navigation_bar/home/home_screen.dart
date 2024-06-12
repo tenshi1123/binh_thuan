@@ -1,6 +1,10 @@
 import 'package:binh_thuan/constants/colors.dart';
-import 'package:binh_thuan/router/app_pages.dart';
-import 'package:binh_thuan/router/app_router.dart';
+import 'package:binh_thuan/constants/styles.dart';
+import 'package:binh_thuan/modules/auth/login/login_screen.dart';
+import 'package:binh_thuan/modules/bottom_navigation_bar/home/custom_widget_home.dart';
+import 'package:binh_thuan/modules/notification/local_notification.dart';
+import 'package:binh_thuan/modules/tuition/tuition_screen.dart';
+import 'package:flutter/foundation.dart';
 import "package:flutter/material.dart";
 import "package:flutter_screenutil/flutter_screenutil.dart";
 import 'package:flutter_svg/flutter_svg.dart';
@@ -17,10 +21,166 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final controller = PageController(viewportFraction: 1, keepPage: true);
+  // final int _selectedIndex = 0;
+  @override
+  void initState() {
+    listenToNotifications();
+    super.initState();
+  }
+
+  //  to listen to any notification clicked or not
+  listenToNotifications() {
+    if (kDebugMode) {
+      print("Listening to notification");
+    }
+    LocalNotifications.onClickNotification.stream.listen((event) {
+      if (kDebugMode) {
+        print('${event}tesst');
+      }
+      Navigator.pushNamed(context, '/another', arguments: event);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final pages = List.generate(3, (index) => NotificationItem(title: index));
     return Scaffold(
+      drawer: Drawer(
+        backgroundColor: Colors.white,
+        child: ListView(
+          // Important: Remove any padding from the ListView.
+          padding: EdgeInsets.zero,
+          children: [
+            SizedBox(
+              height: 54.h,
+            ),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  width: 20.w,
+                ),
+                Container(
+                  width: 72.w,
+                  height: 72.h,
+                  decoration: const BoxDecoration(
+                    shape: BoxShape.circle,
+                    image: DecorationImage(
+                        image: AssetImage(
+                          'assets/images/placeholder_avatar.png',
+                        ),
+                        scale: 3),
+                  ),
+                ),
+                SizedBox(
+                  width: 10.w,
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    SizedBox(
+                      height: 8.h,
+                    ),
+                    Text(
+                      'Nguyễn Hồng Ánh',
+                      style: defaultText20.copyWith(
+                          fontWeight: FontWeight.w800, color: colorDarkBlue),
+                    ),
+                    SizedBox(
+                      height: 6.h,
+                    ),
+                    Text(
+                      'Mã học sinh: 10A1-32SD',
+                      style: defaultText12.copyWith(color: color666),
+                    ),
+                    SizedBox(
+                      height: 20.h,
+                    )
+                  ],
+                ),
+              ],
+            ),
+            const Divider(
+              indent: 20,
+              endIndent: 20,
+            ),
+            const MenuItem(title: 'Bài tập'),
+            SizedBox(
+              height: 20.h,
+            ),
+            SizedBox(
+              height: 40.h,
+              child: Text(
+                '\r  Khóa học bổ trợ',
+                style: defaultText16,
+              ),
+            ),
+            const CourseItem(
+              title: 'toans',
+            ),
+            SizedBox(
+              height: 10.h,
+            ),
+            const CourseItem(
+              title: 'vawn',
+            ),
+            SizedBox(
+              height: 10.h,
+            ),
+            const CourseItem(
+              title: 'vawn',
+            ),
+            // ListTile(
+            //   title: const Text('School'),
+            //   selected: _selectedIndex == 2,
+            //   onTap: () {
+            //     Navigator.pop(context);
+            //   },
+            // ),
+            SizedBox(
+              height: 10.h,
+            ),
+            const MenuItem(title: 'Bảng điểm'),
+            SizedBox(
+              height: 10.h,
+            ),
+            const MenuItem(title: 'Tài liệu'),
+            SizedBox(
+              height: 50.h,
+            ),
+            InkWell(
+              onTap: () {
+                Navigator.of(context, rootNavigator: true).pushAndRemoveUntil(
+                  MaterialPageRoute(
+                    builder: (BuildContext context) {
+                      return const LoginScreen();
+                    },
+                  ),
+                  (_) => false,
+                );
+              },
+              child: Container(
+                margin: EdgeInsets.symmetric(horizontal: 80.w),
+                height: 40.h,
+                decoration: BoxDecoration(
+                  color: color9B9,
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(8.r),
+                  ),
+                ),
+                child: Align(
+                  alignment: Alignment.center,
+                  child: Text(
+                    'Đăng xuất',
+                    style: defaultText20.copyWith(color: Colors.white),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Column(
@@ -34,31 +194,63 @@ class _HomeScreenState extends State<HomeScreen> {
                   top: 0,
                   left: 0,
                   child: Image(
-                    width: 390.w,
+                    width: MediaQuery.of(context).size.width,
                     height: 260.h,
-                    image:
-                        const AssetImage('assets/images/home_background.png'),
+                    image: const AssetImage(
+                      'assets/images/home_background.png',
+                    ),
+                    fit: BoxFit.fitWidth,
                   ),
                 ),
                 Positioned(
                   top: 71.h,
                   left: 70.w,
-                  child: SvgPicture.asset('assets/icons/message_icon.svg'),
+                  child: InkWell(
+                      onTap: () {
+                        LocalNotifications.showScheduleNotification(
+                            title: 'day la title',
+                            body: 'day la body',
+                            payload: 'day la payload');
+                      },
+                      child: SvgPicture.asset('assets/icons/message_icon.svg')),
                 ),
                 Positioned(
                   top: 71.h,
                   left: 30.w,
-                  child: SvgPicture.asset('assets/icons/three_stick_icon.svg'),
+                  child: GestureDetector(
+                    onTap: () {
+                      LocalNotifications.showPeriodicNotifications(
+                          title: 'pro', body: 'hihi', payload: 'a');
+                    },
+                    child:
+                        //  InkWell(
+                        //     onTap: () {
+                        //       Scaffold.of(context).openDrawer();
+                        //     },
+                        //     child: SvgPicture.asset(
+                        //         'assets/icons/three_stick_icon.svg')),
+                        Builder(
+                      builder: (context) {
+                        return InkWell(
+                            onTap: () {
+                              Scaffold.of(context).openDrawer();
+                            },
+                            child: SvgPicture.asset(
+                                'assets/icons/three_stick_icon.svg'));
+                      },
+                    ),
+                  ),
                 ),
                 Positioned(
                   top: 71.h,
                   left: 300.w,
                   child: InkWell(
                     onTap: () {
-                      AppRouter.toPage(
-                        context, AppPages.NotificationScreen,
-                        // blocValue: _authBloc,
-                      );
+                      LocalNotifications.showSimpleNotification(
+                          title: 'test',
+                          body: 'this is body',
+                          payload: 'this is payload');
+                      //LocalNotification.cancelAll();
                     },
                     child: Container(
                         height: 32.h,
@@ -70,9 +262,11 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              const Text(
+                              Text(
                                 '  04',
-                                style: TextStyle(color: Colors.white),
+                                style: defaultText12.copyWith(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w700),
                               ),
                               SvgPicture.asset('assets/icons/noti_icon.svg')
                             ])),
@@ -85,8 +279,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
-                        width: 80.w,
-                        height: 80.h,
+                        width: 72.w,
+                        height: 72.h,
                         decoration: const BoxDecoration(
                           shape: BoxShape.circle,
                           image: DecorationImage(
@@ -104,17 +298,19 @@ class _HomeScreenState extends State<HomeScreen> {
                         children: [
                           Text(
                             'Nguyễn Hồng Ánh',
-                            style: TextStyle(
-                              fontSize: 20.sp,
+                            style: defaultText20.copyWith(
                               color: Colors.white,
+                              fontWeight: FontWeight.w800,
                             ),
                           ),
                           Text(
                             'Mã học sinh: 10A1-32SD',
-                            style: TextStyle(
-                              fontSize: 12.sp,
-                              color: Colors.white,
-                            ),
+                            style: defaultText12.copyWith(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w700),
+                          ),
+                          SizedBox(
+                            height: 40.h,
                           )
                         ],
                       ),
@@ -130,12 +326,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     height: 100.h,
                     decoration: BoxDecoration(
                       //color: Colors.pinkAccent,
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(8.r),
-                        topRight: Radius.circular(8.r),
-                        bottomLeft: Radius.circular(8.r),
-                        bottomRight: Radius.circular(8.r),
-                      ),
+                      borderRadius: BorderRadius.all(Radius.circular(8.r)),
                       boxShadow: [
                         BoxShadow(
                           color: Colors.grey.withOpacity(0.4),
@@ -155,21 +346,15 @@ class _HomeScreenState extends State<HomeScreen> {
                           children: [
                             Text(
                               'love',
-                              style: TextStyle(
-                                fontSize: 12.sp,
-                                fontFamily: 'Nunito',
-                                color: Colors.black,
-                              ),
+                              style: defaultText12.copyWith(
+                                  fontWeight: FontWeight.w700, color: color666),
                             ),
                             //const Divider(),
                             Text(
                               '10A1',
-                              style: TextStyle(
-                                fontSize: 20.sp,
-                                fontFamily: 'Nunito',
-                                fontWeight: FontWeight.w900,
-                                color: Colors.black,
-                              ),
+                              style: defaultText20.copyWith(
+                                  fontWeight: FontWeight.w900,
+                                  color: colorDarkBlue),
                             ),
                           ],
                         ),
@@ -186,20 +371,16 @@ class _HomeScreenState extends State<HomeScreen> {
                           children: [
                             Text(
                               'Đang tham gia',
-                              style: TextStyle(
-                                fontSize: 12.sp,
+                              style: defaultText12.copyWith(
                                 fontWeight: FontWeight.w700,
-                                color: Colors.grey,
-                                fontFamily: 'Nunito',
+                                color: color666,
                               ),
                             ),
                             Text(
                               '3 khóa học',
-                              style: TextStyle(
-                                fontSize: 16.sp,
+                              style: defaultText16.copyWith(
                                 fontWeight: FontWeight.w800,
-                                color: Colors.black,
-                                fontFamily: 'Nunito',
+                                color: colorDarkBlue,
                               ),
                             ),
                           ],
@@ -217,21 +398,16 @@ class _HomeScreenState extends State<HomeScreen> {
                           children: [
                             Text(
                               'Điểm trung bình',
-                              style: TextStyle(
-                                fontSize: 12.sp,
+                              style: defaultText12.copyWith(
                                 fontWeight: FontWeight.w700,
-                                color: Colors.grey,
-                                fontFamily: 'Nunito',
+                                color: color666,
                               ),
                             ),
                             Text(
                               '--/10 ',
-                              style: TextStyle(
-                                fontSize: 16.sp,
-                                fontWeight: FontWeight.w800,
-                                color: Colors.black,
-                                fontFamily: 'Nunito',
-                              ),
+                              style: defaultText16.copyWith(
+                                  fontWeight: FontWeight.w800,
+                                  color: colorDarkBlue),
                             ),
                           ],
                         ),
@@ -285,9 +461,22 @@ class _HomeScreenState extends State<HomeScreen> {
                   'assets/icons/score.svg',
                   height: 86.h,
                 ),
-                SvgPicture.asset(
-                  'assets/icons/tuition.svg',
-                  height: 86.h,
+                InkWell(
+                  onTap: () {
+                    Navigator.of(context, rootNavigator: true)
+                        .pushAndRemoveUntil(
+                      MaterialPageRoute(
+                        builder: (BuildContext context) {
+                          return const TuitionScreen();
+                        },
+                      ),
+                      (_) => false,
+                    );
+                  },
+                  child: SvgPicture.asset(
+                    'assets/icons/tuition.svg',
+                    height: 86.h,
+                  ),
                 ),
               ],
             ),
@@ -295,8 +484,7 @@ class _HomeScreenState extends State<HomeScreen> {
               padding: EdgeInsets.fromLTRB(10.w, 0, 0, 10.h),
               child: Text(
                 'Đang diễn ra',
-                style: TextStyle(
-                  fontSize: 16.sp,
+                style: defaultText16.copyWith(
                   fontWeight: FontWeight.w900,
                 ),
               ),
@@ -326,11 +514,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     children: [
                       Text(
                         'Lorem ipsum',
-                        style: TextStyle(
-                          fontSize: 18.sp,
+                        style: defaultText18.copyWith(
                           fontWeight: FontWeight.w900,
-                          color: Colors.black,
-                          fontFamily: 'Nunito',
                         ),
                       ),
                       Container(
@@ -342,12 +527,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       Text(
                         'Tiết 8: Lorem ipsum dolor sit amet',
-                        style: TextStyle(
-                          fontSize: 14.sp,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.grey,
-                          fontFamily: 'Nunito',
-                        ),
+                        style: defaultText14,
                       ),
                       Row(
                         children: [
@@ -356,7 +536,11 @@ class _HomeScreenState extends State<HomeScreen> {
                             SizedBox(
                               width: 10.w,
                             ),
-                            const Text('07:15 - 08:15'),
+                            Text(
+                              '07:15 - 08:15',
+                              style: defaultText14.copyWith(
+                                  color: const Color(0xff666666)),
+                            ),
                           ]),
                         ],
                       )
@@ -375,10 +559,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     child: Text(
                       'Vào \nhọc',
-                      style: TextStyle(
-                        fontSize: 16.sp,
-                        //height: 15.h,
-                        fontFamily: 'Nunito',
+                      style: defaultText16.copyWith(
+                        fontWeight: FontWeight.w800,
                         color: Colors.white,
                       ),
                     ),
@@ -390,8 +572,7 @@ class _HomeScreenState extends State<HomeScreen> {
               padding: EdgeInsets.fromLTRB(10.w, 15.w, 0, 0),
               child: Text(
                 'Thông báo',
-                style: TextStyle(
-                  fontSize: 16.sp,
+                style: defaultText16.copyWith(
                   fontWeight: FontWeight.w900,
                 ),
               ),
@@ -450,17 +631,13 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 Text(
                   '    Lịch học sắp tới',
-                  style: TextStyle(
-                      fontSize: 16.sp,
-                      fontWeight: FontWeight.w900,
-                      color: Colors.black),
+                  style: defaultText16.copyWith(
+                      fontWeight: FontWeight.w900, color: Colors.black),
                 ),
                 Text(
                   'Xem thêm    ',
-                  style: TextStyle(
-                      fontSize: 12.sp,
-                      fontWeight: FontWeight.w400,
-                      color: Colors.blue),
+                  style: defaultText12.copyWith(
+                      fontWeight: FontWeight.w400, color: Colors.blue),
                 ),
               ],
             ),
@@ -479,208 +656,6 @@ class _HomeScreenState extends State<HomeScreen> {
             )
           ],
         ),
-      ),
-    );
-  }
-}
-
-class ExampleDialog extends StatelessWidget {
-  const ExampleDialog({super.key});
-
-  @override
-  Widget build(BuildContext context) => Dialog(
-        child: Container(
-          height: MediaQuery.of(context).size.height * 0.6,
-          width: MediaQuery.of(context).size.width * 0.3,
-          padding: const EdgeInsets.symmetric(horizontal: 30),
-          color: Colors.amber,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              const Text(
-                "This is a modal screen",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 26,
-                ),
-              ),
-              Center(
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  child: const Text("Return"),
-                ),
-              ),
-            ],
-          ),
-        ),
-      );
-}
-
-class CalenderItem extends StatelessWidget {
-  const CalenderItem({super.key});
-
-  @override
-  Widget build(BuildContext context) => Container(
-        margin: EdgeInsets.symmetric(vertical: 10.h),
-        width: 350.w,
-        height: 100.h,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(8.r)),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.4),
-              spreadRadius: 5,
-              blurRadius: 7,
-              offset: const Offset(4, 7), // changes position of shadow
-            ),
-          ],
-          color: Colors.white,
-        ),
-        child: Row(
-          children: [
-            Container(
-              margin: const EdgeInsets.all(6),
-              height: 76.h,
-              width: 76.w,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(
-                  Radius.circular(8.r),
-                ),
-                color: const Color(0xffF7926E),
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Text(
-                    'Thứ 6',
-                    style: TextStyle(
-                      fontSize: 12.sp,
-                      fontFamily: 'Nunito',
-                      color: Colors.white,
-                    ),
-                  ),
-                  Container(
-                    margin:
-                        const EdgeInsetsDirectional.only(start: 1.0, end: 1.0),
-                    height: 1.h,
-                    width: 42.w,
-                    color: Colors.white,
-                  ),
-                  Text(
-                    '27',
-                    style: TextStyle(
-                      fontSize: 20.sp,
-                      fontFamily: 'Nunito',
-                      fontWeight: FontWeight.w900,
-                      color: Colors.white,
-                    ),
-                  ),
-                  Text(
-                    'tháng 4',
-                    style: TextStyle(
-                      fontSize: 12.sp,
-                      fontFamily: 'Nunito',
-                      color: Colors.white,
-                    ),
-                  )
-                ],
-              ),
-            ),
-            SizedBox(
-              width: 10.w,
-            ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
-                  'Toán',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w800,
-                    color: Colors.black,
-                    fontFamily: 'Nunito',
-                  ),
-                ),
-                Row(
-                  children: [
-                    SvgPicture.asset('assets/icons/time_icon.svg'),
-                    const Text('  Thời gian: 07:15 - 08:00'),
-                  ],
-                ),
-                Row(
-                  children: [
-                    SvgPicture.asset('assets/icons/teacher_icon.svg'),
-                    const Text('  Giáo viên: HươngNN'),
-                  ],
-                ),
-              ],
-            )
-          ],
-        ),
-      );
-}
-
-class NotificationItem extends StatelessWidget {
-  final int title;
-
-  const NotificationItem({super.key, required this.title});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: 10.h, horizontal: 20.w),
-      padding: EdgeInsets.symmetric(horizontal: 9.w, vertical: 12.h),
-      width: 390.w,
-      height: 200.h,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(8.r)),
-        color: const Color(0xffDADEF1),
-      ),
-      child: Row(
-        children: [
-          Container(
-            height: 76.h,
-            width: 76.w,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(
-                Radius.circular(8.r),
-              ),
-              color: const Color(0xff6B7AC7),
-            ),
-            child: Center(
-              child: SvgPicture.asset('assets/icons/calender_icon.svg'),
-            ),
-          ),
-          SizedBox(
-            width: 10.w,
-          ),
-          Flexible(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  '$title [Quan trọng] Thay đổi lịch học',
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w800,
-                    color: Colors.black,
-                    fontFamily: 'Nunito',
-                  ),
-                ),
-                const Text(
-                  'Lorem ipsum dolor sit amet, consectetur adipis cing elit, sed do eiusmod tempor...',
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 2,
-                ),
-              ],
-            ),
-          )
-        ],
       ),
     );
   }

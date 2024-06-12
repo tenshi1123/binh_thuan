@@ -5,6 +5,7 @@ import 'package:binh_thuan/modules/auth/forgor_password/forgot_password_screen.d
 import 'package:binh_thuan/modules/auth/forgor_password/otp_screen.dart';
 import 'package:binh_thuan/modules/bottom_navigation_bar/interactive.dart';
 import 'package:binh_thuan/modules/notification/notification_screen.dart';
+import 'package:binh_thuan/modules/tuition/tuition_screen.dart';
 
 import '../modules/auth/login/login_screen.dart';
 import 'page_config.dart';
@@ -17,6 +18,7 @@ enum AppPages {
   ChangePassScreen,
   NavigationBar,
   NotificationScreen,
+  TuitionPage,
 }
 
 final RegExp _keyPattern = RegExp('(?<=[a-z])[A-Z]');
@@ -58,6 +60,8 @@ extension AppPagesExtension on AppPages {
         return PageConfig()..pageBuilder = () => const InteractiveExample();
       case AppPages.NotificationScreen:
         return PageConfig()..pageBuilder = () => const NotificationScreen();
+      case AppPages.TuitionPage:
+        return PageConfig()..pageBuilder = () => const TuitionScreen();
       default:
         throw StateError(
           "Missing page: ${page.toString()} in AppPagesExtension.getPageConfig()",

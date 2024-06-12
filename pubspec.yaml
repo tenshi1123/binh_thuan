@@ -48,7 +48,7 @@ dependencies:
   flutter_local_notifications: ^17.1.2
   flutter_timezone: ^1.0.8
   rxdart: ^0.27.7
-
+  flutter_custom_clippers: ^2.1.0
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -62,3 +62,7 @@ flutter:
     - assets/
     - assets/images/
     - assets/icons/
+  fonts:
+    - family: Nunito     
+      fonts:
+        - asset: assets/fonts/Nunito.ttf

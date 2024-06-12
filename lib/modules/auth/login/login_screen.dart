@@ -1,4 +1,5 @@
 import 'package:binh_thuan/constants/colors.dart';
+import 'package:binh_thuan/constants/styles.dart';
 import 'package:binh_thuan/router/app_pages.dart';
 import 'package:binh_thuan/router/app_router.dart';
 import 'package:flutter/material.dart';
@@ -169,13 +170,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Text(
                     'Đăng nhập',
                     textAlign: TextAlign.center,
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontFamily: 'Inter',
-                        fontSize: 20.sp,
-                        letterSpacing: -0.5,
-                        fontWeight: FontWeight.normal,
-                        height: 0.7),
+                    style: defaultText20.copyWith(color: Colors.white),
                   ),
                 ),
               ),
