@@ -1,6 +1,7 @@
 import 'package:binh_thuan/modules/app.dart';
 import 'package:binh_thuan/modules/notification/local_notification.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 final navigatorKey = GlobalKey<NavigatorState>();
@@ -22,6 +23,8 @@ void main() async {
           arguments: initialNotification?.notificationResponse?.payload);
     });
   }
-
-  runApp(const App());
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
+      .then((_) {
+    runApp(const App());
+  });
 }

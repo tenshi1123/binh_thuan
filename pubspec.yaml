@@ -49,6 +49,7 @@ dependencies:
   flutter_timezone: ^1.0.8
   rxdart: ^0.27.7
   flutter_custom_clippers: ^2.1.0
+  tab_container: ^3.5.3
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -66,3 +67,6 @@ flutter:
     - family: Nunito     
       fonts:
         - asset: assets/fonts/Nunito.ttf
+    - family: Nunito-Bold
+      fonts:
+        - asset: assets/fonts/Nunito-Bold.ttf

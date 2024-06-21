@@ -1,4 +1,5 @@
 import 'package:binh_thuan/constants/colors.dart';
+import 'package:binh_thuan/modules/auth/login/login_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -23,7 +24,14 @@ class _ChangePassScreenState extends State<ChangePassScreen> {
           isDefaultAction: true,
           child: const Text('Yes'),
           onPressed: () {
-            Navigator.of(context, rootNavigator: true).pop("Discard");
+            Navigator.of(context, rootNavigator: true).pushAndRemoveUntil(
+              MaterialPageRoute(
+                builder: (BuildContext context) {
+                  return const LoginScreen();
+                },
+              ),
+              (_) => false,
+            );
           },
         )
       ],

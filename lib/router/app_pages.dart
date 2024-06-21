@@ -3,7 +3,7 @@
 import 'package:binh_thuan/modules/auth/forgor_password/change_password_screen.dart';
 import 'package:binh_thuan/modules/auth/forgor_password/forgot_password_screen.dart';
 import 'package:binh_thuan/modules/auth/forgor_password/otp_screen.dart';
-import 'package:binh_thuan/modules/bottom_navigation_bar/interactive.dart';
+import 'package:binh_thuan/modules/bottom_navigation_bar/bottom_nav_bar.dart';
 import 'package:binh_thuan/modules/notification/notification_screen.dart';
 import 'package:binh_thuan/modules/tuition/tuition_screen.dart';
 
@@ -57,7 +57,7 @@ extension AppPagesExtension on AppPages {
       case AppPages.ChangePassScreen:
         return PageConfig()..pageBuilder = () => const ChangePassScreen();
       case AppPages.NavigationBar:
-        return PageConfig()..pageBuilder = () => const InteractiveExample();
+        return PageConfig()..pageBuilder = () => const BottomNavBar();
       case AppPages.NotificationScreen:
         return PageConfig()..pageBuilder = () => const NotificationScreen();
       case AppPages.TuitionPage:

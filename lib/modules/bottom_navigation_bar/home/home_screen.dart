@@ -2,6 +2,7 @@ import 'package:binh_thuan/constants/colors.dart';
 import 'package:binh_thuan/constants/styles.dart';
 import 'package:binh_thuan/modules/auth/login/login_screen.dart';
 import 'package:binh_thuan/modules/bottom_navigation_bar/home/custom_widget_home.dart';
+import 'package:binh_thuan/modules/exercise/exercise_screen.dart';
 import 'package:binh_thuan/modules/notification/local_notification.dart';
 import 'package:binh_thuan/modules/tuition/tuition_screen.dart';
 import 'package:flutter/foundation.dart';
@@ -9,6 +10,7 @@ import "package:flutter/material.dart";
 import "package:flutter_screenutil/flutter_screenutil.dart";
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import "package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart";
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key, this.useRouter = false});
@@ -85,7 +87,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     Text(
                       'Nguyễn Hồng Ánh',
                       style: defaultText20.copyWith(
-                          fontWeight: FontWeight.w800, color: colorDarkBlue),
+                          fontWeight: FontWeight.w800, color: keyBlack),
                     ),
                     SizedBox(
                       height: 6.h,
@@ -117,19 +119,19 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             const CourseItem(
-              title: 'toans',
+              title: 'Toán',
             ),
             SizedBox(
               height: 10.h,
             ),
             const CourseItem(
-              title: 'vawn',
+              title: 'Văn ',
             ),
             SizedBox(
               height: 10.h,
             ),
             const CourseItem(
-              title: 'vawn',
+              title: 'Anh',
             ),
             // ListTile(
             //   title: const Text('School'),
@@ -206,13 +208,17 @@ class _HomeScreenState extends State<HomeScreen> {
                   top: 71.h,
                   left: 70.w,
                   child: InkWell(
-                      onTap: () {
-                        LocalNotifications.showScheduleNotification(
-                            title: 'day la title',
-                            body: 'day la body',
-                            payload: 'day la payload');
-                      },
-                      child: SvgPicture.asset('assets/icons/message_icon.svg')),
+                    onTap: () {
+                      LocalNotifications.showScheduleNotification(
+                          title: 'day la title',
+                          body: 'day la body',
+                          payload: 'day la payload');
+                    },
+                    child: SvgPicture.asset(
+                      'assets/icons/message_icon.svg',
+                      color: Colors.white,
+                    ),
+                  ),
                 ),
                 Positioned(
                   top: 71.h,
@@ -252,24 +258,49 @@ class _HomeScreenState extends State<HomeScreen> {
                           payload: 'this is payload');
                       //LocalNotification.cancelAll();
                     },
-                    child: Container(
-                        height: 32.h,
-                        width: 65.w,
-                        decoration: const BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(15)),
-                          color: kPrimaryColor,
-                        ),
-                        child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                '  04',
-                                style: defaultText12.copyWith(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w700),
-                              ),
-                              SvgPicture.asset('assets/icons/noti_icon.svg')
-                            ])),
+                    child:
+                        // Container(
+                        //   height: 32.h,
+                        //   width: 65.w,
+                        //   decoration: const BoxDecoration(
+                        //     borderRadius: BorderRadius.all(Radius.circular(15)),
+                        //     color: kPrimaryColor,
+                        //   ),
+                        //   child: Row(
+                        //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        //     children: [
+                        //       Text(
+                        //         '  04',
+                        //         style: defaultText12.copyWith(
+                        //             color: Colors.white,
+                        //             fontWeight: FontWeight.w700),
+                        //       ),
+                        //       SvgPicture.asset('assets/icons/noti_icon.svg')
+                        //     ],
+                        //   ),
+                        // ),
+                        Container(
+                            height: 32.h,
+                            width: 65.w,
+                            decoration: BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(30.r)),
+                                color: Colors.transparent,
+                                border:
+                                    Border.all(color: Colors.white, width: 1)),
+                            child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    '  04',
+                                    style: defaultText12.copyWith(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w700,
+                                        fontFamily: 'Nunito-Bold'),
+                                  ),
+                                  SvgPicture.asset('assets/icons/noti_icon.svg')
+                                ])),
                   ),
                 ),
                 Positioned(
@@ -353,8 +384,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             Text(
                               '10A1',
                               style: defaultText20.copyWith(
-                                  fontWeight: FontWeight.w900,
-                                  color: colorDarkBlue),
+                                  fontWeight: FontWeight.w900, color: keyBlack),
                             ),
                           ],
                         ),
@@ -380,7 +410,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               '3 khóa học',
                               style: defaultText16.copyWith(
                                 fontWeight: FontWeight.w800,
-                                color: colorDarkBlue,
+                                color: keyBlack,
                               ),
                             ),
                           ],
@@ -406,8 +436,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             Text(
                               '--/10 ',
                               style: defaultText16.copyWith(
-                                  fontWeight: FontWeight.w800,
-                                  color: colorDarkBlue),
+                                  fontWeight: FontWeight.w800, color: keyBlack),
                             ),
                           ],
                         ),
@@ -453,9 +482,17 @@ class _HomeScreenState extends State<HomeScreen> {
                     height: 86.h,
                   ),
                 ),
-                SvgPicture.asset(
-                  'assets/icons/home_work.svg',
-                  height: 86.h,
+                InkWell(
+                  onTap: () {
+                    pushWithoutNavBar(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const ExerciseScreen()));
+                  },
+                  child: SvgPicture.asset(
+                    'assets/icons/home_work.svg',
+                    height: 86.h,
+                  ),
                 ),
                 SvgPicture.asset(
                   'assets/icons/score.svg',
@@ -463,15 +500,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 InkWell(
                   onTap: () {
-                    Navigator.of(context, rootNavigator: true)
-                        .pushAndRemoveUntil(
-                      MaterialPageRoute(
-                        builder: (BuildContext context) {
-                          return const TuitionScreen();
-                        },
-                      ),
-                      (_) => false,
-                    );
+                    pushWithoutNavBar(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const TuitionScreen()));
                   },
                   child: SvgPicture.asset(
                     'assets/icons/tuition.svg',
@@ -481,7 +513,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
             Padding(
-              padding: EdgeInsets.fromLTRB(10.w, 0, 0, 10.h),
+              padding: EdgeInsets.fromLTRB(10.w, 10.h, 0, 10.h),
               child: Text(
                 'Đang diễn ra',
                 style: defaultText16.copyWith(
@@ -596,7 +628,6 @@ class _HomeScreenState extends State<HomeScreen> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                const SizedBox(height: 16),
                 SizedBox(
                   height: 138.h,
                   width: 390.w,

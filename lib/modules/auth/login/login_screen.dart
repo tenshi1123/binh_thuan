@@ -62,6 +62,10 @@ class _LoginScreenState extends State<LoginScreen> {
                     decoration: const InputDecoration(
                       border: OutlineInputBorder(borderSide: BorderSide.none),
                       hintText: 'Mã học sinh',
+                      hintStyle: TextStyle(
+                        fontSize: 16.0,
+                        color: Color(0xff999999),
+                      ),
                     ),
                   ),
                 ),
@@ -98,6 +102,10 @@ class _LoginScreenState extends State<LoginScreen> {
                     decoration: const InputDecoration(
                       border: OutlineInputBorder(borderSide: BorderSide.none),
                       hintText: 'Mật khẩu',
+                      hintStyle: TextStyle(
+                        fontSize: 16.0,
+                        color: Color(0xff999999),
+                      ),
                     ),
                   ),
                 ),
@@ -156,21 +164,28 @@ class _LoginScreenState extends State<LoginScreen> {
                   )),
               Positioned(
                 top: 670.h - MediaQuery.of(context).viewInsets.bottom,
-                left: 130.w,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: kPrimaryColor,
-                      textStyle: const TextStyle(fontSize: 20)),
-                  onPressed: () {
+                left: 100.w,
+                child: GestureDetector(
+                  onTap: () {
                     AppRouter.toPage(
                       context, AppPages.NavigationBar,
                       // blocValue: _authBloc,
                     );
                   },
-                  child: Text(
-                    'Đăng nhập',
-                    textAlign: TextAlign.center,
-                    style: defaultText20.copyWith(color: Colors.white),
+                  child: Container(
+                    height: 48.h,
+                    width: 191.w,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(9.r),
+                      color: kPrimaryColor,
+                    ),
+                    child: Center(
+                      child: Text(
+                        'Đăng nhập',
+                        textAlign: TextAlign.center,
+                        style: defaultText20.copyWith(color: Colors.white),
+                      ),
+                    ),
                   ),
                 ),
               ),

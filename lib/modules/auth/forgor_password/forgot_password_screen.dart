@@ -70,15 +70,15 @@ class _LoginScreenState extends State<ForgotPassScreen> {
                         height: 1.1666666666666667.h),
                   )),
               Positioned(
-                  top: 386.h,
-                  left: 150.h,
+                  top: 366.h,
+                  left: 120.h,
                   child: Text(
                     'Quên mật khẩu ?',
                     textAlign: TextAlign.right,
                     style: TextStyle(
-                        color: const Color.fromRGBO(153, 153, 153, 1),
+                        color: kPrimaryColor,
                         fontFamily: 'Inter',
-                        fontSize: 16.sp,
+                        fontSize: 20.sp,
                         //letterSpacing: -0.5,
                         fontWeight: FontWeight.bold,
                         height: 1.1666666666666667.h),
@@ -124,10 +124,9 @@ class _LoginScreenState extends State<ForgotPassScreen> {
                     'Mã học sinh hoặc số điện thoại',
                     textAlign: TextAlign.left,
                     style: TextStyle(
-                        color: const Color.fromRGBO(102, 102, 102, 1),
+                        color: const Color(0xff999999),
                         fontFamily: 'Inter',
                         fontSize: 16.sp,
-                        letterSpacing: -0.5,
                         fontWeight: FontWeight.normal,
                         height: 0.875.h),
                   )),

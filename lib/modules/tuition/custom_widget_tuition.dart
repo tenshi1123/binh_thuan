@@ -26,11 +26,12 @@ class NotyetItem extends StatelessWidget {
           ),
           Positioned(
             left: 10.w,
+            top: 2.h,
             child: Image(
               height: 246.h,
               width: 351.w,
               image: const AssetImage('assets/images/Subtract1.png'),
-              fit: BoxFit.cover,
+              fit: BoxFit.fill,
             ),
           ),
           Positioned(
@@ -141,11 +142,12 @@ class NotEnoughItem extends StatelessWidget {
           ),
           Positioned(
             left: 10.w,
+            top: 2.h,
             child: Image(
               height: 287.h,
               width: 351.w,
               image: const AssetImage('assets/images/Subtract2.png'),
-              fit: BoxFit.cover,
+              fit: BoxFit.fill,
             ),
           ),
           Positioned(
@@ -275,11 +277,12 @@ class CompleteItem extends StatelessWidget {
           ),
           Positioned(
             left: 10.w,
+            top: 2.h,
             child: Image(
               height: 287.h,
               width: 352.w,
               image: const AssetImage('assets/images/Subtract3.png'),
-              fit: BoxFit.cover,
+              fit: BoxFit.fill,
             ),
           ),
           Positioned(
@@ -400,13 +403,13 @@ class RowFeeCustom extends StatelessWidget {
         Text(
           title,
           style: defaultText16.copyWith(
-            color: colorDarkBlue,
+            color: keyBlack,
           ),
         ),
         Text(
           content,
           style: defaultText16.copyWith(
-            color: colorDarkBlue,
+            color: keyBlack,
           ),
         ),
       ],

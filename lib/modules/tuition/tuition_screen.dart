@@ -62,7 +62,7 @@ class TuitionScreen extends StatelessWidget {
                         Text(
                           'Chi phí còn thiếu ',
                           style: defaultText16.copyWith(
-                            color: colorDarkBlue,
+                            color: keyBlack,
                             fontWeight: FontWeight.w700,
                           ),
                         ),

@@ -150,7 +150,7 @@ class NotificationItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10.h, horizontal: 20.w),
-      padding: EdgeInsets.symmetric(horizontal: 9.w, vertical: 12.h),
+      padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 12.h),
       width: 390.w,
       height: 200.h,
       decoration: BoxDecoration(
@@ -191,7 +191,7 @@ class NotificationItem extends StatelessWidget {
                   'Lorem ipsum dolor sit amet, consectetur adipis cing elit, sed do eiusmod tempor...',
                   overflow: TextOverflow.ellipsis,
                   maxLines: 2,
-                  style: defaultText12,
+                  style: defaultText14,
                 ),
               ],
             ),
@@ -210,7 +210,7 @@ class CourseItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 50.h,
+      height: 60.h,
       margin: EdgeInsets.only(right: 20.w),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.horizontal(right: Radius.circular(8.r)),
@@ -220,10 +220,10 @@ class CourseItem extends StatelessWidget {
       child: ListTile(
         dense: true,
         contentPadding: EdgeInsets.only(left: 8.w, right: 0.0),
-        visualDensity: VisualDensity(horizontal: 0, vertical: -4.h),
+        visualDensity: VisualDensity(horizontal: 0, vertical: 0.h),
         leading: Container(
-          height: 40.dg,
-          width: 40.dg,
+          height: 40.h,
+          width: 40.w,
           decoration: const BoxDecoration(
             shape: BoxShape.circle,
             color: Colors.white,
