@@ -3,6 +3,7 @@ import 'package:binh_thuan/modules/notification/local_notification.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 final navigatorKey = GlobalKey<NavigatorState>();
 GlobalKey<ScaffoldState> key = GlobalKey();
@@ -25,6 +26,6 @@ void main() async {
   }
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
       .then((_) {
-    runApp(const App());
+    initializeDateFormatting().then((_) => runApp(const App()));
   });
 }

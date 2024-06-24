@@ -32,3 +32,9 @@ TextStyle defaultText20 = TextStyle(
   fontWeight: FontWeight.w600,
   fontFamily: 'Nunito',
 );
+
+TextStyle defaultBoldText = TextStyle(
+  fontSize: 16.sp,
+  color: keyBlack,
+  fontFamily: 'Nunito-Bold',
+);

@@ -1,6 +1,6 @@
 import 'package:binh_thuan/constants/colors.dart';
 import 'package:binh_thuan/constants/styles.dart';
-import 'package:binh_thuan/modules/course/subject_screen.dart';
+import 'package:binh_thuan/modules/bottom_navigation_bar/course/subject_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -50,8 +50,8 @@ class NestedScroll extends StatelessWidget {
                             width: 65.w,
                             decoration: const BoxDecoration(
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(15)),
-                              color: kPrimaryColor,
+                                  BorderRadius.all(Radius.circular(20)),
+                              color: Colors.white,
                             ),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -89,7 +89,7 @@ class NestedScroll extends StatelessWidget {
                             }),
                       ),
                       Text(
-                        '\t    Khóa học của tôi',
+                        '\t    Môn học của tôi',
                         style:
                             defaultText16.copyWith(fontFamily: 'Nunito-Bold'),
                       ),
@@ -113,8 +113,8 @@ class NestedScroll extends StatelessWidget {
           child: AspectRatio(
             aspectRatio: 10 / 8,
             child: TabContainer(
-              borderRadius: BorderRadius.circular(20),
-              tabBorderRadius: BorderRadius.circular(30),
+              borderRadius: BorderRadius.circular(20.r),
+              tabBorderRadius: BorderRadius.circular(30.r),
               tabEdge: TabEdge.top,
               curve: Curves.easeIn,
               transitionBuilder: (child, animation) {
@@ -323,13 +323,14 @@ class CourseItem extends StatelessWidget {
             width: 350.w,
             image: const AssetImage('assets/images/course_bg1.png'),
             fit: BoxFit.fill,
+            //color: Colors.pink.withOpacity(0.5),
           ),
         ),
         Positioned(
           top: 0,
           right: 0,
           child: Text(
-            'Chờ thanh toán',
+            'Đang học',
             style: defaultText12.copyWith(
               fontFamily: 'Nunito-Bold',
             ),

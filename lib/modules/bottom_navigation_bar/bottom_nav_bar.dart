@@ -1,9 +1,11 @@
 import "package:binh_thuan/constants/colors.dart";
 import "package:binh_thuan/modules/bottom_navigation_bar/home/home_screen.dart";
-import "package:binh_thuan/modules/course/course_screen.dart";
+import "package:binh_thuan/modules/bottom_navigation_bar/course/course_screen.dart";
 import "package:flutter/material.dart";
 import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart";
+
+import "personal/info_student_screen.dart";
 
 class BottomNavBar extends StatefulWidget {
   const BottomNavBar({super.key});
@@ -35,7 +37,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
             icon: const ImageIcon(
               AssetImage('assets/images/nav_bar_2.png'),
             ),
-            title: "Khóa học",
+            title: "Môn học",
             activeForegroundColor: kPrimaryColor,
             inactiveForegroundColor: Colors.white,
             activeColorSecondary: Colors.white,
@@ -43,7 +45,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
           ),
         ),
         PersistentTabConfig(
-          screen: const HomeScreen(),
+          screen: const InfoScreen(),
           item: ItemConfig(
             icon: const ImageIcon(
               AssetImage('assets/images/nav_bar_3.png'),

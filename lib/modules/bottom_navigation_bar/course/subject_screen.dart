@@ -1,9 +1,13 @@
 import 'package:binh_thuan/constants/styles.dart';
-import 'package:binh_thuan/modules/course/course_screen.dart';
+import 'package:binh_thuan/modules/bottom_navigation_bar/course/course_screen.dart';
 import "package:flutter/material.dart";
 import "package:flutter_screenutil/flutter_screenutil.dart";
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:tab_container/tab_container.dart';
+
+import 'subject_tab/tab_exercise.dart';
+import 'subject_tab/tab_infomation.dart';
+import 'subject_tab/tab_schedule.dart';
 
 class SubjectScreen extends StatelessWidget {
   const SubjectScreen({super.key, this.useRouter = false});
@@ -36,18 +40,18 @@ class SubjectScreen extends StatelessWidget {
                       ),
                     ),
                     Positioned(
-                      top: 71.h,
+                      top: 50.h,
                       left: 70.w,
                       child: SvgPicture.asset('assets/icons/message_icon.svg'),
                     ),
                     Positioned(
-                      top: 71.h,
+                      top: 50.h,
                       left: 30.w,
                       child:
                           SvgPicture.asset('assets/icons/three_stick_icon.svg'),
                     ),
                     Positioned(
-                      top: 71.h,
+                      top: 50.h,
                       left: 300.w,
                       child: Container(
                           height: 32.h,
@@ -83,11 +87,16 @@ class SubjectScreen extends StatelessWidget {
                       ),
                     ),
                     Positioned(
-                        bottom: 5.h,
-                        left: 5.w,
-                        child: const Icon(
-                          Icons.arrow_back_ios_new,
-                          color: Colors.white,
+                        bottom: 0.h,
+                        left: 0.w,
+                        child: IconButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          icon: const Icon(
+                            Icons.arrow_back_ios_new,
+                            color: Colors.white,
+                          ),
                         ))
                   ]),
                 ),
@@ -152,46 +161,15 @@ List<Widget> _getTabs1() {
 }
 
 List<Widget> getChildren2() {
-  return _tabs.map((String name) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: SafeArea(
-        top: false,
-        bottom: false,
-        child: Builder(
-          builder: (BuildContext context) {
-            return CustomScrollView(
-              key: PageStorageKey<String>(name),
-              slivers: <Widget>[
-                SliverOverlapInjector(
-                  handle:
-                      NestedScrollView.sliverOverlapAbsorberHandleFor(context),
-                ),
-                SliverPadding(
-                  padding: const EdgeInsets.all(8.0),
-                  sliver: SliverFixedExtentList(
-                    itemExtent: 136.h,
-                    delegate: SliverChildBuilderDelegate(
-                      (BuildContext context, int index) {
-                        return Padding(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 12.w,
-                            vertical: 12.h,
-                          ),
-                          child: const CommingLesson(),
-                        );
-                      },
-                      childCount: 5,
-                    ),
-                  ),
-                ),
-              ],
-            );
-          },
-        ),
-      ),
-    );
-  }).toList();
+  return [
+    TabSchedule(
+      name: _tabs[0],
+    ),
+    TabExercise(
+      name: _tabs[1],
+    ),
+    const TabInfomation()
+  ];
 }
 
 class Schedule extends StatelessWidget {

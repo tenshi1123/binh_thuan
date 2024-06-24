@@ -4,6 +4,7 @@ import 'package:binh_thuan/modules/auth/login/login_screen.dart';
 import 'package:binh_thuan/modules/bottom_navigation_bar/home/custom_widget_home.dart';
 import 'package:binh_thuan/modules/exercise/exercise_screen.dart';
 import 'package:binh_thuan/modules/notification/local_notification.dart';
+import 'package:binh_thuan/modules/schedule/table_calender.dart';
 import 'package:binh_thuan/modules/tuition/tuition_screen.dart';
 import 'package:flutter/foundation.dart';
 import "package:flutter/material.dart";
@@ -63,15 +64,15 @@ class _HomeScreenState extends State<HomeScreen> {
                   width: 20.w,
                 ),
                 Container(
-                  width: 72.w,
-                  height: 72.h,
+                  width: 80.w,
+                  height: 80.h,
                   decoration: const BoxDecoration(
                     shape: BoxShape.circle,
                     image: DecorationImage(
                         image: AssetImage(
                           'assets/images/placeholder_avatar.png',
                         ),
-                        scale: 3),
+                        scale: 2),
                   ),
                 ),
                 SizedBox(
@@ -451,30 +452,10 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 InkWell(
                   onTap: () {
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                          title: const Text('AlertDialog Title'),
-                          content: const SingleChildScrollView(
-                            child: ListBody(
-                              children: <Widget>[
-                                Text('This is a demo alert dialog.'),
-                                Text(
-                                    'Would you like to approve of this message?'),
-                              ],
-                            ),
-                          ),
-                          actions: <Widget>[
-                            TextButton(
-                              child: const Text('Approve'),
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                            ),
-                          ],
-                        );
-                      },
+                    pushWithoutNavBar(
+                      context,
+                      MaterialPageRoute(
+                          builder: (_) => const TableEventsExample()),
                     );
                   },
                   child: SvgPicture.asset(
@@ -609,22 +590,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
             ),
-            // SizedBox(
-            //   height: 138.h,
-            //   child: Swiper(
-            //     itemBuilder: (BuildContext context, int index) {
-            //       return NotificationItem(
-            //         title: index,
-            //       );
-            //     },
-            //     itemCount: 3,
-            //     itemWidth: 300.w,
-            //     indicatorLayout: PageIndicatorLayout.COLOR,
-            //     autoplay: true,
-            //     pagination: const SwiperPagination(),
-            //     //control: const SwiperControl(),
-            //   ),
-            // ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[

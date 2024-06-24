@@ -55,6 +55,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     color: Colors.white,
                   ),
                   child: TextField(
+                    style: defaultText16,
                     controller: studenIdController,
                     //focusNode: _focusNode,
                     scrollPadding: EdgeInsets.symmetric(
@@ -97,6 +98,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: TextField(
                     controller: passController,
                     focusNode: _focusNode,
+                    style: defaultText16,
                     scrollPadding: EdgeInsets.symmetric(
                         vertical: MediaQuery.of(context).viewInsets.bottom),
                     decoration: const InputDecoration(
@@ -110,30 +112,30 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
               ),
-              Positioned(
-                  top: 600.h - MediaQuery.of(context).viewInsets.bottom,
-                  left: 225.w,
-                  child: TextButton(
-                    onPressed: () {
-                      AppRouter.toPage(
-                        context,
-                        AppPages.ForgotPassScreen,
-                        // blocValue: _authBloc,
-                        arguments: {},
-                      );
-                    },
-                    child: Text(
-                      'Quên mật khẩu ?',
-                      textAlign: TextAlign.right,
-                      style: TextStyle(
-                          color: kPrimaryColor,
-                          fontFamily: 'Inter',
-                          fontSize: 16.sp,
-                          //letterSpacing: -0.5,
-                          fontWeight: FontWeight.normal,
-                          height: 0.875.h),
-                    ),
-                  )),
+              // Positioned(
+              //     top: 600.h - MediaQuery.of(context).viewInsets.bottom,
+              //     left: 225.w,
+              //     child: TextButton(
+              //       onPressed: () {
+              //         AppRouter.toPage(
+              //           context,
+              //           AppPages.ForgotPassScreen,
+              //           // blocValue: _authBloc,
+              //           arguments: {},
+              //         );
+              //       },
+              //       child: Text(
+              //         'Quên mật khẩu ?',
+              //         textAlign: TextAlign.right,
+              //         style: TextStyle(
+              //             color: kPrimaryColor,
+              //             fontFamily: 'Inter',
+              //             fontSize: 16.sp,
+              //             //letterSpacing: -0.5,
+              //             fontWeight: FontWeight.normal,
+              //             height: 0.875.h),
+              //       ),
+              //     )),
               Positioned(
                   top: 408.h - MediaQuery.of(context).viewInsets.bottom,
                   left: 60.w,

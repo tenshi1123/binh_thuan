@@ -1,7 +1,9 @@
+import 'dart:math';
 import 'package:binh_thuan/constants/colors.dart';
 import 'package:binh_thuan/constants/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class ExerciseScreen extends StatelessWidget {
   const ExerciseScreen({super.key});
@@ -13,6 +15,7 @@ class ExerciseScreen extends StatelessWidget {
     return DefaultTabController(
       length: tabs.length,
       child: Scaffold(
+        backgroundColor: Colors.white,
         body: NestedScrollView(
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
             return <Widget>[
@@ -20,6 +23,7 @@ class ExerciseScreen extends StatelessWidget {
                 handle:
                     NestedScrollView.sliverOverlapAbsorberHandleFor(context),
                 sliver: SliverAppBar(
+                  backgroundColor: Colors.white,
                   flexibleSpace: FlexibleSpaceBar(
                     background: Stack(
                       children: [
@@ -57,7 +61,7 @@ class ExerciseScreen extends StatelessWidget {
                           top: 170.h,
                           child: SizedBox(
                             width: 380.w,
-                            height: 117.h,
+                            height: 100.h,
                             child: ListView.builder(
                                 scrollDirection: Axis.horizontal,
                                 padding: const EdgeInsets.all(8),
@@ -94,7 +98,7 @@ class ExerciseScreen extends StatelessWidget {
                   floating: true,
                   snap: false,
                   stretch: true,
-                  toolbarHeight: 250.h,
+                  toolbarHeight: 270.h,
                   forceElevated: innerBoxIsScrolled,
                   bottom: TabBar(
                     tabAlignment: TabAlignment.start,
@@ -112,6 +116,7 @@ class ExerciseScreen extends StatelessWidget {
                     ),
                     unselectedLabelColor: keyBlack.withOpacity(0.3),
                     labelColor: keyBlack,
+
                     tabs: _tabScroll(), //list of tabs
                   ),
                 ),
@@ -133,15 +138,19 @@ class ExerciseScreen extends StatelessWidget {
                               NestedScrollView.sliverOverlapAbsorberHandleFor(
                                   context),
                         ),
+                        SliverToBoxAdapter(
+                          child: Text(
+                            '   day la 1 cai title',
+                            style: defaultBoldText,
+                          ),
+                        ),
                         SliverPadding(
                           padding: const EdgeInsets.all(8.0),
                           sliver: SliverFixedExtentList(
-                            itemExtent: 48.0,
+                            itemExtent: 83.h,
                             delegate: SliverChildBuilderDelegate(
                               (BuildContext context, int index) {
-                                return ListTile(
-                                  title: Text('Item $index'),
-                                );
+                                return const ExerciseItem();
                               },
                               childCount: 30,
                             ),
@@ -177,7 +186,7 @@ class IsComingItem extends StatelessWidget {
     return Container(
       margin: EdgeInsets.only(right: 10.h),
       width: 177.w,
-      height: 150.h,
+      height: 100.h,
       decoration: BoxDecoration(
         color: color,
         borderRadius: BorderRadius.all(Radius.circular(10.r)),
@@ -219,29 +228,29 @@ class IsComingItem extends StatelessWidget {
               softWrap: false,
             ),
           ),
-          Container(
-            margin: EdgeInsets.only(left: 8.h),
-            padding: EdgeInsets.only(left: 6.h),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.all(
-                Radius.circular(16.r),
-              ),
-            ),
-            width: 90.w,
-            child: Row(
-              children: [
-                const Icon(
-                  Icons.timer,
-                  color: keyBlack,
-                ),
-                Text(
-                  time,
-                  style: defaultText12,
-                )
-              ],
-            ),
-          ),
+          // Container(
+          //   margin: EdgeInsets.only(left: 8.h),
+          //   padding: EdgeInsets.only(left: 6.h),
+          //   decoration: BoxDecoration(
+          //     color: Colors.white,
+          //     borderRadius: BorderRadius.all(
+          //       Radius.circular(16.r),
+          //     ),
+          //   ),
+          //   width: 90.w,
+          //   child: Row(
+          //     children: [
+          //       const Icon(
+          //         Icons.timer,
+          //         color: keyBlack,
+          //       ),
+          //       Text(
+          //         time,
+          //         style: defaultText12,
+          //       )
+          //     ],
+          //   ),
+          // ),
         ],
       ),
     );
@@ -294,3 +303,60 @@ List<Widget> _tabScroll() => [
       homeTab(title: "Chưa làm"),
       homeTab(title: "Hoàn thành"),
     ];
+final _random = Random();
+
+class ExerciseItem extends StatelessWidget {
+  const ExerciseItem({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 350.w,
+      height: 83.h,
+      padding: EdgeInsets.symmetric(horizontal: 10.w),
+      margin: EdgeInsets.symmetric(vertical: 10.h, horizontal: 6.w),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.all(Radius.circular(6.r)),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.4),
+              spreadRadius: 5,
+              blurRadius: 7,
+              offset: const Offset(4, 7), // changes position of shadow
+            ),
+          ],
+          color: Colors.white),
+      child: Row(
+        children: [
+          Container(
+            width: 45.w,
+            height: 45.h,
+            padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h),
+            decoration: BoxDecoration(
+                color: listColor[_random.nextInt(listColor.length)],
+                shape: BoxShape.circle),
+            child: SvgPicture.asset('assets/icons/home_work_icon.svg',
+                width: 18.w, height: 18.h, fit: BoxFit.fill),
+          ),
+          SizedBox(width: 8.w),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(
+                height: 6.h,
+              ),
+              Text(
+                'Lorem ipsum',
+                style: defaultBoldText,
+              ),
+              Text(
+                'Hạn nộp: 20 tháng 4, 2024',
+                style: defaultText14,
+              )
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}

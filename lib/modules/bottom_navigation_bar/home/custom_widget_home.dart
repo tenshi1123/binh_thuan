@@ -1,4 +1,7 @@
 //custom widget
+import 'dart:math';
+
+import 'package:binh_thuan/constants/colors.dart';
 import 'package:binh_thuan/constants/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -38,6 +41,8 @@ class ExampleDialog extends StatelessWidget {
         ),
       );
 }
+
+final _random = Random();
 
 class CalenderItem extends StatelessWidget {
   const CalenderItem({super.key});
@@ -133,6 +138,90 @@ class CalenderItem extends StatelessWidget {
                       style: defaultText12,
                     ),
                   ],
+                ),
+              ],
+            )
+          ],
+        ),
+      );
+}
+
+class CalenderItem1 extends StatelessWidget {
+  final Color color = listColor[_random.nextInt(listColor.length)];
+
+  CalenderItem1({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) => Container(
+        margin: EdgeInsets.symmetric(vertical: 10.h),
+        width: 350.w,
+        height: 78.h,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.all(Radius.circular(8.r)),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.4),
+              spreadRadius: 5,
+              blurRadius: 7,
+              offset: const Offset(4, 7), // changes position of shadow
+            ),
+          ],
+          color: color,
+        ),
+        child: Row(
+          children: [
+            Container(
+              margin: const EdgeInsets.all(6),
+              height: 68.h,
+              width: 69.w,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(8.r),
+                ),
+                color: Colors.white,
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Text(
+                    'Toán',
+                    style: defaultBoldText.copyWith(
+                      color: color,
+                    ),
+                  ),
+                  Container(
+                    margin:
+                        const EdgeInsetsDirectional.only(start: 1.0, end: 1.0),
+                    height: 1.h,
+                    width: 42.w,
+                    color: color,
+                  ),
+                  Text(
+                    '07:00',
+                    style: defaultText20.copyWith(
+                      fontWeight: FontWeight.w900,
+                      color: color,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(
+              width: 10.w,
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  '•   Tiết 1',
+                  style: defaultBoldText.copyWith(color: Colors.white),
+                ),
+                Text(
+                  '•   Giáo viên: HươngNN',
+                  style: defaultBoldText.copyWith(color: Colors.white),
                 ),
               ],
             )
