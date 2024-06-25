@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:binh_thuan/modules/notification/another_page.dart';
+import 'package:binh_thuan/modules/notification/notification_screen.dart';
 import 'package:binh_thuan/modules/notification/local_notification.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -51,7 +51,7 @@ class _AppState extends State<App> with WidgetsBindingObserver {
           //home: const SplashScreenApp(),
           routes: {
             '/': (context) => const SplashScreenApp(),
-            '/another': (context) => const AnotherPage(),
+            '/another': (context) => const NotificationScreen(),
           },
         );
       },

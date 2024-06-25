@@ -1,6 +1,6 @@
 import "package:binh_thuan/constants/colors.dart";
 import "package:binh_thuan/modules/bottom_navigation_bar/home/home_screen.dart";
-import "package:binh_thuan/modules/bottom_navigation_bar/course/course_screen.dart";
+import "package:binh_thuan/modules/bottom_navigation_bar/course/list_subject_screen.dart";
 import "package:flutter/material.dart";
 import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart";

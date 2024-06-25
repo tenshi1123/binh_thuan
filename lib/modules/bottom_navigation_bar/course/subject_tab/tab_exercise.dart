@@ -14,7 +14,7 @@ class TabExercise extends StatelessWidget {
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
-        toolbarHeight: 86.h,
+        toolbarHeight: 120.h,
         automaticallyImplyLeading: false,
         flexibleSpace: FlexibleSpaceBar(
           background: Stack(
@@ -54,7 +54,7 @@ class TabExercise extends StatelessWidget {
           tabAlignment: TabAlignment.start,
           padding: EdgeInsets.zero,
           indicatorPadding: EdgeInsets.zero,
-          labelPadding: EdgeInsets.zero,
+          labelPadding: EdgeInsets.symmetric(horizontal: 10.w),
           isScrollable: true,
           indicatorColor: keyBlack,
           indicatorSize: TabBarIndicatorSize.label,

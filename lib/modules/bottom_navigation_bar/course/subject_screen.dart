@@ -1,5 +1,5 @@
 import 'package:binh_thuan/constants/styles.dart';
-import 'package:binh_thuan/modules/bottom_navigation_bar/course/course_screen.dart';
+import 'package:binh_thuan/modules/bottom_navigation_bar/course/list_subject_screen.dart';
 import "package:flutter/material.dart";
 import "package:flutter_screenutil/flutter_screenutil.dart";
 import 'package:flutter_svg/flutter_svg.dart';
@@ -43,12 +43,6 @@ class SubjectScreen extends StatelessWidget {
                       top: 50.h,
                       left: 70.w,
                       child: SvgPicture.asset('assets/icons/message_icon.svg'),
-                    ),
-                    Positioned(
-                      top: 50.h,
-                      left: 30.w,
-                      child:
-                          SvgPicture.asset('assets/icons/three_stick_icon.svg'),
                     ),
                     Positioned(
                       top: 50.h,
@@ -137,10 +131,12 @@ class SubjectScreen extends StatelessWidget {
                 );
               },
               color: Colors.white,
-              selectedTextStyle: defaultText16,
-              unselectedTextStyle: defaultText12.copyWith(
-                color: Colors.white,
-              ),
+              selectedTextStyle: defaultBoldText.copyWith(
+                  fontSize: 14.sp, decoration: TextDecoration.none),
+              unselectedTextStyle: defaultBoldText.copyWith(
+                  color: Colors.white,
+                  fontSize: 14.sp,
+                  decoration: TextDecoration.none),
               tabs: _getTabs1(),
               children: getChildren2(),
             ),

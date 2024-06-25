@@ -1,5 +1,5 @@
 import 'package:binh_thuan/constants/styles.dart';
-import 'package:binh_thuan/modules/bottom_navigation_bar/course/course_screen.dart';
+import 'package:binh_thuan/modules/bottom_navigation_bar/course/subject_tab/schedule_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -11,45 +11,28 @@ class TabSchedule extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: SafeArea(
-        top: false,
-        bottom: false,
-        child: Builder(
-          builder: (BuildContext context) {
-            return CustomScrollView(
-              key: PageStorageKey<String>(name),
-              slivers: <Widget>[
-                SliverToBoxAdapter(
-                  child: Text(
-                    '    Đang diễn ra',
-                    style: defaultBoldText,
-                  ),
-                ),
-                SliverOverlapInjector(
-                  handle:
-                      NestedScrollView.sliverOverlapAbsorberHandleFor(context),
-                ),
-                SliverPadding(
-                  padding: const EdgeInsets.all(8.0),
-                  sliver: SliverFixedExtentList(
-                    itemExtent: 136.h,
-                    delegate: SliverChildBuilderDelegate(
-                      (BuildContext context, int index) {
-                        return Padding(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 12.w,
-                            vertical: 12.h,
-                          ),
-                          child: const CommingLesson(),
-                        );
-                      },
-                      childCount: 5,
-                    ),
-                  ),
-                ),
-              ],
-            );
-          },
+      body: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 16.h),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              '\rĐang diễn ra',
+              style: defaultBoldText,
+            ),
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text('Hiện không có lớp học nào', style: defaultText14),
+              ),
+            ),
+            Text(
+              '\rThời khóa biểu',
+              style: defaultBoldText,
+            ),
+            const Expanded(child: ScheduleItem()),
+          ],
         ),
       ),
     );

@@ -2,6 +2,7 @@ import 'package:binh_thuan/constants/colors.dart';
 import 'package:binh_thuan/constants/styles.dart';
 import 'package:binh_thuan/modules/auth/login/login_screen.dart';
 import 'package:binh_thuan/modules/bottom_navigation_bar/home/custom_widget_home.dart';
+import 'package:binh_thuan/modules/chat/screen/list_conversation.dart';
 import 'package:binh_thuan/modules/exercise/exercise_screen.dart';
 import 'package:binh_thuan/modules/notification/local_notification.dart';
 import 'package:binh_thuan/modules/schedule/table_calender.dart';
@@ -210,10 +211,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   left: 70.w,
                   child: InkWell(
                     onTap: () {
-                      LocalNotifications.showScheduleNotification(
-                          title: 'day la title',
-                          body: 'day la body',
-                          payload: 'day la payload');
+                      pushWithoutNavBar(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const ListConversation()));
                     },
                     child: SvgPicture.asset(
                       'assets/icons/message_icon.svg',
@@ -644,7 +645,7 @@ class _HomeScreenState extends State<HomeScreen> {
               padding: const EdgeInsets.all(8),
               itemCount: 6,
               itemBuilder: (BuildContext context, int index) {
-                return const CalenderItem();
+                return const ComingLesson();
               },
             ),
             SizedBox(

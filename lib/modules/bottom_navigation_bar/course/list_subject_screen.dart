@@ -33,13 +33,6 @@ class NestedScroll extends StatelessWidget {
                             width: 20.w,
                           ),
                           SvgPicture.asset(
-                            'assets/icons/three_stick_icon.svg',
-                            color: kPrimaryColor,
-                          ),
-                          SizedBox(
-                            width: 20.w,
-                          ),
-                          SvgPicture.asset(
                             'assets/icons/message_icon.svg',
                           ),
                           SizedBox(
@@ -180,11 +173,12 @@ List<Widget> getChildren1() {
                         ),
                         child: InkWell(
                             onTap: () {
-                              pushWithNavBar(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          const SubjectScreen()));
+                              pushWithoutNavBar(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const SubjectScreen(),
+                                ),
+                              );
                             },
                             child: const CourseItem()),
                       );

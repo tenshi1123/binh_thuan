@@ -104,7 +104,7 @@ class ExerciseScreen extends StatelessWidget {
                     tabAlignment: TabAlignment.start,
                     padding: EdgeInsets.zero,
                     indicatorPadding: EdgeInsets.zero,
-                    labelPadding: EdgeInsets.zero,
+                    labelPadding: EdgeInsets.symmetric(horizontal: 10.w),
                     isScrollable: true,
                     indicatorColor: keyBlack,
                     indicatorSize: TabBarIndicatorSize.label,
@@ -260,7 +260,7 @@ class IsComingItem extends StatelessWidget {
 Widget homeTab({required String title, bool isSeprator = true}) {
   return Tab(
     child: Container(
-      width: 130.w,
+      // width: 130.w,
       height: 20,
       decoration: isSeprator
           ? const BoxDecoration(
@@ -276,6 +276,9 @@ Widget homeTab({required String title, bool isSeprator = true}) {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
+          SizedBox(
+            width: 10.w,
+          ),
           Text(title),
           Container(
             decoration: BoxDecoration(
