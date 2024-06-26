@@ -77,7 +77,7 @@ class _ChangePassScreenState extends State<ChangePassScreen> {
                   ),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.grey.withOpacity(0.4),
+                      color: kPrimaryColor.withOpacity(0.4),
                       spreadRadius: 5,
                       blurRadius: 7,
                       offset: const Offset(4, 7), // changes position of shadow
@@ -112,7 +112,7 @@ class _ChangePassScreenState extends State<ChangePassScreen> {
                   ),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.grey.withOpacity(0.4),
+                      color: kPrimaryColor.withOpacity(0.4),
                       spreadRadius: 5,
                       blurRadius: 7,
                       offset: const Offset(4, 7), // changes position of shadow

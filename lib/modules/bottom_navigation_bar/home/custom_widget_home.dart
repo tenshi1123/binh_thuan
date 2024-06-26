@@ -64,7 +64,7 @@ class ComingLesson extends StatelessWidget {
             borderRadius: BorderRadius.all(Radius.circular(8.r)),
             boxShadow: [
               BoxShadow(
-                color: Colors.grey.withOpacity(0.4),
+                color: kPrimaryColor.withOpacity(0.4),
                 spreadRadius: 5,
                 blurRadius: 7,
                 offset: const Offset(4, 7), // changes position of shadow
@@ -167,7 +167,7 @@ class CompleteLesson extends StatelessWidget {
           borderRadius: BorderRadius.all(Radius.circular(8.r)),
           boxShadow: [
             BoxShadow(
-              color: Colors.grey.withOpacity(0.4),
+              color: kPrimaryColor.withOpacity(0.4),
               spreadRadius: 5,
               blurRadius: 7,
               offset: const Offset(4, 7), // changes position of shadow
@@ -273,7 +273,7 @@ class ItemTableCalender extends StatelessWidget {
           borderRadius: BorderRadius.all(Radius.circular(8.r)),
           boxShadow: [
             BoxShadow(
-              color: Colors.grey.withOpacity(0.4),
+              color: kPrimaryColor.withOpacity(0.4),
               spreadRadius: 5,
               blurRadius: 7,
               offset: const Offset(4, 7), // changes position of shadow
@@ -460,7 +460,7 @@ class MenuItem extends StatelessWidget {
         borderRadius: BorderRadius.all(Radius.circular(8.r)),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.4),
+            color: kPrimaryColor.withOpacity(0.4),
             spreadRadius: 5,
             blurRadius: 7,
             offset: const Offset(4, 7), // changes position of shadow

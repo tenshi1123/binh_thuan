@@ -79,17 +79,18 @@ class ExerciseScreen extends StatelessWidget {
                           ),
                         ),
                         Positioned(
-                            left: 10.w,
-                            top: 80.h,
-                            child: IconButton(
-                              icon: const Icon(
-                                Icons.arrow_back_ios_new,
-                                color: Colors.white,
-                              ),
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                            ))
+                          left: 10.w,
+                          top: 80.h,
+                          child: IconButton(
+                            icon: const Icon(
+                              Icons.arrow_back_ios_new,
+                              color: Colors.white,
+                            ),
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                          ),
+                        ),
                       ],
                     ),
                   ),
@@ -257,7 +258,8 @@ class IsComingItem extends StatelessWidget {
   }
 }
 
-Widget homeTab({required String title, bool isSeprator = true}) {
+Widget homeTab(
+    {required String title, bool isSeprator = true, bool hasNumber = true}) {
   return Tab(
     child: Container(
       // width: 130.w,
@@ -280,21 +282,23 @@ Widget homeTab({required String title, bool isSeprator = true}) {
             width: 10.w,
           ),
           Text(title),
-          Container(
-            decoration: BoxDecoration(
-              color: keyBlack,
-              borderRadius: BorderRadius.all(Radius.circular(10.r)),
-            ),
-            height: 20.h,
-            padding: EdgeInsets.symmetric(horizontal: 8.h),
-            margin: EdgeInsets.only(left: 8.h),
-            child: Center(
-              child: Text(
-                '21',
-                style: defaultText12.copyWith(color: Colors.white),
-              ),
-            ),
-          )
+          hasNumber
+              ? Container(
+                  decoration: BoxDecoration(
+                    color: keyBlack,
+                    borderRadius: BorderRadius.all(Radius.circular(10.r)),
+                  ),
+                  height: 20.h,
+                  padding: EdgeInsets.symmetric(horizontal: 8.h),
+                  margin: EdgeInsets.only(left: 8.h),
+                  child: Center(
+                    child: Text(
+                      '21',
+                      style: defaultText12.copyWith(color: Colors.white),
+                    ),
+                  ),
+                )
+              : const SizedBox(),
         ],
       ),
     ),
@@ -322,10 +326,10 @@ class ExerciseItem extends StatelessWidget {
           borderRadius: BorderRadius.all(Radius.circular(6.r)),
           boxShadow: [
             BoxShadow(
-              color: Colors.grey.withOpacity(0.4),
+              color: kPrimaryColor.withOpacity(0.1),
               spreadRadius: 5,
               blurRadius: 7,
-              offset: const Offset(4, 7), // changes position of shadow
+              offset: const Offset(4, 4.5), // changes position of shadow
             ),
           ],
           color: Colors.white),

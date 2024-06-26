@@ -45,7 +45,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.grey.withOpacity(0.4),
+                        color: kPrimaryColor.withOpacity(0.4),
                         spreadRadius: 5,
                         blurRadius: 7,
                         offset:
@@ -86,7 +86,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.grey.withOpacity(0.4),
+                        color: kPrimaryColor.withOpacity(0.4),
                         spreadRadius: 5,
                         blurRadius: 7,
                         offset:

@@ -33,18 +33,18 @@ class NestedScroll extends StatelessWidget {
                             width: 20.w,
                           ),
                           SvgPicture.asset(
-                            'assets/icons/message_icon.svg',
+                            'assets/icons/message_icon_blue.svg',
                           ),
                           SizedBox(
-                            width: 220.w,
+                            width: 240.w,
                           ),
                           Container(
                             height: 32.h,
                             width: 65.w,
                             decoration: const BoxDecoration(
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(20)),
-                              color: Colors.white,
+                                  BorderRadius.all(Radius.circular(30)),
+                              color: kPrimaryColor,
                             ),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -208,7 +208,7 @@ class CommingLesson extends StatelessWidget {
         borderRadius: BorderRadius.all(Radius.circular(8.r)),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.4),
+            color: kPrimaryColor.withOpacity(0.4),
             spreadRadius: 3,
             blurRadius: 7,
             offset: const Offset(0, 1),

@@ -362,7 +362,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       borderRadius: BorderRadius.all(Radius.circular(8.r)),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.grey.withOpacity(0.4),
+                          color: kPrimaryColor.withOpacity(0.4),
                           spreadRadius: 5,
                           blurRadius: 7,
                           offset:
@@ -511,7 +511,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 borderRadius: BorderRadius.all(Radius.circular(10.r)),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.grey.withOpacity(0.4),
+                    color: kPrimaryColor.withOpacity(0.4),
                     spreadRadius: 5,
                     blurRadius: 7,
                     offset: const Offset(4, 8), // changes position of shadow
