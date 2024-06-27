@@ -1,10 +1,12 @@
 import 'package:binh_thuan/constants/colors.dart';
+import 'package:binh_thuan/constants/string.dart';
 import 'package:binh_thuan/constants/styles.dart';
 import 'package:binh_thuan/router/app_pages.dart';
 import 'package:binh_thuan/router/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:sp_util/sp_util.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -14,6 +16,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  bool _isObscure = true;
   final _focusNode = FocusNode();
   TextEditingController? passController = TextEditingController();
   TextEditingController? studenIdController = TextEditingController();
@@ -96,17 +99,38 @@ class _LoginScreenState extends State<LoginScreen> {
                     color: Colors.white,
                   ),
                   child: TextField(
+                    obscureText: _isObscure,
+                    obscuringCharacter: "*",
                     controller: passController,
                     focusNode: _focusNode,
                     style: defaultText16,
                     scrollPadding: EdgeInsets.symmetric(
                         vertical: MediaQuery.of(context).viewInsets.bottom),
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(borderSide: BorderSide.none),
+                    decoration: InputDecoration(
+                      border:
+                          const OutlineInputBorder(borderSide: BorderSide.none),
                       hintText: 'Mật khẩu',
-                      hintStyle: TextStyle(
+                      hintStyle: const TextStyle(
                         fontSize: 16.0,
                         color: Color(0xff999999),
+                      ),
+                      suffix: IconButton(
+                        padding: const EdgeInsets.all(0),
+                        iconSize: 20.0,
+                        icon: _isObscure
+                            ? const Icon(
+                                Icons.visibility_off,
+                                color: Colors.grey,
+                              )
+                            : const Icon(
+                                Icons.visibility,
+                                color: Colors.black,
+                              ),
+                        onPressed: () {
+                          setState(() {
+                            _isObscure = !_isObscure;
+                          });
+                        },
                       ),
                     ),
                   ),
@@ -169,6 +193,10 @@ class _LoginScreenState extends State<LoginScreen> {
                 left: 100.w,
                 child: GestureDetector(
                   onTap: () {
+                    SpUtil.putString(ConstString.token, "tokensdasdasdkl");
+                    String token =
+                        SpUtil.getString(ConstString.token, defValue: '') ?? '';
+                    print(token);
                     AppRouter.toPage(
                       context, AppPages.NavigationBar,
                       // blocValue: _authBloc,

@@ -41,7 +41,7 @@ class SubjectScreen extends StatelessWidget {
                     ),
                     Positioned(
                       top: 50.h,
-                      left: 70.w,
+                      left: 20.w,
                       child: SvgPicture.asset('assets/icons/message_icon.svg'),
                     ),
                     Positioned(
@@ -82,7 +82,7 @@ class SubjectScreen extends StatelessWidget {
                     ),
                     Positioned(
                         bottom: 0.h,
-                        left: 0.w,
+                        left: 10.w,
                         child: IconButton(
                           onPressed: () {
                             Navigator.of(context).pop();
@@ -132,10 +132,14 @@ class SubjectScreen extends StatelessWidget {
               },
               color: Colors.white,
               selectedTextStyle: defaultBoldText.copyWith(
-                  fontSize: 14.sp, decoration: TextDecoration.none),
+                fontSize: 15.sp,
+                decoration: TextDecoration.none,
+                fontWeight: FontWeight.w500,
+              ),
               unselectedTextStyle: defaultBoldText.copyWith(
                   color: Colors.white,
-                  fontSize: 14.sp,
+                  fontSize: 13.sp,
+                  fontWeight: FontWeight.w200,
                   decoration: TextDecoration.none),
               tabs: _getTabs1(),
               children: getChildren2(),

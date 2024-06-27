@@ -1,4 +1,5 @@
 import 'package:binh_thuan/constants/colors.dart';
+import 'package:binh_thuan/constants/string.dart';
 import 'package:binh_thuan/constants/styles.dart';
 import 'package:binh_thuan/modules/auth/login/login_screen.dart';
 import 'package:binh_thuan/modules/bottom_navigation_bar/home/custom_widget_home.dart';
@@ -7,6 +8,7 @@ import 'package:flutter/foundation.dart';
 import "package:flutter/material.dart";
 import "package:flutter_screenutil/flutter_screenutil.dart";
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:sp_util/sp_util.dart';
 
 class InfoScreen extends StatefulWidget {
   const InfoScreen({super.key, this.useRouter = false});
@@ -202,7 +204,6 @@ class _InfoScreenState extends State<InfoScreen> {
                     },
                     child: SvgPicture.asset(
                       'assets/icons/message_icon.svg',
-                      color: Colors.white,
                     ),
                   ),
                 ),
@@ -316,7 +317,7 @@ class _InfoScreenState extends State<InfoScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             Text(
-                              'love',
+                              'Lớp',
                               style: defaultText12.copyWith(
                                   fontWeight: FontWeight.w700,
                                   color: Colors.white),
@@ -527,13 +528,26 @@ class _InfoScreenState extends State<InfoScreen> {
               indent: 20.w,
               endIndent: 20.w,
             ),
-            ManagementItem(
-              title: 'Đăng xuất',
-              icon: 'assets/icons/privacy_icon.svg',
-              style: defaultBoldText,
+            GestureDetector(
+              onTap: () {
+                SpUtil.remove(ConstString.token);
+                Navigator.of(context, rootNavigator: true).pushAndRemoveUntil(
+                  MaterialPageRoute(
+                    builder: (BuildContext context) {
+                      return const LoginScreen();
+                    },
+                  ),
+                  (_) => false,
+                );
+              },
+              child: ManagementItem(
+                title: 'Đăng xuất',
+                icon: 'assets/icons/privacy_icon.svg',
+                style: defaultBoldText,
+              ),
             ),
             SizedBox(
-              height: 50.h,
+              height: 80.h,
             )
           ],
         ),

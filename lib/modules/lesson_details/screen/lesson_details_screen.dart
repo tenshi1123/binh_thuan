@@ -40,7 +40,7 @@ class _LessonDetailsScreenState extends State<LessonDetailsScreen> {
 
   @override
   void dispose() {
-    _timer.cancel();
+    //_timer.cancel();
     super.dispose();
   }
 
@@ -49,110 +49,112 @@ class _LessonDetailsScreenState extends State<LessonDetailsScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
-        child: Column(
-          children: [
-            SizedBox(
-              height: 8.h,
-            ),
-            Row(
-              children: [
-                SizedBox(
-                  width: 6.w,
-                ),
-                RichText(
-                  text: TextSpan(
-                      text: '<',
-                      style: const TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.w700,
-                      ),
-                      children: [
-                        TextSpan(
-                          text: '  Chi tiết buổi học ',
-                          style: defaultBoldText.copyWith(fontSize: 14.sp),
-                          recognizer: TapGestureRecognizer()
-                            ..onTap = () => Navigator.of(context).pop(),
-                        )
-                      ]),
-                ),
-                SizedBox(
-                  width: 200.w,
-                ),
-                SvgPicture.asset('assets/icons/three_dots_icon.svg'),
-              ],
-            ),
-            SizedBox(
-              height: 20.h,
-            ),
-            const ItemDetails(),
-            _tabSection(context),
-            SizedBox(
-              height: 10.h,
-            ),
-            SizedBox(
-              width: 250.w,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              SizedBox(
+                height: 8.h,
+              ),
+              Row(
                 children: [
                   SizedBox(
-                    width: 10.w,
+                    width: 6.w,
                   ),
-                  Text(
-                    "$_start",
-                    style: defaultBoldText,
+                  RichText(
+                    text: TextSpan(
+                        text: '<',
+                        style: const TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.w700,
+                        ),
+                        children: [
+                          TextSpan(
+                            text: '  Chi tiết buổi học ',
+                            style: defaultBoldText.copyWith(fontSize: 14.sp),
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = () => Navigator.of(context).pop(),
+                          )
+                        ]),
                   ),
+                  SizedBox(
+                    width: 200.w,
+                  ),
+                  SvgPicture.asset('assets/icons/three_dots_icon.svg'),
                 ],
               ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Container(
-                  height: 57.h,
-                  width: 152.w,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(8.r),
+              SizedBox(
+                height: 20.h,
+              ),
+              const ItemDetails(),
+              _tabSection(context),
+              SizedBox(
+                height: 10.h,
+              ),
+              SizedBox(
+                width: 250.w,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    SizedBox(
+                      width: 10.w,
                     ),
-                    border: Border.all(
-                      color: kPrimaryColor,
-                    ),
-                  ),
-                  child: Center(
-                    child: Text(
-                      'Xin nghỉ',
+                    Text(
+                      "$_start",
                       style: defaultBoldText,
                     ),
-                  ),
+                  ],
                 ),
-                GestureDetector(
-                  onTap: () {
-                    startTimer();
-                  },
-                  child: Container(
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Container(
                     height: 57.h,
                     width: 152.w,
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(8.r),
-                        ),
-                        border: Border.all(
-                          color: Colors.white,
-                        ),
-                        color: rec21Red),
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(8.r),
+                      ),
+                      border: Border.all(
+                        color: kPrimaryColor,
+                      ),
+                    ),
                     child: Center(
                       child: Text(
-                        'Vào lớp',
-                        style: defaultBoldText.copyWith(
-                          color: Colors.white,
-                        ),
+                        'Xin nghỉ',
+                        style: defaultBoldText,
                       ),
                     ),
                   ),
-                )
-              ],
-            )
-          ],
+                  GestureDetector(
+                    onTap: () {
+                      startTimer();
+                    },
+                    child: Container(
+                      height: 57.h,
+                      width: 152.w,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(8.r),
+                          ),
+                          border: Border.all(
+                            color: Colors.white,
+                          ),
+                          color: rec21Red),
+                      child: Center(
+                        child: Text(
+                          'Vào lớp',
+                          style: defaultBoldText.copyWith(
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              )
+            ],
+          ),
         ),
       ),
     );

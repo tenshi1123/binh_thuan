@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:sp_util/sp_util.dart';
 
 final navigatorKey = GlobalKey<NavigatorState>();
 GlobalKey<ScaffoldState> key = GlobalKey();
@@ -12,6 +13,7 @@ FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await LocalNotifications.init();
+  await SpUtil.getInstance();
 
 //  handle in terminated state
   var initialNotification =

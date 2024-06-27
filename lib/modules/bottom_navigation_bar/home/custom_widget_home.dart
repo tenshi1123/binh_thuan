@@ -6,6 +6,7 @@ import 'package:binh_thuan/constants/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
 
 import '../../lesson_details/screen/lesson_details_screen.dart';
 
@@ -52,9 +53,12 @@ class ComingLesson extends StatelessWidget {
   @override
   Widget build(BuildContext context) => GestureDetector(
         onTap: () {
-          Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => const LessonDetailsScreen(),
-          ));
+          pushWithoutNavBar(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const LessonDetailsScreen(),
+            ),
+          );
         },
         child: Container(
           margin: EdgeInsets.symmetric(vertical: 10.h),

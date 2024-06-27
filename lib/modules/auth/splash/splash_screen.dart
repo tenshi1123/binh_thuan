@@ -1,7 +1,10 @@
+import 'package:binh_thuan/constants/string.dart';
 import 'package:binh_thuan/modules/auth/login/login_screen.dart';
+import 'package:binh_thuan/modules/bottom_navigation_bar/bottom_nav_bar.dart';
 import 'package:flutter/material.dart';
 
 import 'package:easy_splash_screen/easy_splash_screen.dart';
+import 'package:sp_util/sp_util.dart';
 
 import '../../app.dart';
 
@@ -22,19 +25,21 @@ class _SplashScreenAppState extends State<SplashScreenApp> {
   }
 
   Future<Widget> checkToken() async {
-    return const LoginScreen();
+    String token = SpUtil.getString(ConstString.token, defValue: '') ?? '';
+
+    return (token == '') ? const LoginScreen() : const BottomNavBar();
   }
 
   @override
   Widget build(BuildContext context) {
     late Widget child = EasySplashScreen(
-      durationInSeconds: 5,
       futureNavigator: checkToken(),
-      logo: Image.network(
-          'https://docs.flutter.dev/assets/images/dash/dash-fainting.gif'),
+      logo: Image.asset(
+        'assets/images/Logo.png',
+        color: Colors.transparent,
+      ),
       logoWidth: 170,
-      loaderColor: Colors.white,
-      backgroundColor: Colors.white,
+      backgroundImage: const AssetImage('assets/images/splash.png'),
     );
 
     return child;

@@ -13,46 +13,49 @@ class DetailsExercise extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
-        child: Column(
-          children: [
-            SizedBox(
-              height: 16.h,
-            ),
-            Row(
-              children: [
-                SizedBox(
-                  width: 6.w,
-                ),
-                RichText(
-                  text: TextSpan(
-                    text: '<  Bài tập ',
-                    style: defaultBoldText.copyWith(
-                      fontSize: 14.sp,
-                      color: keyBlack.withOpacity(0.5),
-                    ),
-                    recognizer: TapGestureRecognizer()
-                      ..onTap = () => Navigator.of(context).pop(),
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20.w),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(
+                height: 16.h,
+              ),
+              Row(
+                children: [
+                  SizedBox(
+                    width: 6.w,
                   ),
-                ),
-                SizedBox(
-                  width: 120.w,
-                ),
-                SvgPicture.asset('assets/icons/three_dots_icon.svg'),
-              ],
-            ),
-            SizedBox(
-              height: 16.h,
-            ),
-            _infoEssayExercise(),
-            SizedBox(
-              height: 16.h,
-            ),
-            Text(
-              'Trả kết quả',
-              style: defaultBoldText.copyWith(fontSize: 20.sp),
-            ),
-            _resultTest(),
-          ],
+                  RichText(
+                    text: TextSpan(
+                      text: '<  Bài tập ',
+                      style: defaultBoldText.copyWith(
+                        fontSize: 14.sp,
+                        color: keyBlack.withOpacity(0.5),
+                      ),
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () => Navigator.of(context).pop(),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 240.w,
+                  ),
+                  SvgPicture.asset('assets/icons/three_dots_icon.svg'),
+                ],
+              ),
+              SizedBox(
+                height: 16.h,
+              ),
+              _infoEssayExercise(),
+              SizedBox(
+                height: 16.h,
+              ),
+              Text(
+                'Bài làm',
+                style: defaultBoldText.copyWith(fontSize: 20.sp),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -62,7 +65,7 @@ class DetailsExercise extends StatelessWidget {
 Widget _infoEssayExercise() {
   return Container(
     width: 350.w,
-    height: 300.h,
+    height: 344.h,
     decoration: BoxDecoration(
       color: Colors.white,
       borderRadius: BorderRadius.all(
@@ -123,7 +126,7 @@ Widget _infoEssayExercise() {
                       color: rec27Teal,
                     ),
                     child: Text(
-                      '  Trắc nghiệm  ',
+                      '  Tự luận  ',
                       style: defaultBoldText.copyWith(
                         color: Colors.white,
                         fontSize: 12.w,
@@ -131,25 +134,6 @@ Widget _infoEssayExercise() {
                       textAlign: TextAlign.center,
                     ),
                   ),
-                  SizedBox(
-                    width: 6.w,
-                  ),
-                  Container(
-                    width: 81.w,
-                    height: 21.h,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(16.r)),
-                      color: rec27Teal,
-                    ),
-                    child: Text(
-                      '15 phút',
-                      style: defaultBoldText.copyWith(
-                        color: Colors.white,
-                        fontSize: 12.w,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                  )
                 ],
               ),
               SizedBox(
@@ -163,12 +147,6 @@ Widget _infoEssayExercise() {
                   overflow: TextOverflow.ellipsis,
                   maxLines: 2,
                 ),
-              ),
-              Text(
-                'Thời lượng: 15 phút',
-                style: defaultText14,
-                overflow: TextOverflow.ellipsis,
-                maxLines: 2,
               ),
               Container(
                 margin: EdgeInsets.symmetric(vertical: 6.h),
@@ -196,63 +174,16 @@ Widget _infoEssayExercise() {
               SizedBox(
                 height: 20.h,
               ),
-              Container(
-                width: 326.w,
-                height: 51.h,
-                decoration: BoxDecoration(
-                  color: const Color(0xffDEE4ED),
-                  borderRadius: BorderRadius.all(Radius.circular(10.r)),
-                ),
-                child: Center(
-                    child: Text(
-                  'Đã hoàn thành',
-                  style: defaultBoldText.copyWith(
-                    color: Colors.white,
-                    fontSize: 20.sp,
-                  ),
-                )),
+              Text(
+                'Tệp đính kèm',
+                style: defaultBoldText.copyWith(fontSize: 20),
+                overflow: TextOverflow.ellipsis,
+                maxLines: 2,
               ),
             ],
           ),
         )
       ],
     ),
-  );
-}
-
-Widget _resultTest() {
-  return Row(
-    mainAxisAlignment: MainAxisAlignment.spaceAround,
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _resultText(tittle1: 'Thời gian hoàn thành', title2: '00:13:41'),
-          _resultText(tittle1: 'Trả lời đúng', title2: '35 câu'),
-          _resultText(tittle1: 'Trả lời sai', title2: '5 câu'),
-          _resultText(tittle1: 'Chưa làm', title2: '0 câu'),
-        ],
-      )
-    ],
-  );
-}
-
-Widget _resultText({required String tittle1, required String title2}) {
-  return Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      Text(
-        tittle1,
-        style: defaultText14,
-      ),
-      Text(
-        title2,
-        style: defaultBoldText,
-      ),
-      SizedBox(
-        height: 8.h,
-      )
-    ],
   );
 }

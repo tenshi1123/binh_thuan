@@ -125,8 +125,11 @@ class NestedScroll extends StatelessWidget {
                 );
               },
               color: Colors.white,
-              selectedTextStyle: defaultText16,
-              unselectedTextStyle: defaultText12.copyWith(color: kPrimaryColor),
+              selectedTextStyle: defaultBoldText.copyWith(fontSize: 15.sp),
+              unselectedTextStyle: defaultBoldText.copyWith(
+                  color: kPrimaryColor,
+                  fontSize: 13,
+                  fontWeight: FontWeight.w200),
               tabs: getTabs1(),
               children: getChildren1(),
             ),
@@ -137,7 +140,7 @@ class NestedScroll extends StatelessWidget {
   }
 }
 
-const List<String> tabs = <String>['Tất cả', 'Đang học', 'Chờ', 'Hoàn thành'];
+const List<String> tabs = <String>['Tất cả', 'Đang học', 'Hoàn thành'];
 List<Widget> getTabs1() {
   return tabs
       .map((e) => Text(

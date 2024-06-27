@@ -18,7 +18,7 @@ class TabSchedule extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              '\rĐang diễn ra',
+              ' \tĐang diễn ra',
               style: defaultBoldText,
             ),
             Center(
@@ -28,7 +28,7 @@ class TabSchedule extends StatelessWidget {
               ),
             ),
             Text(
-              '\rThời khóa biểu',
+              ' \rThời khóa biểu',
               style: defaultBoldText,
             ),
             const Expanded(child: ScheduleItem()),

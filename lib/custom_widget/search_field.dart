@@ -48,7 +48,8 @@ class _SearchFieldState extends State<SearchField> {
       ),
     );
     return Padding(
-      padding: EdgeInsets.only(top: 0, bottom: 10.h, left: 20.w, right: 20.w),
+      padding:
+          EdgeInsets.only(top: 10.h, bottom: 10.h, left: 20.w, right: 20.w),
       child: TextField(
         style: defaultText14,
         controller: _controller,

@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'package:binh_thuan/constants/colors.dart';
 import 'package:binh_thuan/constants/styles.dart';
+import 'package:binh_thuan/modules/exercise/details_exercise.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -184,75 +185,84 @@ class IsComingItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.only(right: 10.h),
-      width: 177.w,
-      height: 100.h,
-      decoration: BoxDecoration(
-        color: color,
-        borderRadius: BorderRadius.all(Radius.circular(10.r)),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(
-            height: 36.h,
-            width: 160.w,
-            child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                padding: EdgeInsets.symmetric(vertical: 6.h),
-                itemCount: entries.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.all(Radius.circular(10.r)),
-                    ),
-                    height: 10.h,
-                    padding: EdgeInsets.symmetric(horizontal: 8.h),
-                    margin: EdgeInsets.only(left: 8.h),
-                    child: Center(
-                      child: Text(
-                        entries[index],
-                        style: defaultText12.copyWith(color: color),
+    return GestureDetector(
+      onTap: () {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => const DetailsExercise(),
+          ),
+        );
+      },
+      child: Container(
+        margin: EdgeInsets.only(right: 10.h),
+        width: 177.w,
+        height: 100.h,
+        decoration: BoxDecoration(
+          color: color,
+          borderRadius: BorderRadius.all(Radius.circular(10.r)),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              height: 36.h,
+              width: 160.w,
+              child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  padding: EdgeInsets.symmetric(vertical: 6.h),
+                  itemCount: entries.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.all(Radius.circular(10.r)),
                       ),
-                    ),
-                  );
-                }),
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 6.h),
-            child: Text(
-              title,
-              overflow: TextOverflow.ellipsis,
-              maxLines: 2,
-              softWrap: false,
+                      height: 10.h,
+                      padding: EdgeInsets.symmetric(horizontal: 8.h),
+                      margin: EdgeInsets.only(left: 8.h),
+                      child: Center(
+                        child: Text(
+                          entries[index],
+                          style: defaultText12.copyWith(color: color),
+                        ),
+                      ),
+                    );
+                  }),
             ),
-          ),
-          // Container(
-          //   margin: EdgeInsets.only(left: 8.h),
-          //   padding: EdgeInsets.only(left: 6.h),
-          //   decoration: BoxDecoration(
-          //     color: Colors.white,
-          //     borderRadius: BorderRadius.all(
-          //       Radius.circular(16.r),
-          //     ),
-          //   ),
-          //   width: 90.w,
-          //   child: Row(
-          //     children: [
-          //       const Icon(
-          //         Icons.timer,
-          //         color: keyBlack,
-          //       ),
-          //       Text(
-          //         time,
-          //         style: defaultText12,
-          //       )
-          //     ],
-          //   ),
-          // ),
-        ],
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 6.h),
+              child: Text(
+                title,
+                overflow: TextOverflow.ellipsis,
+                maxLines: 2,
+                softWrap: false,
+              ),
+            ),
+            // Container(
+            //   margin: EdgeInsets.only(left: 8.h),
+            //   padding: EdgeInsets.only(left: 6.h),
+            //   decoration: BoxDecoration(
+            //     color: Colors.white,
+            //     borderRadius: BorderRadius.all(
+            //       Radius.circular(16.r),
+            //     ),
+            //   ),
+            //   width: 90.w,
+            //   child: Row(
+            //     children: [
+            //       const Icon(
+            //         Icons.timer,
+            //         color: keyBlack,
+            //       ),
+            //       Text(
+            //         time,
+            //         style: defaultText12,
+            //       )
+            //     ],
+            //   ),
+            // ),
+          ],
+        ),
       ),
     );
   }
