@@ -3,6 +3,8 @@ import 'dart:math';
 
 import 'package:binh_thuan/constants/colors.dart';
 import 'package:binh_thuan/constants/styles.dart';
+import 'package:binh_thuan/router/app_pages.dart';
+import 'package:binh_thuan/router/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -10,8 +12,8 @@ import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
 
 import '../../lesson_details/screen/lesson_details_screen.dart';
 
-class ExampleDialog extends StatelessWidget {
-  const ExampleDialog({super.key});
+class CustomDialog extends StatelessWidget {
+  const CustomDialog({super.key});
 
   @override
   Widget build(BuildContext context) => Dialog(
@@ -68,10 +70,10 @@ class ComingLesson extends StatelessWidget {
             borderRadius: BorderRadius.all(Radius.circular(8.r)),
             boxShadow: [
               BoxShadow(
-                color: kPrimaryColor.withOpacity(0.4),
-                spreadRadius: 5,
+                color: kPrimaryColor.withOpacity(0.3),
+                spreadRadius: 3,
                 blurRadius: 7,
-                offset: const Offset(4, 7), // changes position of shadow
+                offset: const Offset(4, 4.5), // changes position of shadow
               ),
             ],
             color: Colors.white,
@@ -129,9 +131,7 @@ class ComingLesson extends StatelessWidget {
                 children: [
                   Text(
                     'Toán',
-                    style: defaultText16.copyWith(
-                      fontWeight: FontWeight.w800,
-                    ),
+                    style: defaultBoldText,
                   ),
                   Row(
                     children: [
@@ -352,55 +352,64 @@ class NotificationItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: 10.h, horizontal: 20.w),
-      padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 12.h),
-      width: 390.w,
-      height: 200.h,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(8.r)),
-        color: const Color(0xffDADEF1),
-      ),
-      child: Row(
-        children: [
-          Container(
-            height: 76.h,
-            width: 76.w,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(
-                Radius.circular(8.r),
+    return GestureDetector(
+      onTap: () {
+        AppRouter.toPage(
+          context,
+          AppPages.NotificationScreen,
+          // blocValue: _authBloc,
+          arguments: {},
+        );
+      },
+      child: Container(
+        margin: EdgeInsets.symmetric(vertical: 10.h, horizontal: 20.w),
+        padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 12.h),
+        width: 390.w,
+        height: 200.h,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.all(Radius.circular(8.r)),
+          color: const Color(0xffDADEF1),
+        ),
+        child: Row(
+          children: [
+            Container(
+              height: 76.h,
+              width: 76.w,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(8.r),
+                ),
+                color: const Color(0xff6B7AC7),
               ),
-              color: const Color(0xff6B7AC7),
+              child: Center(
+                child: SvgPicture.asset('assets/icons/calender_icon.svg'),
+              ),
             ),
-            child: Center(
-              child: SvgPicture.asset('assets/icons/calender_icon.svg'),
+            SizedBox(
+              width: 10.w,
             ),
-          ),
-          SizedBox(
-            width: 10.w,
-          ),
-          Flexible(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  '$title [Quan trọng] Thay đổi lịch học',
-                  style: defaultText16.copyWith(
-                    fontWeight: FontWeight.w800,
-                    color: Colors.black,
+            Flexible(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    '$title [Quan trọng] Thay đổi lịch học',
+                    style: defaultBoldText.copyWith(
+                      color: keyBlack,
+                    ),
                   ),
-                ),
-                Text(
-                  'Lorem ipsum dolor sit amet, consectetur adipis cing elit, sed do eiusmod tempor...',
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 2,
-                  style: defaultText14,
-                ),
-              ],
-            ),
-          )
-        ],
+                  Text(
+                    'Lorem ipsum dolor sit amet, consectetur adipis cing elit, sed do eiusmod tempor...',
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 2,
+                    style: defaultText14,
+                  ),
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

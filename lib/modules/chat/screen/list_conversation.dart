@@ -4,6 +4,7 @@ import 'package:binh_thuan/custom_widget/search_field.dart';
 import 'package:binh_thuan/modules/chat/screen/chat_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class ListConversation extends StatelessWidget {
   const ListConversation({super.key});
@@ -48,9 +49,26 @@ class ListConversation extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SearchField(),
             SizedBox(
-              height: 8.h,
+              height: 18.h,
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20.w),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const SearchField(),
+                  SvgPicture.asset(
+                    'assets/icons/add_member.svg',
+                    color: kPrimaryColor,
+                    width: 24.w,
+                    height: 24.h,
+                  )
+                ],
+              ),
+            ),
+            SizedBox(
+              height: 20.h,
             ),
             const ConversationItem(
               icon: 'assets/icons/wallet.svg',
@@ -63,14 +81,14 @@ class ListConversation extends StatelessWidget {
               icon: 'assets/icons/wallet.svg',
               title: 'Tenshii',
               title2: 'Lorem ipsum dolor sit amet, consectetur adipisci...',
-              time: '18:06',
+              time: 'CN',
               isRead: true,
             ),
             const ConversationItem(
               icon: 'assets/icons/wallet.svg',
               title: 'Catarina',
               title2: 'Lorem ipsum dolor sit amet, consectetur adipisci...',
-              time: '18:06',
+              time: 'T7',
               isRead: true,
             ),
           ],
@@ -152,7 +170,7 @@ class ConversationItem extends StatelessWidget {
                   children: [
                     Text(
                       time,
-                      style: defaultText12,
+                      style: defaultText12.copyWith(color: kPrimaryColor),
                     ),
                     SizedBox(
                       height: 8.h,

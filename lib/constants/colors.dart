@@ -11,10 +11,19 @@ const rec21Red = Color(0xffFF6667);
 const rec19Violet = Color(0xffB499FF);
 const rec19Blue = Color(0xff3772FB);
 const rec27Teal = Color(0xff6CC3C6);
+const rec12Marine = Color(0xff909BD5);
+const rec14Marine = Color(0xffDADEF1);
 List<Color> listColor = [
   rec20Yellow,
   rec21Red,
   rec19Violet,
   rec19Blue,
   rec27Teal
+];
+List<String> listSubject = [
+  'Toán học',
+  'Văn học',
+  'Địa lý',
+  'Tiếng Anh',
+  'Lịch Sử',
 ];

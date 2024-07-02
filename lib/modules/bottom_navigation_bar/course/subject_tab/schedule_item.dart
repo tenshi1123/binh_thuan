@@ -1,6 +1,7 @@
 import 'package:binh_thuan/constants/colors.dart';
 import 'package:binh_thuan/modules/bottom_navigation_bar/home/custom_widget_home.dart';
 import 'package:binh_thuan/modules/exercise/exercise_screen.dart';
+import 'package:binh_thuan/modules/lesson_details/screen/lesson_details_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -128,7 +129,7 @@ class InfoItem extends StatelessWidget {
                         itemExtent: 83.h,
                         delegate: SliverChildBuilderDelegate(
                           (BuildContext context, int index) {
-                            return const ExerciseItem();
+                            return const DocumentItem();
                           },
                           childCount: 2,
                         ),

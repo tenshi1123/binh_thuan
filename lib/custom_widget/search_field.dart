@@ -41,38 +41,44 @@ class _SearchFieldState extends State<SearchField> {
 
   @override
   Widget build(BuildContext context) {
-    var outlineInputBorder = OutlineInputBorder(
-      borderRadius: BorderRadius.circular(15),
-      borderSide: const BorderSide(
-        color: keyBlack,
+    return Container(
+      height: 40.h,
+      width: 320.w,
+      decoration: BoxDecoration(
+        color: rec14Marine,
+        borderRadius: BorderRadius.all(
+          Radius.circular(38.r),
+        ),
       ),
-    );
-    return Padding(
-      padding:
-          EdgeInsets.only(top: 10.h, bottom: 10.h, left: 20.w, right: 20.w),
-      child: TextField(
-        style: defaultText14,
-        controller: _controller,
-        onSubmitted: (_) => _call(),
-        decoration: widget.inputDecoration ??
-            InputDecoration(
-              hintText: 'search',
-              suffixIconConstraints: const BoxConstraints(
-                maxHeight: 30,
-                maxWidth: 30,
-              ),
-              enabledBorder: outlineInputBorder,
-              border: outlineInputBorder,
-              suffixIcon: Padding(
-                padding: const EdgeInsets.only(right: 8.0),
-                child: InkWell(
-                  onTap: _call,
-                  child: const CustomPaint(
-                    size: Size.square(24),
-                  ),
+      child: Row(
+        children: [
+          SizedBox(
+            width: 12.w,
+          ),
+          const Icon(
+            Icons.search_sharp,
+            color: rec12Marine,
+          ),
+          SizedBox(
+            height: 40.h,
+            width: 200.w,
+            child: TextField(
+              style: defaultText16,
+              //controller: studenIdController,
+              //focusNode: _focusNode,
+              scrollPadding: EdgeInsets.symmetric(
+                  vertical: MediaQuery.of(context).viewInsets.bottom),
+              decoration: InputDecoration(
+                border: const OutlineInputBorder(borderSide: BorderSide.none),
+                hintText: 'Tìm kiếm: Tin nhắn, liên hệ,...',
+                hintStyle: defaultText14.copyWith(
+                  color: rec12Marine,
+                  fontWeight: FontWeight.w800,
                 ),
               ),
             ),
+          ),
+        ],
       ),
     );
   }

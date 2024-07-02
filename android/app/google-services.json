@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "705053563238",
+    "project_id": "binhthuan-1d9cb",
+    "storage_bucket": "binhthuan-1d9cb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:705053563238:android:f3233200a6737ad6fa10a7",
+        "android_client_info": {
+          "package_name": "binh.thuan.binh_thuan"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA31vJoaWV340uuqaNQdNDR2eI5CrCQA3w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

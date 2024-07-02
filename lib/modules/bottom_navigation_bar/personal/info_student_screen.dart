@@ -504,7 +504,7 @@ class _InfoScreenState extends State<InfoScreen> {
               ),
             ),
             const ManagementItem(
-              title: 'Đổi mặt khẩu',
+              title: 'Đổi mật khẩu',
               icon: 'assets/icons/bell_icon.svg',
             ),
             Divider(

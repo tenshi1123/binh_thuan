@@ -1,8 +1,10 @@
 import 'package:binh_thuan/constants/colors.dart';
 import 'package:binh_thuan/constants/styles.dart';
+import 'package:binh_thuan/modules/tuition/tuition_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
 
 class NotificationScreen extends StatelessWidget {
   const NotificationScreen({super.key});
@@ -72,11 +74,19 @@ class NotificationScreen extends StatelessWidget {
             SizedBox(
               height: 8.h,
             ),
-            const NotiItem(
-              icon: 'assets/icons/wallet.svg',
-              title: 'Yêu cầu: Hoàn thành học phí kì II/2024 ',
-              title2: 'Giáo viên HươngNN đã thêm một tài...',
-              time: '18:06',
+            GestureDetector(
+              onTap: () {
+                pushWithoutNavBar(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const TuitionScreen()));
+              },
+              child: const NotiItem(
+                icon: 'assets/icons/wallet.svg',
+                title: 'Yêu cầu: Hoàn thành học phí kì II/2024 ',
+                title2: 'Giáo viên HươngNN đã thêm một tài...',
+                time: '18:06',
+              ),
             ),
             SizedBox(
               height: 16.h,
@@ -132,48 +142,54 @@ class NotiItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: 390.w,
-      height: 78.h,
-      child: Row(
-        children: [
-          SizedBox(
-            width: 20.w,
-          ),
-          SvgPicture.asset(icon),
-          SizedBox(
-            width: 12.w,
-          ),
-          SizedBox(
-            width: 250,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 2,
-                  softWrap: false,
-                  style: defaultBoldText,
-                ),
-                Text(
-                  title2,
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 1,
-                  softWrap: false,
-                  style: defaultText12,
-                ),
-              ],
+    return GestureDetector(
+      onTap: () {
+        pushWithoutNavBar(context,
+            MaterialPageRoute(builder: (context) => const TuitionScreen()));
+      },
+      child: SizedBox(
+        width: 390.w,
+        height: 78.h,
+        child: Row(
+          children: [
+            SizedBox(
+              width: 20.w,
             ),
-          ),
-          SizedBox(
-            width: 12.w,
-          ),
-          Text(
-            time,
-            style: defaultText12,
-          ),
-        ],
+            SvgPicture.asset(icon),
+            SizedBox(
+              width: 12.w,
+            ),
+            SizedBox(
+              width: 250,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 2,
+                    softWrap: false,
+                    style: defaultBoldText,
+                  ),
+                  Text(
+                    title2,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                    softWrap: false,
+                    style: defaultText12,
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(
+              width: 12.w,
+            ),
+            Text(
+              time,
+              style: defaultText12,
+            ),
+          ],
+        ),
       ),
     );
   }

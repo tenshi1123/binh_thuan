@@ -122,19 +122,21 @@ Widget _infoTest({required bool isComplete}) {
               Row(
                 children: [
                   Container(
-                    width: 81.w,
-                    height: 21.h,
+                    width: 90.w,
+                    height: 23.h,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(16.r)),
-                      color: rec27Teal,
+                      color: kPrimaryColor,
                     ),
-                    child: Text(
-                      '  Trắc nghiệm  ',
-                      style: defaultBoldText.copyWith(
-                        color: Colors.white,
-                        fontSize: 12.w,
+                    child: Center(
+                      child: Text(
+                        'Trắc nghiệm',
+                        style: defaultBoldText.copyWith(
+                          color: Colors.white,
+                          fontSize: 12.w,
+                        ),
+                        textAlign: TextAlign.center,
                       ),
-                      textAlign: TextAlign.center,
                     ),
                   ),
                   SizedBox(
@@ -145,15 +147,17 @@ Widget _infoTest({required bool isComplete}) {
                     height: 21.h,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(16.r)),
-                      color: rec27Teal,
+                      color: kPrimaryColor,
                     ),
-                    child: Text(
-                      '15 phút',
-                      style: defaultBoldText.copyWith(
-                        color: Colors.white,
-                        fontSize: 12.w,
+                    child: Center(
+                      child: Text(
+                        '15 phút',
+                        style: defaultBoldText.copyWith(
+                          color: Colors.white,
+                          fontSize: 12.w,
+                        ),
+                        textAlign: TextAlign.center,
                       ),
-                      textAlign: TextAlign.center,
                     ),
                   )
                 ],
@@ -276,8 +280,8 @@ Widget _resultTest() {
             ],
           ),
           circularStrokeCap: CircularStrokeCap.round,
-          progressColor: rec27Teal,
-          backgroundColor: rec27Teal.withOpacity(0.3)),
+          progressColor: kPrimaryColor,
+          backgroundColor: kPrimaryColor.withOpacity(0.3)),
       Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

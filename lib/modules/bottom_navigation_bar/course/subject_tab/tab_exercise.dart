@@ -20,7 +20,7 @@ class TabExercise extends StatelessWidget {
           background: Stack(
             children: [
               Positioned(
-                top: 6.h,
+                top: 10.h,
                 child: Text(
                   '\t    Sắp đến hạn',
                   style: defaultText16.copyWith(
@@ -28,7 +28,7 @@ class TabExercise extends StatelessWidget {
                 ),
               ),
               Positioned(
-                top: 24.h,
+                top: 30.h,
                 child: SizedBox(
                   width: 380.w,
                   height: 100.h,
@@ -39,8 +39,8 @@ class TabExercise extends StatelessWidget {
                       itemBuilder: (BuildContext context, int index) {
                         //return const CommingLesson();
                         return const IsComingItem(
-                          entries: ['Tự luận', 'Về nhà'],
-                          color: Color(0xff85DDE0),
+                          entries: ['Tự luận'],
+                          color: kPrimaryColor,
                           title: 'Bài 3: Lorem ipsum dolor sit amet',
                           time: 'Còn: 1 giờ',
                         );

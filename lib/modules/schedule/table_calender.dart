@@ -155,7 +155,13 @@ class _TableEventsExampleState extends State<TableEventsExample> {
             rangeSelectionMode: _rangeSelectionMode,
             eventLoader: _getEventsForDay,
             startingDayOfWeek: StartingDayOfWeek.monday,
-            calendarBuilders: const CalendarBuilders(),
+            calendarBuilders: CalendarBuilders(
+              markerBuilder: (context, date, events) {
+                return events.isNotEmpty
+                    ? _buildEventsMarkerNum(events)
+                    : Container();
+              },
+            ),
             calendarStyle: CalendarStyle(
                 // Use `CalendarStyle` to customize the UI
                 outsideDaysVisible: true,
@@ -180,16 +186,23 @@ class _TableEventsExampleState extends State<TableEventsExample> {
             child: ValueListenableBuilder<List<Event>>(
               valueListenable: _selectedEvents,
               builder: (context, value, _) {
-                return ListView.builder(
-                  scrollDirection: Axis.vertical,
-                  shrinkWrap: true,
-                  physics: const ScrollPhysics(),
-                  padding: const EdgeInsets.all(8),
-                  itemCount: value.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return ItemTableCalender();
-                  },
-                );
+                return value.isEmpty
+                    ? Center(
+                        child: Text(
+                          'Không có lịch học',
+                          style: defaultBoldText,
+                        ),
+                      )
+                    : ListView.builder(
+                        scrollDirection: Axis.vertical,
+                        shrinkWrap: true,
+                        physics: const ScrollPhysics(),
+                        padding: const EdgeInsets.all(8),
+                        itemCount: value.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return ItemTableCalender();
+                        },
+                      );
                 // ListView.builder(
                 //   itemCount: value.length,
                 //   itemBuilder: (context, index) {
@@ -221,4 +234,34 @@ class _TableEventsExampleState extends State<TableEventsExample> {
       ),
     );
   }
+}
+
+Widget _buildEventsMarkerNum(List events) {
+  return Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+    buildCalendarDayMarker(text: '${events.length}', backColor: rec19Blue)
+  ]);
+}
+
+AnimatedContainer buildCalendarDayMarker({
+  required String text,
+  required Color backColor,
+}) {
+  return AnimatedContainer(
+    duration: const Duration(milliseconds: 300),
+    decoration: BoxDecoration(
+      shape: BoxShape.rectangle,
+      color: backColor,
+    ),
+    width: 18.w,
+    height: 13.h,
+    child: Center(
+      child: Text(
+        text,
+        style: const TextStyle().copyWith(
+          color: Colors.white,
+          fontSize: 12.sp,
+        ),
+      ),
+    ),
+  );
 }

@@ -339,16 +339,18 @@ class _HomeScreenState extends State<HomeScreen> {
                           children: [
                             Text(
                               'Nguyễn Hồng Ánh',
-                              style: defaultText20.copyWith(
+                              style: defaultBoldText.copyWith(
                                 color: Colors.white,
-                                fontWeight: FontWeight.w800,
+                                fontSize: 20.sp,
                               ),
                             ),
                             Text(
                               'Mã học sinh: 10A1-32SD',
-                              style: defaultText12.copyWith(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w700),
+                              style: defaultBoldText.copyWith(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w100,
+                                fontSize: 12.sp,
+                              ),
                             ),
                             SizedBox(
                               height: 40.h,
@@ -387,15 +389,16 @@ class _HomeScreenState extends State<HomeScreen> {
                             children: [
                               Text(
                                 'Lớp',
-                                style: defaultText12.copyWith(
-                                    fontWeight: FontWeight.w700,
+                                style: defaultBoldText.copyWith(
+                                    fontWeight: FontWeight.w200,
+                                    fontSize: 12.sp,
                                     color: color666),
                               ),
                               //const Divider(),
                               Text(
                                 '10A1',
-                                style: defaultText20.copyWith(
-                                    fontWeight: FontWeight.w900,
+                                style: defaultBoldText.copyWith(
+                                    fontWeight: FontWeight.w200,
                                     color: keyBlack),
                               ),
                             ],
@@ -413,17 +416,16 @@ class _HomeScreenState extends State<HomeScreen> {
                             children: [
                               Text(
                                 'Đang tham gia',
-                                style: defaultText12.copyWith(
-                                  fontWeight: FontWeight.w700,
-                                  color: color666,
-                                ),
+                                style: defaultBoldText.copyWith(
+                                    fontWeight: FontWeight.w200,
+                                    fontSize: 12.sp,
+                                    color: color666),
                               ),
                               Text(
                                 '3 khóa học',
-                                style: defaultText16.copyWith(
-                                  fontWeight: FontWeight.w800,
-                                  color: keyBlack,
-                                ),
+                                style: defaultBoldText.copyWith(
+                                    fontWeight: FontWeight.w200,
+                                    color: keyBlack),
                               ),
                             ],
                           ),
@@ -440,15 +442,15 @@ class _HomeScreenState extends State<HomeScreen> {
                             children: [
                               Text(
                                 'Điểm trung bình',
-                                style: defaultText12.copyWith(
-                                  fontWeight: FontWeight.w700,
-                                  color: color666,
-                                ),
+                                style: defaultBoldText.copyWith(
+                                    fontWeight: FontWeight.w200,
+                                    fontSize: 12.sp,
+                                    color: color666),
                               ),
                               Text(
                                 '--/10 ',
-                                style: defaultText16.copyWith(
-                                    fontWeight: FontWeight.w800,
+                                style: defaultBoldText.copyWith(
+                                    fontWeight: FontWeight.w200,
                                     color: keyBlack),
                               ),
                             ],
@@ -507,12 +509,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               Padding(
                 padding: EdgeInsets.fromLTRB(10.w, 10.h, 0, 10.h),
-                child: Text(
-                  'Đang diễn ra',
-                  style: defaultText16.copyWith(
-                    fontWeight: FontWeight.w900,
-                  ),
-                ),
+                child: Text('Đang diễn ra', style: defaultBoldText),
               ),
               Container(
                 width: 390.w,
@@ -523,9 +520,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   boxShadow: [
                     BoxShadow(
                       color: kPrimaryColor.withOpacity(0.4),
-                      spreadRadius: 5,
+                      spreadRadius: 3,
                       blurRadius: 7,
-                      offset: const Offset(4, 8), // changes position of shadow
+                      offset: const Offset(4, 6), // changes position of shadow
                     ),
                   ],
                   color: Colors.white,
@@ -537,12 +534,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          'Lorem ipsum',
-                          style: defaultText18.copyWith(
-                            fontWeight: FontWeight.w900,
-                          ),
-                        ),
+                        Text('Lorem ipsum',
+                            style: defaultBoldText.copyWith(fontSize: 18.sp)),
                         Container(
                           margin: const EdgeInsetsDirectional.only(
                               start: 1.0, end: 1.0),
@@ -582,25 +575,15 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         color: const Color(0xffFF6667),
                       ),
-                      child: Text(
-                        'Vào \nhọc',
-                        style: defaultText16.copyWith(
-                          fontWeight: FontWeight.w800,
-                          color: Colors.white,
-                        ),
-                      ),
+                      child: Text('Vào \nhọc',
+                          style: defaultBoldText.copyWith(color: Colors.white)),
                     ),
                   ],
                 ),
               ),
               Padding(
                 padding: EdgeInsets.fromLTRB(10.w, 15.w, 0, 0),
-                child: Text(
-                  'Thông báo',
-                  style: defaultText16.copyWith(
-                    fontWeight: FontWeight.w900,
-                  ),
-                ),
+                child: Text('Thông báo', style: defaultBoldText),
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -637,15 +620,14 @@ class _HomeScreenState extends State<HomeScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    '    Lịch học sắp tới',
-                    style: defaultText16.copyWith(
-                        fontWeight: FontWeight.w900, color: Colors.black),
-                  ),
+                  Text('    Lịch học sắp tới', style: defaultBoldText),
                   Text(
                     'Xem thêm    ',
                     style: defaultText12.copyWith(
-                        fontWeight: FontWeight.w400, color: Colors.blue),
+                      fontWeight: FontWeight.w500,
+                      color: kPrimaryColor,
+                      fontSize: 13.sp,
+                    ),
                   ),
                 ],
               ),

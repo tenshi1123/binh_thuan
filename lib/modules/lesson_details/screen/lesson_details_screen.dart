@@ -1,9 +1,8 @@
-import 'dart:async';
-
 import 'package:binh_thuan/constants/colors.dart';
 import 'package:binh_thuan/constants/styles.dart';
 import 'package:binh_thuan/modules/exercise/exercise_screen.dart';
 import 'package:binh_thuan/modules/lesson_details/test_screen.dart';
+import 'package:binh_thuan/modules/videoplayer/animation_player.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -17,26 +16,26 @@ class LessonDetailsScreen extends StatefulWidget {
 }
 
 class _LessonDetailsScreenState extends State<LessonDetailsScreen> {
-  late Timer _timer;
-  int _start = 200;
+  // late Timer _timer;
+  // int _start = 200;
 
-  void startTimer() {
-    const oneSec = Duration(seconds: 1);
-    _timer = Timer.periodic(
-      oneSec,
-      (Timer timer) {
-        if (_start == 0) {
-          setState(() {
-            timer.cancel();
-          });
-        } else {
-          setState(() {
-            _start--;
-          });
-        }
-      },
-    );
-  }
+  // void startTimer() {
+  //   const oneSec = Duration(seconds: 1);
+  //   _timer = Timer.periodic(
+  //     oneSec,
+  //     (Timer timer) {
+  //       if (_start == 0) {
+  //         setState(() {
+  //           timer.cancel();
+  //         });
+  //       } else {
+  //         setState(() {
+  //           _start--;
+  //         });
+  //       }
+  //     },
+  //   );
+  // }
 
   @override
   void dispose() {
@@ -98,41 +97,23 @@ class _LessonDetailsScreenState extends State<LessonDetailsScreen> {
                     SizedBox(
                       width: 10.w,
                     ),
-                    Text(
-                      "$_start",
-                      style: defaultBoldText,
-                    ),
+                    // Text(
+                    //   "$_start",
+                    //   style: defaultBoldText,
+                    // ),
                   ],
                 ),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Container(
-                    height: 57.h,
-                    width: 152.w,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(8.r),
-                      ),
-                      border: Border.all(
-                        color: kPrimaryColor,
-                      ),
-                    ),
-                    child: Center(
-                      child: Text(
-                        'Xin nghỉ',
-                        style: defaultBoldText,
-                      ),
-                    ),
-                  ),
                   GestureDetector(
                     onTap: () {
-                      startTimer();
+                      //startTimer();
                     },
                     child: Container(
                       height: 57.h,
-                      width: 152.w,
+                      width: 350.w,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.all(
                             Radius.circular(8.r),
@@ -174,7 +155,7 @@ class ItemDetails extends StatelessWidget {
         color: Colors.white,
         border: Border(
           left: BorderSide(
-            color: rec27Teal,
+            color: kPrimaryColor,
             width: 20.w,
             style: BorderStyle.solid,
           ),
@@ -287,18 +268,22 @@ Widget _tabSection(BuildContext context) {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
-        TabBar(tabs: [
-          homeTab(title: "Tài liệu", isSeprator: false, hasNumber: false),
-          homeTab(title: "Nhiệm vụ", hasNumber: false),
-          homeTab(title: "Thắc mắc", hasNumber: false),
-        ]),
+        TabBar(
+            unselectedLabelColor: keyBlack.withOpacity(0.3),
+            labelColor: keyBlack,
+            indicatorColor: keyBlack,
+            tabs: [
+              homeTab(title: "Tài liệu", isSeprator: false, hasNumber: false),
+              homeTab(title: "Nhiệm vụ", hasNumber: false),
+              homeTab(title: "Thắc mắc", hasNumber: false),
+            ]),
         SizedBox(
           //Add this to give height
           height: MediaQuery.of(context).size.height * 0.4,
-          child: TabBarView(children: [
-            _document(),
-            const MissionItem(),
-            const Text("User Body"),
+          child: const TabBarView(children: [
+            DocumentTab(),
+            MissionItem(),
+            QuestionTab(),
           ]),
         ),
       ],
@@ -306,14 +291,19 @@ Widget _tabSection(BuildContext context) {
   );
 }
 
-Widget _document() {
-  return ListView.builder(
-      scrollDirection: Axis.vertical,
-      padding: const EdgeInsets.all(8),
-      itemCount: 4,
-      itemBuilder: (BuildContext context, int index) {
-        return const ExerciseItem();
-      });
+class DocumentTab extends StatelessWidget {
+  const DocumentTab({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+        scrollDirection: Axis.vertical,
+        padding: const EdgeInsets.all(8),
+        itemCount: 4,
+        itemBuilder: (BuildContext context, int index) {
+          return const DocumentItem();
+        });
+  }
 }
 
 class MissionItem extends StatelessWidget {
@@ -415,6 +405,140 @@ class MissionItem extends StatelessWidget {
           );
         },
       ),
+    );
+  }
+}
+
+class DocumentItem extends StatelessWidget {
+  const DocumentItem({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const AnimationPlayer(),
+          ),
+        );
+      },
+      child: Container(
+        width: 350.w,
+        height: 83.h,
+        padding: EdgeInsets.symmetric(horizontal: 10.w),
+        margin: EdgeInsets.symmetric(vertical: 10.h, horizontal: 6.w),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(6.r)),
+            boxShadow: [
+              BoxShadow(
+                color: kPrimaryColor.withOpacity(0.1),
+                spreadRadius: 2,
+                blurRadius: 7,
+                offset: const Offset(4, 4.5), // changes position of shadow
+              ),
+            ],
+            color: Colors.white),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Container(
+              width: 45.w,
+              height: 45.h,
+              padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h),
+              decoration: BoxDecoration(
+                color: kPrimaryColor,
+                shape: BoxShape.rectangle,
+                borderRadius: BorderRadius.all(
+                  Radius.circular(
+                    6.r,
+                  ),
+                ),
+              ),
+              child: SvgPicture.asset('assets/icons/video_icon.svg',
+                  width: 18.w, height: 18.h, fit: BoxFit.fill),
+            ),
+            SizedBox(width: 8.w),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Text(
+                  'Lorem ipsum',
+                  style: defaultBoldText,
+                ),
+                Text(
+                  'Video',
+                  style: defaultText14.copyWith(color: color999),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class QuestionTab extends StatefulWidget {
+  const QuestionTab({super.key});
+
+  @override
+  State<QuestionTab> createState() => _QuestionTabState();
+}
+
+class _QuestionTabState extends State<QuestionTab> {
+  TextEditingController? questionController = TextEditingController();
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        SizedBox(height: 20.h),
+        SizedBox(
+          width: 350.w,
+          child: Row(
+            children: [
+              SizedBox(
+                width: 320.w,
+                //height: 60.h,
+                child: TextField(
+                  style: defaultText16,
+                  onTapOutside: (event) {
+                    FocusManager.instance.primaryFocus?.unfocus();
+                  },
+                  //keyboardType: TextInputType.multiline,
+                  minLines: 1,
+                  maxLines: 5,
+                  controller: questionController,
+                  //focusNode: _focusNode,
+                  scrollPadding: EdgeInsets.symmetric(
+                      vertical: MediaQuery.of(context).viewInsets.bottom),
+                  decoration: InputDecoration(
+                    border:
+                        const OutlineInputBorder(borderSide: BorderSide.none),
+                    hintText:
+                        'Gửi thắc mắc và câu hỏi về bài học cho giáo viên',
+                    hintStyle: defaultText12.copyWith(
+                      color: rec12Marine,
+                    ),
+                  ),
+                ),
+              ),
+              GestureDetector(
+                onTap: () {
+                  questionController?.clear();
+                },
+                child: SvgPicture.asset('assets/icons/plane.svg'),
+              ),
+            ],
+          ),
+        ),
+        Divider(
+          color: Colors.black,
+          indent: 20.w,
+          endIndent: 20.w,
+        )
+      ],
     );
   }
 }

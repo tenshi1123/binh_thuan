@@ -1,3 +1,4 @@
+import 'package:binh_thuan/constants/colors.dart';
 import 'package:binh_thuan/constants/styles.dart';
 import 'package:binh_thuan/modules/bottom_navigation_bar/course/list_subject_screen.dart';
 import "package:flutter/material.dart";
@@ -25,14 +26,14 @@ class SubjectScreen extends StatelessWidget {
               sliver: SliverAppBar(
                 flexibleSpace: SizedBox(
                   width: 390.w,
-                  height: 156.h,
+                  height: 160.h,
                   child: Stack(children: [
                     Positioned(
                       top: 0.h,
                       left: 0.h,
                       child: Image(
                         width: MediaQuery.of(context).size.width,
-                        height: 156.h,
+                        height: 160.h,
                         image: const AssetImage(
                           'assets/images/appbar_background2.png',
                         ),
@@ -96,7 +97,7 @@ class SubjectScreen extends StatelessWidget {
                 ),
                 automaticallyImplyLeading: false,
                 pinned: false,
-                toolbarHeight: 120.h,
+                toolbarHeight: 122.h,
                 forceElevated: innerBoxIsScrolled,
                 // bottom: TabBar(
                 //   tabs: tabs.map((String name) => Tab(text: name)).toList(),
@@ -107,7 +108,7 @@ class SubjectScreen extends StatelessWidget {
           ];
         },
         body: Container(
-          decoration: const BoxDecoration(color: Color(0xff6CC3C6)),
+          decoration: const BoxDecoration(color: kPrimaryColor),
           width: 390.w,
           child: AspectRatio(
             aspectRatio: 10 / 8,

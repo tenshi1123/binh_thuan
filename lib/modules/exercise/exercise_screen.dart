@@ -140,12 +140,6 @@ class ExerciseScreen extends StatelessWidget {
                               NestedScrollView.sliverOverlapAbsorberHandleFor(
                                   context),
                         ),
-                        SliverToBoxAdapter(
-                          child: Text(
-                            '   day la 1 cai title',
-                            style: defaultBoldText,
-                          ),
-                        ),
                         SliverPadding(
                           padding: const EdgeInsets.all(8.0),
                           sliver: SliverFixedExtentList(
@@ -223,7 +217,10 @@ class IsComingItem extends StatelessWidget {
                       child: Center(
                         child: Text(
                           entries[index],
-                          style: defaultText12.copyWith(color: color),
+                          style: defaultBoldText.copyWith(
+                            fontSize: 12.sp,
+                            color: color,
+                          ),
                         ),
                       ),
                     );
@@ -327,52 +324,61 @@ class ExerciseItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 350.w,
-      height: 83.h,
-      padding: EdgeInsets.symmetric(horizontal: 10.w),
-      margin: EdgeInsets.symmetric(vertical: 10.h, horizontal: 6.w),
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(6.r)),
-          boxShadow: [
-            BoxShadow(
-              color: kPrimaryColor.withOpacity(0.1),
-              spreadRadius: 5,
-              blurRadius: 7,
-              offset: const Offset(4, 4.5), // changes position of shadow
+    return GestureDetector(
+      onTap: () {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => const DetailsExercise(),
+          ),
+        );
+      },
+      child: Container(
+        width: 350.w,
+        height: 83.h,
+        padding: EdgeInsets.symmetric(horizontal: 10.w),
+        margin: EdgeInsets.symmetric(vertical: 10.h, horizontal: 6.w),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(6.r)),
+            boxShadow: [
+              BoxShadow(
+                color: kPrimaryColor.withOpacity(0.1),
+                spreadRadius: 5,
+                blurRadius: 7,
+                offset: const Offset(4, 4.5), // changes position of shadow
+              ),
+            ],
+            color: Colors.white),
+        child: Row(
+          children: [
+            Container(
+              width: 45.w,
+              height: 45.h,
+              padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h),
+              decoration: BoxDecoration(
+                  color: listColor[_random.nextInt(listColor.length)],
+                  shape: BoxShape.circle),
+              child: SvgPicture.asset('assets/icons/home_work_icon.svg',
+                  width: 18.w, height: 18.h, fit: BoxFit.fill),
+            ),
+            SizedBox(width: 8.w),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: 6.h,
+                ),
+                Text(
+                  'Lorem ipsum',
+                  style: defaultBoldText,
+                ),
+                Text(
+                  'Hạn nộp: 20 tháng 4, 2024',
+                  style: defaultText14,
+                )
+              ],
             ),
           ],
-          color: Colors.white),
-      child: Row(
-        children: [
-          Container(
-            width: 45.w,
-            height: 45.h,
-            padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h),
-            decoration: BoxDecoration(
-                color: listColor[_random.nextInt(listColor.length)],
-                shape: BoxShape.circle),
-            child: SvgPicture.asset('assets/icons/home_work_icon.svg',
-                width: 18.w, height: 18.h, fit: BoxFit.fill),
-          ),
-          SizedBox(width: 8.w),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                height: 6.h,
-              ),
-              Text(
-                'Lorem ipsum',
-                style: defaultBoldText,
-              ),
-              Text(
-                'Hạn nộp: 20 tháng 4, 2024',
-                style: defaultText14,
-              )
-            ],
-          ),
-        ],
+        ),
       ),
     );
   }
