@@ -1,9 +1,15 @@
 class ApiPath {
-  static const String baseUrl = 'http://test';
+  //baseurl
+  static const String baseUrl = 'https://lequydon.hvg.edu.vn/api';
+  //
   static const String refreshToken = '$baseUrl/refresh_token.php';
-  static const String login = 'https://demo3.hvg.edu.vn/api/login';
-  static const String getProvince = 'https://esgoo.net/api-tinhthanh/1/0.htm';
-  static const String getDistrict = 'https://esgoo.net/api-tinhthanh/2/01.htm';
-  static const String getWards = 'https://esgoo.net/api-tinhthanh/3/001.htm';
-  static const String fptAi = 'https://api.fpt.ai/vision/idr/vnm';
+  static const String login = '$baseUrl/login';
+  static const String home = '$baseUrl/home';
+  static const String changePass = '$baseUrl/change_password';
+  static const String subject = '$baseUrl/subject';
+  static const String detailSubject = '$baseUrl/detail_subject';
+  static const String lesson = '$baseUrl/chi_tiet_buoi_hoc';
+  static const String calender = '$baseUrl/lich_hoc';
+  static const String oneSignal =
+      'https://api.onesignal.com/notifications?app_id=1f643336-9d73-4c65-ac00-38d499b8c462';
 }

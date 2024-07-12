@@ -1,16 +1,17 @@
+import 'dart:convert';
+
 import 'package:binh_thuan/constants/colors.dart';
-import 'package:binh_thuan/constants/string.dart';
 import 'package:binh_thuan/constants/styles.dart';
+import 'package:binh_thuan/repo/repo/login_repo.dart';
 import 'package:binh_thuan/router/app_pages.dart';
 import 'package:binh_thuan/router/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:sp_util/sp_util.dart';
+import 'package:crypto/crypto.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
-
   @override
   State<LoginScreen> createState() => _LoginScreenState();
 }
@@ -48,11 +49,11 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     boxShadow: [
                       BoxShadow(
-                        color: kPrimaryColor.withOpacity(0.4),
+                        color: kPrimaryColor.withOpacity(0.2),
                         spreadRadius: 5,
                         blurRadius: 7,
                         offset:
-                            const Offset(4, 7), // changes position of shadow
+                            const Offset(4, 6), // changes position of shadow
                       ),
                     ],
                     color: Colors.white,
@@ -89,11 +90,11 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     boxShadow: [
                       BoxShadow(
-                        color: kPrimaryColor.withOpacity(0.4),
+                        color: kPrimaryColor.withOpacity(0.2),
                         spreadRadius: 5,
                         blurRadius: 7,
                         offset:
-                            const Offset(4, 7), // changes position of shadow
+                            const Offset(4, 6), // changes position of shadow
                       ),
                     ],
                     color: Colors.white,
@@ -192,11 +193,15 @@ class _LoginScreenState extends State<LoginScreen> {
                 top: 670.h - MediaQuery.of(context).viewInsets.bottom,
                 left: 100.w,
                 child: GestureDetector(
-                  onTap: () {
-                    SpUtil.putString(ConstString.token, "tokensdasdasdkl");
-                    String token =
-                        SpUtil.getString(ConstString.token, defValue: '') ?? '';
-                    print(token);
+                  onTap: () async {
+                    // "code": "2302682572",
+                    // "password": "123456"
+                    await LoginRepo().login(
+                        studenIdController?.text ?? '',
+                        md5
+                            .convert(utf8.encode(passController?.text ?? ''))
+                            .toString());
+
                     AppRouter.toPage(
                       context, AppPages.NavigationBar,
                       // blocValue: _authBloc,

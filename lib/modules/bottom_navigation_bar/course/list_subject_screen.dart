@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:binh_thuan/constants/colors.dart';
 import 'package:binh_thuan/constants/styles.dart';
 import 'package:binh_thuan/modules/bottom_navigation_bar/course/subject_screen.dart';
+import 'package:binh_thuan/modules/chat/screen/list_conversation.dart';
 import 'package:binh_thuan/modules/lesson_details/screen/lesson_details_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -35,8 +36,19 @@ class NestedScroll extends StatelessWidget {
                           SizedBox(
                             width: 20.w,
                           ),
-                          SvgPicture.asset(
-                            'assets/icons/message_icon_blue.svg',
+                          GestureDetector(
+                            onTap: () {
+                              pushWithoutNavBar(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      const ListConversation(),
+                                ),
+                              );
+                            },
+                            child: SvgPicture.asset(
+                              'assets/icons/message_icon_blue.svg',
+                            ),
                           ),
                           SizedBox(
                             width: 240.w,
@@ -223,7 +235,7 @@ class CommingLesson extends StatelessWidget {
           borderRadius: BorderRadius.all(Radius.circular(8.r)),
           boxShadow: [
             BoxShadow(
-              color: kPrimaryColor.withOpacity(0.4),
+              color: kPrimaryColor.withOpacity(0.2),
               spreadRadius: 3,
               blurRadius: 7,
               offset: const Offset(0, 1),

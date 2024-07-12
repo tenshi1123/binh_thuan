@@ -1,6 +1,9 @@
 import 'package:binh_thuan/constants/string.dart';
+import 'package:binh_thuan/main.dart' as main;
 import 'package:binh_thuan/modules/auth/login/login_screen.dart';
 import 'package:binh_thuan/modules/bottom_navigation_bar/bottom_nav_bar.dart';
+import 'package:binh_thuan/modules/notification/noti_repo.dart';
+import 'package:binh_thuan/utils/onesignal.dart';
 import 'package:flutter/material.dart';
 
 import 'package:easy_splash_screen/easy_splash_screen.dart';
@@ -25,8 +28,9 @@ class _SplashScreenAppState extends State<SplashScreenApp> {
   }
 
   Future<Widget> checkToken() async {
+    main.listNotification = await NotificationRepo().getAllNotification();
     String token = SpUtil.getString(ConstString.token, defValue: '') ?? '';
-
+    sendUserTag(1423);
     return (token == '') ? const LoginScreen() : const BottomNavBar();
   }
 

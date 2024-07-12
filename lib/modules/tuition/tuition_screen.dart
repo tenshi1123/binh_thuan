@@ -48,11 +48,11 @@ class TuitionScreen extends StatelessWidget {
                       color: Colors.white,
                       boxShadow: [
                         BoxShadow(
-                          color: kPrimaryColor.withOpacity(0.4),
+                          color: kPrimaryColor.withOpacity(0.2),
                           spreadRadius: 4,
                           blurRadius: 7,
                           offset:
-                              const Offset(4, 7), // changes position of shadow
+                              const Offset(4, 6), // changes position of shadow
                         ),
                       ],
                     ),

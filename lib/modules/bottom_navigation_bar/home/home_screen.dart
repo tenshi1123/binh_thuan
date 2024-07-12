@@ -1,13 +1,15 @@
 import 'package:binh_thuan/constants/colors.dart';
 import 'package:binh_thuan/constants/string.dart';
 import 'package:binh_thuan/constants/styles.dart';
+import 'package:binh_thuan/main.dart';
 import 'package:binh_thuan/modules/auth/login/login_screen.dart';
 import 'package:binh_thuan/modules/bottom_navigation_bar/home/custom_widget_home.dart';
 import 'package:binh_thuan/modules/chat/screen/list_conversation.dart';
-import 'package:binh_thuan/modules/exercise/exercise_screen.dart';
 import 'package:binh_thuan/modules/notification/local_notification.dart';
 import 'package:binh_thuan/modules/schedule/table_calender.dart';
 import 'package:binh_thuan/modules/tuition/tuition_screen.dart';
+import 'package:binh_thuan/router/app_pages.dart';
+import 'package:binh_thuan/router/app_router.dart';
 import 'package:flutter/foundation.dart';
 import "package:flutter/material.dart";
 import "package:flutter_screenutil/flutter_screenutil.dart";
@@ -27,14 +29,12 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final controller = PageController(viewportFraction: 1, keepPage: true);
-  // final int _selectedIndex = 0;
+
   @override
   void initState() {
-    listenToNotifications();
     super.initState();
   }
 
-  //  to listen to any notification clicked or not
   listenToNotifications() {
     if (kDebugMode) {
       print("Listening to notification");
@@ -49,12 +49,12 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final pages = List.generate(3, (index) => NotificationItem(title: index));
+    final pages = List.generate(listNotification.length,
+        (index) => NotificationItem(noti: listNotification[index]));
     return Scaffold(
       drawer: Drawer(
         backgroundColor: Colors.white,
         child: ListView(
-          // Important: Remove any padding from the ListView.
           padding: EdgeInsets.zero,
           children: [
             SizedBox(
@@ -137,13 +137,6 @@ class _HomeScreenState extends State<HomeScreen> {
             const CourseItem(
               title: 'Anh',
             ),
-            // ListTile(
-            //   title: const Text('School'),
-            //   selected: _selectedIndex == 2,
-            //   onTap: () {
-            //     Navigator.pop(context);
-            //   },
-            // ),
             SizedBox(
               height: 10.h,
             ),
@@ -215,7 +208,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   Positioned(
                     top: 71.h,
-                    left: 70.w,
+                    left: 30.w,
                     child: InkWell(
                       onTap: () {
                         pushWithoutNavBar(
@@ -229,88 +222,52 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                   ),
-                  Positioned(
-                    top: 71.h,
-                    left: 30.w,
-                    child: GestureDetector(
-                      onTap: () {
-                        LocalNotifications.showPeriodicNotifications(
-                            title: 'pro', body: 'hihi', payload: 'a');
-                      },
-                      child:
-                          //  InkWell(
-                          //     onTap: () {
-                          //       Scaffold.of(context).openDrawer();
-                          //     },
-                          //     child: SvgPicture.asset(
-                          //         'assets/icons/three_stick_icon.svg')),
-                          Builder(
-                        builder: (context) {
-                          return InkWell(
-                              onTap: () {
-                                Scaffold.of(context).openDrawer();
-                              },
-                              child: SvgPicture.asset(
-                                  'assets/icons/three_stick_icon.svg'));
-                        },
-                      ),
-                    ),
-                  ),
+                  // Positioned(
+                  //   top: 71.h,
+                  //   left: 30.w,
+                  //   child: Builder(
+                  //     builder: (context) {
+                  //       return InkWell(
+                  //           onTap: () {
+                  //             Scaffold.of(context).openDrawer();
+                  //           },
+                  //           child: SvgPicture.asset(
+                  //               'assets/icons/three_stick_icon.svg'));
+                  //     },
+                  //   ),
+                  // ),
                   Positioned(
                     top: 71.h,
                     left: 300.w,
                     child: InkWell(
                       onTap: () {
-                        LocalNotifications.showSimpleNotification(
-                            title: 'test',
-                            body: 'this is body',
-                            payload: 'this is payload');
-                        //LocalNotification.cancelAll();
+                        AppRouter.toPage(
+                          context,
+                          AppPages.NotificationScreen,
+                          arguments: {},
+                        );
                       },
-                      child:
-                          // Container(
-                          //   height: 32.h,
-                          //   width: 65.w,
-                          //   decoration: const BoxDecoration(
-                          //     borderRadius: BorderRadius.all(Radius.circular(15)),
-                          //     color: kPrimaryColor,
-                          //   ),
-                          //   child: Row(
-                          //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          //     children: [
-                          //       Text(
-                          //         '  04',
-                          //         style: defaultText12.copyWith(
-                          //             color: Colors.white,
-                          //             fontWeight: FontWeight.w700),
-                          //       ),
-                          //       SvgPicture.asset('assets/icons/noti_icon.svg')
-                          //     ],
-                          //   ),
-                          // ),
-                          Container(
-                              height: 32.h,
-                              width: 65.w,
-                              decoration: BoxDecoration(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(30.r)),
-                                  color: Colors.transparent,
-                                  border: Border.all(
-                                      color: Colors.white, width: 1)),
-                              child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      '  04',
-                                      style: defaultText12.copyWith(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.w700,
-                                          fontFamily: 'Nunito-Bold'),
-                                    ),
-                                    SvgPicture.asset(
-                                        'assets/icons/noti_icon.svg')
-                                  ])),
+                      child: Container(
+                          height: 32.h,
+                          width: 65.w,
+                          decoration: BoxDecoration(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(30.r)),
+                              color: Colors.transparent,
+                              border:
+                                  Border.all(color: Colors.white, width: 1)),
+                          child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  '  04',
+                                  style: defaultText12.copyWith(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w700,
+                                      fontFamily: 'Nunito-Bold'),
+                                ),
+                                SvgPicture.asset('assets/icons/noti_icon.svg')
+                              ])),
                     ),
                   ),
                   Positioned(
@@ -368,15 +325,13 @@ class _HomeScreenState extends State<HomeScreen> {
                       width: 350.w,
                       height: 100.h,
                       decoration: BoxDecoration(
-                        //color: Colors.pinkAccent,
                         borderRadius: BorderRadius.all(Radius.circular(8.r)),
                         boxShadow: [
                           BoxShadow(
-                            color: kPrimaryColor.withOpacity(0.4),
-                            spreadRadius: 5,
-                            blurRadius: 7,
-                            offset: const Offset(
-                                4, 7), // changes position of shadow
+                            color: kPrimaryColor.withOpacity(0.1),
+                            spreadRadius: 8,
+                            blurRadius: 9,
+                            offset: const Offset(4, 5),
                           ),
                         ],
                         color: Colors.white,
@@ -394,7 +349,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                     fontSize: 12.sp,
                                     color: color666),
                               ),
-                              //const Divider(),
                               Text(
                                 '10A1',
                                 style: defaultBoldText.copyWith(
@@ -415,14 +369,14 @@ class _HomeScreenState extends State<HomeScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Đang tham gia',
+                                'Bài tập chưa làm',
                                 style: defaultBoldText.copyWith(
                                     fontWeight: FontWeight.w200,
                                     fontSize: 12.sp,
                                     color: color666),
                               ),
                               Text(
-                                '3 khóa học',
+                                '4 bài',
                                 style: defaultBoldText.copyWith(
                                     fontWeight: FontWeight.w200,
                                     color: keyBlack),
@@ -462,8 +416,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 ]),
               ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
+                  const SizedBox(
+                    width: 20,
+                  ),
                   InkWell(
                     onTap: () {
                       pushWithoutNavBar(
@@ -477,22 +434,27 @@ class _HomeScreenState extends State<HomeScreen> {
                       height: 86.h,
                     ),
                   ),
-                  InkWell(
-                    onTap: () {
-                      pushWithoutNavBar(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const ExerciseScreen()));
-                    },
-                    child: SvgPicture.asset(
-                      'assets/icons/home_work.svg',
-                      height: 86.h,
-                    ),
+                  const SizedBox(
+                    width: 20,
                   ),
-                  SvgPicture.asset(
-                    'assets/icons/score.svg',
-                    height: 86.h,
-                  ),
+                  // Bài tập
+                  // InkWell(
+                  //   onTap: () {
+                  //     pushWithoutNavBar(
+                  //         context,
+                  //         MaterialPageRoute(
+                  //             builder: (context) => const ExerciseScreen()));
+                  //   },
+                  //   child: SvgPicture.asset(
+                  //     'assets/icons/home_work.svg',
+                  //     height: 86.h,
+                  //   ),
+                  // ),
+                  // Điểm số
+                  // SvgPicture.asset(
+                  //   'assets/icons/score.svg',
+                  //   height: 86.h,
+                  // ),
                   InkWell(
                     onTap: () {
                       pushWithoutNavBar(
@@ -508,27 +470,27 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
               Padding(
-                padding: EdgeInsets.fromLTRB(10.w, 10.h, 0, 10.h),
+                padding: EdgeInsets.fromLTRB(20.w, 15.h, 0, 5.h),
                 child: Text('Đang diễn ra', style: defaultBoldText),
               ),
               Container(
                 width: 390.w,
                 height: 100.h,
+                padding: EdgeInsets.symmetric(horizontal: 20.w),
                 decoration: BoxDecoration(
-                  //color: Colors.pinkAccent,
                   borderRadius: BorderRadius.all(Radius.circular(10.r)),
                   boxShadow: [
                     BoxShadow(
-                      color: kPrimaryColor.withOpacity(0.4),
-                      spreadRadius: 3,
-                      blurRadius: 7,
-                      offset: const Offset(4, 6), // changes position of shadow
+                      color: kPrimaryColor.withOpacity(0.1),
+                      spreadRadius: 8,
+                      blurRadius: 6,
+                      offset: const Offset(4, 6),
                     ),
                   ],
                   color: Colors.white,
                 ),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -575,14 +537,22 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         color: const Color(0xffFF6667),
                       ),
-                      child: Text('Vào \nhọc',
-                          style: defaultBoldText.copyWith(color: Colors.white)),
+                      child: GestureDetector(
+                        onTap: () {
+                          showDialog(
+                              context: context,
+                              builder: (_) => const CustomDialog());
+                        },
+                        child: Text('Vào \nhọc',
+                            style:
+                                defaultBoldText.copyWith(color: Colors.white)),
+                      ),
                     ),
                   ],
                 ),
               ),
               Padding(
-                padding: EdgeInsets.fromLTRB(10.w, 15.w, 0, 0),
+                padding: EdgeInsets.fromLTRB(20.w, 15.w, 0, 0),
                 child: Text('Thông báo', style: defaultBoldText),
               ),
               Column(
@@ -603,12 +573,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   SmoothPageIndicator(
                     controller: controller,
                     count: 3,
-                    effect: const SlideEffect(
+                    effect: SlideEffect(
                         paintStyle: PaintingStyle.stroke,
                         activeDotColor: kPrimaryColor,
                         dotColor: kPrimaryColor,
-                        dotHeight: 13,
-                        dotWidth: 13),
+                        dotHeight: 10.h,
+                        dotWidth: 10.w),
                     onDotClicked: (index) {
                       controller.animateToPage(index,
                           duration: const Duration(milliseconds: 300),
@@ -617,25 +587,28 @@ class _HomeScreenState extends State<HomeScreen> {
                   )
                 ],
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text('    Lịch học sắp tới', style: defaultBoldText),
-                  Text(
-                    'Xem thêm    ',
-                    style: defaultText12.copyWith(
-                      fontWeight: FontWeight.w500,
-                      color: kPrimaryColor,
-                      fontSize: 13.sp,
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20.w),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text('Lịch học sắp tới', style: defaultBoldText),
+                    Text(
+                      'Xem thêm',
+                      style: defaultText12.copyWith(
+                        fontWeight: FontWeight.w500,
+                        color: kPrimaryColor,
+                        fontSize: 13.sp,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
               ListView.builder(
                 scrollDirection: Axis.vertical,
                 shrinkWrap: true,
                 physics: const ScrollPhysics(),
-                padding: const EdgeInsets.all(8),
+                padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 8.h),
                 itemCount: 6,
                 itemBuilder: (BuildContext context, int index) {
                   return const ComingLesson();

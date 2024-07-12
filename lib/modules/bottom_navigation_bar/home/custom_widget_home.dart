@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:binh_thuan/constants/colors.dart';
 import 'package:binh_thuan/constants/styles.dart';
+import 'package:binh_thuan/modules/notification/noti_model.dart';
 import 'package:binh_thuan/router/app_pages.dart';
 import 'package:binh_thuan/router/app_router.dart';
 import 'package:flutter/material.dart';
@@ -21,12 +22,12 @@ class CustomDialog extends StatelessWidget {
           height: MediaQuery.of(context).size.height * 0.6,
           width: MediaQuery.of(context).size.width * 0.3,
           padding: const EdgeInsets.symmetric(horizontal: 30),
-          color: Colors.amber,
+          color: Colors.white,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Text(
-                "This is a modal screen",
+                "Link sang lớp học trên zoom",
                 textAlign: TextAlign.center,
                 style: defaultText20.copyWith(
                   color: Colors.black,
@@ -171,10 +172,10 @@ class CompleteLesson extends StatelessWidget {
           borderRadius: BorderRadius.all(Radius.circular(8.r)),
           boxShadow: [
             BoxShadow(
-              color: kPrimaryColor.withOpacity(0.4),
+              color: kPrimaryColor.withOpacity(0.2),
               spreadRadius: 5,
               blurRadius: 7,
-              offset: const Offset(4, 7), // changes position of shadow
+              offset: const Offset(4, 6), // changes position of shadow
             ),
           ],
           color: Colors.white,
@@ -277,10 +278,10 @@ class ItemTableCalender extends StatelessWidget {
           borderRadius: BorderRadius.all(Radius.circular(8.r)),
           boxShadow: [
             BoxShadow(
-              color: kPrimaryColor.withOpacity(0.4),
+              color: kPrimaryColor.withOpacity(0.2),
               spreadRadius: 5,
               blurRadius: 7,
-              offset: const Offset(4, 7), // changes position of shadow
+              offset: const Offset(4, 6), // changes position of shadow
             ),
           ],
           color: color,
@@ -346,9 +347,9 @@ class ItemTableCalender extends StatelessWidget {
 }
 
 class NotificationItem extends StatelessWidget {
-  final int title;
+  final NotiModel noti;
 
-  const NotificationItem({super.key, required this.title});
+  const NotificationItem({super.key, required this.noti});
 
   @override
   Widget build(BuildContext context) {
@@ -394,13 +395,13 @@ class NotificationItem extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    '$title [Quan trọng] Thay đổi lịch học',
+                    '${noti.headings} ',
                     style: defaultBoldText.copyWith(
                       color: keyBlack,
                     ),
                   ),
                   Text(
-                    'Lorem ipsum dolor sit amet, consectetur adipis cing elit, sed do eiusmod tempor...',
+                    '${noti.contents} ',
                     overflow: TextOverflow.ellipsis,
                     maxLines: 2,
                     style: defaultText14,
@@ -473,10 +474,10 @@ class MenuItem extends StatelessWidget {
         borderRadius: BorderRadius.all(Radius.circular(8.r)),
         boxShadow: [
           BoxShadow(
-            color: kPrimaryColor.withOpacity(0.4),
+            color: kPrimaryColor.withOpacity(0.2),
             spreadRadius: 5,
             blurRadius: 7,
-            offset: const Offset(4, 7), // changes position of shadow
+            offset: const Offset(4, 6), // changes position of shadow
           ),
         ],
         color: Colors.white,

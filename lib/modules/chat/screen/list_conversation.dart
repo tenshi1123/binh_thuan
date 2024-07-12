@@ -116,8 +116,14 @@ class ConversationItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => const ChatScreen()));
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => const ChatScreen(
+                      groupId: '',
+                      groupName: '',
+                      userName: '',
+                    )));
       },
       child: SizedBox(
         width: 390.w,

@@ -1,9 +1,12 @@
 import 'package:binh_thuan/constants/colors.dart';
 import 'package:binh_thuan/constants/styles.dart';
+import 'package:binh_thuan/main.dart';
+import 'package:binh_thuan/modules/notification/noti_model.dart';
 import 'package:binh_thuan/modules/tuition/tuition_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:intl/intl.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
 
 class NotificationScreen extends StatelessWidget {
@@ -74,37 +77,15 @@ class NotificationScreen extends StatelessWidget {
             SizedBox(
               height: 8.h,
             ),
-            GestureDetector(
-              onTap: () {
-                pushWithoutNavBar(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const TuitionScreen()));
+            ListView.builder(
+              scrollDirection: Axis.vertical,
+              shrinkWrap: true,
+              physics: const ScrollPhysics(),
+              padding: const EdgeInsets.all(8),
+              itemCount: listNotification.length,
+              itemBuilder: (BuildContext context, int index) {
+                return NotiItem(notification: listNotification[index]);
               },
-              child: const NotiItem(
-                icon: 'assets/icons/wallet.svg',
-                title: 'Yêu cầu: Hoàn thành học phí kì II/2024 ',
-                title2: 'Giáo viên HươngNN đã thêm một tài...',
-                time: '18:06',
-              ),
-            ),
-            SizedBox(
-              height: 16.h,
-            ),
-            const NotiItem(
-              icon: 'assets/icons/wallet.svg',
-              title: 'Yêu cầu: Hoàn thành học phí kì II/2024 ',
-              title2: 'Giáo viên HươngNN đã thêm một tài...',
-              time: '18:06',
-            ),
-            SizedBox(
-              height: 16.h,
-            ),
-            const NotiItem(
-              icon: 'assets/icons/wallet.svg',
-              title: 'Yêu cầu: Hoàn thành học phí kì II/2024 ',
-              title2: 'Giáo viên HươngNN đã thêm một tài...',
-              time: '18:06',
             ),
             Divider(
               indent: 20.w,
@@ -129,16 +110,11 @@ class NotificationScreen extends StatelessWidget {
 }
 
 class NotiItem extends StatelessWidget {
-  final String icon;
-  final String title;
-  final String title2;
-  final String time;
-  const NotiItem(
-      {super.key,
-      required this.icon,
-      required this.title,
-      required this.title2,
-      required this.time});
+  final NotiModel notification;
+  const NotiItem({
+    super.key,
+    required this.notification,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -155,7 +131,7 @@ class NotiItem extends StatelessWidget {
             SizedBox(
               width: 20.w,
             ),
-            SvgPicture.asset(icon),
+            SvgPicture.asset('assets/icons/wallet.svg'),
             SizedBox(
               width: 12.w,
             ),
@@ -165,14 +141,14 @@ class NotiItem extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    title,
+                    notification.headings,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 2,
                     softWrap: false,
                     style: defaultBoldText,
                   ),
                   Text(
-                    title2,
+                    notification.contents,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 1,
                     softWrap: false,
@@ -185,7 +161,9 @@ class NotiItem extends StatelessWidget {
               width: 12.w,
             ),
             Text(
-              time,
+              (notification.completedAt.day == DateTime.now().day)
+                  ? DateFormat("hh:mm").format(notification.completedAt)
+                  : DateFormat("dd-MM").format(notification.completedAt),
               style: defaultText12,
             ),
           ],

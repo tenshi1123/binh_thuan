@@ -46,7 +46,7 @@ class _LoginScreenState extends State<ForgotPassScreen> {
                         ),
                         boxShadow: [
                           BoxShadow(
-                            color: kPrimaryColor.withOpacity(0.4),
+                            color: kPrimaryColor.withOpacity(0.2),
                             spreadRadius: 5,
                             blurRadius: 7,
                             offset: const Offset(

@@ -3,11 +3,13 @@ import 'package:binh_thuan/constants/string.dart';
 import 'package:binh_thuan/constants/styles.dart';
 import 'package:binh_thuan/modules/auth/login/login_screen.dart';
 import 'package:binh_thuan/modules/bottom_navigation_bar/home/custom_widget_home.dart';
+import 'package:binh_thuan/modules/chat/screen/list_conversation.dart';
 import 'package:binh_thuan/modules/notification/local_notification.dart';
-import 'package:flutter/foundation.dart';
+import 'package:binh_thuan/utils/onesignal.dart';
 import "package:flutter/material.dart";
 import "package:flutter_screenutil/flutter_screenutil.dart";
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
 import 'package:sp_util/sp_util.dart';
 
 class InfoScreen extends StatefulWidget {
@@ -24,20 +26,7 @@ class _InfoScreenState extends State<InfoScreen> {
 
   @override
   void initState() {
-    //listenToNotifications();
     super.initState();
-  }
-
-  listenToNotifications() {
-    if (kDebugMode) {
-      print("Listening to notification");
-    }
-    LocalNotifications.onClickNotification.stream.listen((event) {
-      if (kDebugMode) {
-        print('${event}tesst');
-      }
-      Navigator.pushNamed(context, '/another', arguments: event);
-    });
   }
 
   @override
@@ -197,10 +186,12 @@ class _InfoScreenState extends State<InfoScreen> {
                   left: 70.w,
                   child: InkWell(
                     onTap: () {
-                      LocalNotifications.showScheduleNotification(
-                          title: 'day la title',
-                          body: 'day la body',
-                          payload: 'day la payload');
+                      pushWithoutNavBar(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const ListConversation(),
+                        ),
+                      );
                     },
                     child: SvgPicture.asset(
                       'assets/icons/message_icon.svg',
@@ -261,47 +252,50 @@ class _InfoScreenState extends State<InfoScreen> {
                 ),
                 Positioned(
                   top: 120.h,
-                  left: 95.w,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        width: 80.w,
-                        height: 80.h,
-                        decoration: const BoxDecoration(
-                          shape: BoxShape.circle,
-                          image: DecorationImage(
-                              image: AssetImage(
-                                'assets/images/placeholder_avatar.png',
-                              ),
-                              scale: 2),
+                  left: 0.w,
+                  child: SizedBox(
+                    width: 390.h,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                          width: 80.w,
+                          height: 80.h,
+                          decoration: const BoxDecoration(
+                            shape: BoxShape.circle,
+                            image: DecorationImage(
+                                image: AssetImage(
+                                  'assets/images/placeholder_avatar.png',
+                                ),
+                                scale: 2),
+                          ),
                         ),
-                      ),
-                      SizedBox(
-                        width: 10.w,
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Nguyễn Hồng Ánh',
-                            style: defaultText20.copyWith(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w800,
-                            ),
-                          ),
-                          Text(
-                            'Mã học sinh: 10A1-32SD',
-                            style: defaultText12.copyWith(
+                        SizedBox(
+                          width: 10.w,
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              'Nguyễn Hồng Ánh',
+                              style: defaultText20.copyWith(
                                 color: Colors.white,
-                                fontWeight: FontWeight.w700),
-                          ),
-                          SizedBox(
-                            height: 40.h,
-                          )
-                        ],
-                      ),
-                    ],
+                                fontWeight: FontWeight.w800,
+                              ),
+                            ),
+                            Text(
+                              'Mã học sinh: 10A1-32SD',
+                              style: defaultText12.copyWith(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w700),
+                            ),
+                            SizedBox(
+                              height: 40.h,
+                            )
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
                 Positioned(
@@ -342,14 +336,14 @@ class _InfoScreenState extends State<InfoScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Đang tham gia',
+                              'Bài tập chưa làm',
                               style: defaultText12.copyWith(
                                 fontWeight: FontWeight.w700,
                                 color: Colors.white,
                               ),
                             ),
                             Text(
-                              '3 khóa học',
+                              '4 bài tập',
                               style: defaultBoldText.copyWith(
                                 color: Colors.white,
                               ),
@@ -401,7 +395,7 @@ class _InfoScreenState extends State<InfoScreen> {
                         color: Colors.white,
                         boxShadow: [
                           BoxShadow(
-                            color: kPrimaryColor.withOpacity(0.4),
+                            color: kPrimaryColor.withOpacity(0.2),
                             spreadRadius: 1,
                             blurRadius: 8,
                             offset: const Offset(
@@ -476,7 +470,7 @@ class _InfoScreenState extends State<InfoScreen> {
                                             fontSize: 14.sp),
                                       ),
                                       Text(
-                                        'Nguyễn Hồng Quang  ',
+                                        'Nguyễn Hồng Quang',
                                         style: defaultBoldText.copyWith(
                                             fontSize: 14.sp),
                                       ),
@@ -530,6 +524,7 @@ class _InfoScreenState extends State<InfoScreen> {
             ),
             GestureDetector(
               onTap: () {
+                deleteUserTag();
                 SpUtil.remove(ConstString.token);
                 Navigator.of(context, rootNavigator: true).pushAndRemoveUntil(
                   MaterialPageRoute(
