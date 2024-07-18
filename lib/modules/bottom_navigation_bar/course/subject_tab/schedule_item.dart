@@ -1,4 +1,5 @@
 import 'package:binh_thuan/constants/colors.dart';
+import 'package:binh_thuan/models/models/detail_subject_models.dart';
 import 'package:binh_thuan/modules/bottom_navigation_bar/home/custom_widget_home.dart';
 import 'package:binh_thuan/modules/exercise/exercise_screen.dart';
 import 'package:binh_thuan/modules/lesson_details/screen/lesson_details_screen.dart';
@@ -52,9 +53,11 @@ class ScheduleItem extends StatelessWidget {
                         itemExtent: 120.h,
                         delegate: SliverChildBuilderDelegate(
                           (BuildContext context, int index) {
-                            return (name == 'Tất cả')
-                                ? const ComingLesson()
-                                : const CompleteLesson();
+                            return
+                                // (name == 'Tất cả')
+                                //     ?  ComingLesson(comingLessonModels: ,)
+                                //     :
+                                const CompleteLesson();
                           },
                           childCount: 30,
                         ),
@@ -84,8 +87,8 @@ List<Widget> _tabScroll() => [
 const List<String> _tabs = <String>['Tất cả', 'Đang học', 'Chờ'];
 
 class InfoItem extends StatelessWidget {
-  const InfoItem({super.key});
-
+  const InfoItem({super.key, required this.videoLesson});
+  final List<LessonModels> videoLesson;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -129,7 +132,9 @@ class InfoItem extends StatelessWidget {
                         itemExtent: 83.h,
                         delegate: SliverChildBuilderDelegate(
                           (BuildContext context, int index) {
-                            return const DocumentItem();
+                            return DocumentItem(
+                              videoLesson: videoLesson,
+                            );
                           },
                           childCount: 2,
                         ),

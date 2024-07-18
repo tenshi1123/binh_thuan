@@ -27,7 +27,7 @@ class CalenderEventModel {
   });
   factory CalenderEventModel.fromJson(Map<String, dynamic> json) {
     return CalenderEventModel(
-      subjectName: (json['subject_name']),
+      subjectName: (json['subject_name']) ?? '',
       timeSlotName: json['time_slot_name'] ?? 'không xác định',
       timeSlotType: json['time_slot_type'] ?? 'không xác định',
       timeStart: json['time_start'] ?? 'không xác định',

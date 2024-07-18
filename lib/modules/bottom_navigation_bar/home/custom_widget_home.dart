@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:binh_thuan/constants/colors.dart';
 import 'package:binh_thuan/constants/styles.dart';
+import 'package:binh_thuan/models/models/subject_models.dart';
 import 'package:binh_thuan/modules/notification/noti_model.dart';
 import 'package:binh_thuan/router/app_pages.dart';
 import 'package:binh_thuan/router/app_router.dart';
@@ -51,15 +52,17 @@ class CustomDialog extends StatelessWidget {
 final _random = Random();
 
 class ComingLesson extends StatelessWidget {
-  const ComingLesson({super.key});
-
+  const ComingLesson({super.key, required this.comingLessonModels});
+  final ComingLessonModels comingLessonModels;
   @override
   Widget build(BuildContext context) => GestureDetector(
         onTap: () {
           pushWithoutNavBar(
             context,
             MaterialPageRoute(
-              builder: (context) => const LessonDetailsScreen(),
+              builder: (context) => const LessonDetailsScreen(
+                videoLesson: [],
+              ),
             ),
           );
         },
@@ -95,7 +98,7 @@ class ComingLesson extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Text(
-                      'Thứ 6',
+                      comingLessonModels.dayOfWeek,
                       style: defaultText12.copyWith(
                         color: Colors.white,
                       ),
@@ -131,14 +134,14 @@ class ComingLesson extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Toán',
+                    comingLessonModels.subjectName,
                     style: defaultBoldText,
                   ),
                   Row(
                     children: [
                       SvgPicture.asset('assets/icons/time_icon.svg'),
                       Text(
-                        '  Thời gian: 07:15 - 08:00',
+                        '  Thời gian: ${comingLessonModels.timeStart} - ${comingLessonModels.timeEnd}',
                         style: defaultText12,
                       ),
                     ],
@@ -147,7 +150,7 @@ class ComingLesson extends StatelessWidget {
                     children: [
                       SvgPicture.asset('assets/icons/teacher_icon.svg'),
                       Text(
-                        '  Giáo viên: HươngNN',
+                        '  Giáo viên: ${comingLessonModels.teacherName}',
                         style: defaultText12,
                       ),
                     ],

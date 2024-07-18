@@ -1,5 +1,7 @@
 // ignore_for_file: constant_identifier_names
 
+import 'package:binh_thuan/models/models/login_model.dart';
+import 'package:binh_thuan/models/models/subject_models.dart';
 import 'package:binh_thuan/modules/auth/forgor_password/change_password_screen.dart';
 import 'package:binh_thuan/modules/auth/forgor_password/forgot_password_screen.dart';
 import 'package:binh_thuan/modules/auth/forgor_password/otp_screen.dart';
@@ -57,7 +59,13 @@ extension AppPagesExtension on AppPages {
       case AppPages.ChangePassScreen:
         return PageConfig()..pageBuilder = () => const ChangePassScreen();
       case AppPages.NavigationBar:
-        return PageConfig()..pageBuilder = () => const BottomNavBar();
+        HomeModel info = arguments?['info'];
+        List<SubjectModels> listSubjectModel = arguments?['listSubjectModel'];
+        return PageConfig()
+          ..pageBuilder = () => BottomNavBar(
+                info: info,
+                listSubjectModel: listSubjectModel,
+              );
       case AppPages.NotificationScreen:
         return PageConfig()..pageBuilder = () => const NotificationScreen();
       case AppPages.TuitionPage:

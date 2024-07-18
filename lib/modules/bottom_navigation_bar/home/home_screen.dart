@@ -2,6 +2,7 @@ import 'package:binh_thuan/constants/colors.dart';
 import 'package:binh_thuan/constants/string.dart';
 import 'package:binh_thuan/constants/styles.dart';
 import 'package:binh_thuan/main.dart';
+import 'package:binh_thuan/models/models/login_model.dart';
 import 'package:binh_thuan/modules/auth/login/login_screen.dart';
 import 'package:binh_thuan/modules/bottom_navigation_bar/home/custom_widget_home.dart';
 import 'package:binh_thuan/modules/chat/screen/list_conversation.dart';
@@ -19,8 +20,8 @@ import "package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart";
 import 'package:sp_util/sp_util.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key, this.useRouter = false});
-
+  const HomeScreen({super.key, this.useRouter = false, required this.info});
+  final HomeModel info;
   final bool useRouter;
 
   @override
@@ -29,10 +30,11 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final controller = PageController(viewportFraction: 1, keepPage: true);
-
+  late StudentModel student;
   @override
   void initState() {
     super.initState();
+    student = widget.info.student;
   }
 
   listenToNotifications() {
@@ -89,7 +91,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       height: 8.h,
                     ),
                     Text(
-                      'Nguyễn Hồng Ánh',
+                      widget.info.student.fullName,
                       style: defaultText20.copyWith(
                           fontWeight: FontWeight.w800, color: keyBlack),
                     ),
@@ -129,7 +131,7 @@ class _HomeScreenState extends State<HomeScreen> {
               height: 10.h,
             ),
             const CourseItem(
-              title: 'Văn ',
+              title: 'Văn',
             ),
             SizedBox(
               height: 10.h,
@@ -295,14 +297,14 @@ class _HomeScreenState extends State<HomeScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Nguyễn Hồng Ánh',
+                              student.fullName,
                               style: defaultBoldText.copyWith(
                                 color: Colors.white,
                                 fontSize: 20.sp,
                               ),
                             ),
                             Text(
-                              'Mã học sinh: 10A1-32SD',
+                              student.code,
                               style: defaultBoldText.copyWith(
                                 color: Colors.white,
                                 fontWeight: FontWeight.w100,
@@ -350,7 +352,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     color: color666),
                               ),
                               Text(
-                                '10A1',
+                                student.nameClass,
                                 style: defaultBoldText.copyWith(
                                     fontWeight: FontWeight.w200,
                                     color: keyBlack),
@@ -376,7 +378,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     color: color666),
                               ),
                               Text(
-                                '4 bài',
+                                '${widget.info.unfinished} bài',
                                 style: defaultBoldText.copyWith(
                                     fontWeight: FontWeight.w200,
                                     color: keyBlack),
@@ -609,9 +611,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 shrinkWrap: true,
                 physics: const ScrollPhysics(),
                 padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 8.h),
-                itemCount: 6,
+                itemCount: widget.info.comming.length,
                 itemBuilder: (BuildContext context, int index) {
-                  return const ComingLesson();
+                  return ComingLesson(
+                    comingLessonModels: widget.info.comming[index],
+                  );
                 },
               ),
               SizedBox(

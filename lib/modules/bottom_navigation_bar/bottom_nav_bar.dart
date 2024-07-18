@@ -1,4 +1,6 @@
 import "package:binh_thuan/constants/colors.dart";
+import "package:binh_thuan/models/models/login_model.dart";
+import "package:binh_thuan/models/models/subject_models.dart";
 import "package:binh_thuan/modules/bottom_navigation_bar/home/home_screen.dart";
 import "package:binh_thuan/modules/bottom_navigation_bar/course/list_subject_screen.dart";
 import "package:binh_thuan/utils/onesignal.dart";
@@ -9,8 +11,10 @@ import "package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart";
 import "personal/info_student_screen.dart";
 
 class BottomNavBar extends StatefulWidget {
-  const BottomNavBar({super.key});
-
+  const BottomNavBar(
+      {super.key, required this.info, required this.listSubjectModel});
+  final HomeModel info;
+  final List<SubjectModels> listSubjectModel;
   @override
   State<BottomNavBar> createState() => _BottomNavBarState();
 }
@@ -33,7 +37,9 @@ class _BottomNavBarState extends State<BottomNavBar> {
 
   List<PersistentTabConfig> _tabs() => [
         PersistentTabConfig(
-          screen: const HomeScreen(),
+          screen: HomeScreen(
+            info: widget.info,
+          ),
           item: ItemConfig(
             icon: const ImageIcon(
               AssetImage('assets/images/nav_bar_1.png'),
@@ -46,7 +52,10 @@ class _BottomNavBarState extends State<BottomNavBar> {
           ),
         ),
         PersistentTabConfig(
-          screen: const NestedScroll(),
+          screen: NestedScroll(
+            info: widget.info,
+            listSubjectModel: widget.listSubjectModel,
+          ),
           item: ItemConfig(
             icon: const ImageIcon(
               AssetImage('assets/images/nav_bar_2.png'),
@@ -59,7 +68,9 @@ class _BottomNavBarState extends State<BottomNavBar> {
           ),
         ),
         PersistentTabConfig(
-          screen: const InfoScreen(),
+          screen: InfoScreen(
+            info: widget.info,
+          ),
           item: ItemConfig(
             icon: const ImageIcon(
               AssetImage('assets/images/nav_bar_3.png'),

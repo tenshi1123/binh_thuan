@@ -1,14 +1,19 @@
 import 'dart:convert';
 
 import 'package:binh_thuan/constants/colors.dart';
+import 'package:binh_thuan/constants/string.dart';
 import 'package:binh_thuan/constants/styles.dart';
+import 'package:binh_thuan/models/models/login_model.dart';
+import 'package:binh_thuan/models/models/subject_models.dart';
 import 'package:binh_thuan/repo/repo/login_repo.dart';
+import 'package:binh_thuan/repo/repo/subject_repo.dart';
 import 'package:binh_thuan/router/app_pages.dart';
 import 'package:binh_thuan/router/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:crypto/crypto.dart';
+import 'package:sp_util/sp_util.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -196,16 +201,23 @@ class _LoginScreenState extends State<LoginScreen> {
                   onTap: () async {
                     // "code": "2302682572",
                     // "password": "123456"
-                    await LoginRepo().login(
+                    HomeModel info = await LoginRepo().login(
                         studenIdController?.text ?? '',
                         md5
                             .convert(utf8.encode(passController?.text ?? ''))
                             .toString());
-
-                    AppRouter.toPage(
-                      context, AppPages.NavigationBar,
-                      // blocValue: _authBloc,
-                    );
+                    List<SubjectModels> listSubjectModels = await SubjectRepo()
+                        .subject(
+                            token: SpUtil.getString(ConstString.token,
+                                    defValue: '') ??
+                                '');
+                    AppRouter.toPage(context, AppPages.NavigationBar,
+                        arguments: {
+                          'info': info,
+                          'listSubjectModel': listSubjectModels
+                        }
+                        // blocValue: _authBloc,
+                        );
                   },
                   child: Container(
                     height: 48.h,

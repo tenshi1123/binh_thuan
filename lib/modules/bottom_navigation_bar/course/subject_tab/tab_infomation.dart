@@ -1,11 +1,12 @@
 import 'package:binh_thuan/constants/styles.dart';
+import 'package:binh_thuan/models/models/detail_subject_models.dart';
 import 'package:binh_thuan/modules/bottom_navigation_bar/course/subject_tab/schedule_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class TabInfomation extends StatelessWidget {
-  const TabInfomation({super.key});
-
+  const TabInfomation({super.key, required this.detailSubject});
+  final DetailSubjectModels detailSubject;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,17 +18,11 @@ class TabInfomation extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Toán nâng cao',
+              detailSubject.info.subjectName,
               style: defaultBoldText.copyWith(fontSize: 20.sp),
             ),
             SizedBox(
               height: 10.h,
-            ),
-            Text(
-              'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod dolore tempor incididunt ut labore et dolore magna aliqua.',
-              overflow: TextOverflow.ellipsis,
-              maxLines: 3,
-              style: defaultText14,
             ),
             SizedBox(
               height: 10.h,
@@ -45,10 +40,6 @@ class TabInfomation extends StatelessWidget {
                       'Giáo viên',
                       style: defaultText16,
                     ),
-                    Text(
-                      'Hình thức',
-                      style: defaultText16,
-                    )
                   ],
                 ),
                 SizedBox(
@@ -58,17 +49,17 @@ class TabInfomation extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      '18',
+                      detailSubject.lichHoc.length.toString(),
                       style: defaultBoldText,
                     ),
                     Text(
-                      'HươngNN',
+                      detailSubject.info.teacherName,
                       style: defaultBoldText,
                     ),
-                    Text(
-                      'Online/Lớp học qua Zoom',
-                      style: defaultBoldText,
-                    )
+                    // Text(
+                    //   'Online/Lớp học qua Zoom',
+                    //   style: defaultBoldText,
+                    // )
                   ],
                 ),
               ],
@@ -78,7 +69,10 @@ class TabInfomation extends StatelessWidget {
               'Kho tài liệu',
               style: defaultBoldText,
             ),
-            const Expanded(child: InfoItem()),
+            Expanded(
+                child: InfoItem(
+              videoLesson: detailSubject.lesson,
+            )),
           ],
         ),
       ),

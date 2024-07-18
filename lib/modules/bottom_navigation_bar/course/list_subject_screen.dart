@@ -1,7 +1,8 @@
-import 'dart:math';
-
 import 'package:binh_thuan/constants/colors.dart';
 import 'package:binh_thuan/constants/styles.dart';
+import 'package:binh_thuan/models/models/detail_subject_models.dart';
+import 'package:binh_thuan/models/models/login_model.dart';
+import 'package:binh_thuan/models/models/subject_models.dart';
 import 'package:binh_thuan/modules/bottom_navigation_bar/course/subject_screen.dart';
 import 'package:binh_thuan/modules/chat/screen/list_conversation.dart';
 import 'package:binh_thuan/modules/lesson_details/screen/lesson_details_screen.dart';
@@ -11,9 +12,16 @@ import 'package:flutter_svg/svg.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
 import 'package:tab_container/tab_container.dart';
 
-class NestedScroll extends StatelessWidget {
-  const NestedScroll({super.key});
+import '../../../repo/repo/subject_repo.dart';
 
+class NestedScroll extends StatelessWidget {
+  const NestedScroll({
+    super.key,
+    required this.info,
+    required this.listSubjectModel,
+  });
+  final HomeModel info;
+  final List<SubjectModels> listSubjectModel;
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -93,7 +101,9 @@ class NestedScroll extends StatelessWidget {
                             padding: const EdgeInsets.all(8),
                             itemCount: 4,
                             itemBuilder: (BuildContext context, int index) {
-                              return const CommingLesson();
+                              return const CommingLesson(
+                                videoLesson: [],
+                              );
                             }),
                       ),
                       Text(
@@ -146,7 +156,7 @@ class NestedScroll extends StatelessWidget {
                   fontSize: 13,
                   fontWeight: FontWeight.w200),
               tabs: getTabs1(),
-              children: getChildren1(),
+              children: getChildren1(listSubjectModel: listSubjectModel),
             ),
           ),
         ),
@@ -164,7 +174,9 @@ List<Widget> getTabs1() {
       .toList();
 }
 
-List<Widget> getChildren1() {
+List<Widget> getChildren1({
+  required List<SubjectModels> listSubjectModel,
+}) {
   return tabs.map((String name) {
     return SafeArea(
       top: false,
@@ -190,18 +202,26 @@ List<Widget> getChildren1() {
                           vertical: 12.h,
                         ),
                         child: InkWell(
-                            onTap: () {
-                              pushWithoutNavBar(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const SubjectScreen(),
+                          onTap: () async {
+                            DetailSubjectModels detailSubject =
+                                await SubjectRepo().detailSubject(
+                                    id: listSubjectModel[index].id);
+                            pushWithoutNavBar(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => SubjectScreen(
+                                  detailSubject: detailSubject,
                                 ),
-                              );
-                            },
-                            child: const CourseItem()),
+                              ),
+                            );
+                          },
+                          child: CourseItem(
+                            subject: listSubjectModel[index],
+                          ),
+                        ),
                       );
                     },
-                    childCount: 5,
+                    childCount: listSubjectModel.length,
                   ),
                 ),
               ),
@@ -214,8 +234,8 @@ List<Widget> getChildren1() {
 }
 
 class CommingLesson extends StatelessWidget {
-  const CommingLesson({super.key});
-
+  const CommingLesson({super.key, required this.videoLesson});
+  final List<LessonModels> videoLesson;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -223,7 +243,9 @@ class CommingLesson extends StatelessWidget {
         pushWithoutNavBar(
           context,
           MaterialPageRoute(
-            builder: (context) => const LessonDetailsScreen(),
+            builder: (context) => LessonDetailsScreen(
+              videoLesson: videoLesson,
+            ),
           ),
         );
       },
@@ -331,8 +353,8 @@ class CommingLesson extends StatelessWidget {
 }
 
 class CourseItem extends StatelessWidget {
-  const CourseItem({super.key});
-
+  const CourseItem({super.key, required this.subject});
+  final SubjectModels subject;
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -345,6 +367,7 @@ class CourseItem extends StatelessWidget {
             width: 350.w,
             image: const AssetImage('assets/images/course_bg1.png'),
             fit: BoxFit.fill,
+            //color: listColor[Random().nextInt(listColor.length)],
             //color: Colors.pink.withOpacity(0.5),
           ),
         ),
@@ -352,7 +375,17 @@ class CourseItem extends StatelessWidget {
           top: 0,
           right: 0,
           child: Text(
-            'Đang học',
+            subject.status,
+            style: defaultText12.copyWith(
+              fontFamily: 'Nunito-Bold',
+            ),
+          ),
+        ),
+        Positioned(
+          top: 0,
+          right: 0,
+          child: Text(
+            subject.status,
             style: defaultText12.copyWith(
               fontFamily: 'Nunito-Bold',
             ),
@@ -362,18 +395,7 @@ class CourseItem extends StatelessWidget {
           bottom: 5.h,
           left: 8.w,
           child: Text(
-            'Hình thức: Online',
-            style: defaultText16.copyWith(
-              fontFamily: 'Nunito-Bold',
-              color: Colors.white,
-            ),
-          ),
-        ),
-        Positioned(
-          bottom: 25.h,
-          left: 8.w,
-          child: Text(
-            'Giáo viên: --',
+            'Giáo viên: ${subject.teacherName}',
             style: defaultText16.copyWith(
               fontFamily: 'Nunito-Bold',
               color: Colors.white,
@@ -389,7 +411,7 @@ class CourseItem extends StatelessWidget {
                 color: Colors.white,
                 borderRadius: BorderRadius.all(Radius.circular(10))),
             child: Text(
-              listSubject[Random().nextInt(listSubject.length)],
+              subject.subjectName,
               style: defaultText16.copyWith(
                 fontFamily: 'Nunito-Bold',
               ),

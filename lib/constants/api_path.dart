@@ -2,7 +2,7 @@ class ApiPath {
   //baseurl
   static const String baseUrl = 'https://lequydon.hvg.edu.vn/api';
   //
-  static const String refreshToken = '$baseUrl/refresh_token.php';
+  static const String refreshToken = '$baseUrl/refresh_token/';
   static const String login = '$baseUrl/login';
   static const String home = '$baseUrl/home';
   static const String changePass = '$baseUrl/change_password';

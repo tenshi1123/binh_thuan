@@ -1,6 +1,3 @@
-// Copyright 2019 Aleksander Woźniak
-// SPDX-License-Identifier: Apache-2.0
-
 import 'package:binh_thuan/constants/colors.dart';
 import 'package:binh_thuan/constants/styles.dart';
 import 'package:binh_thuan/modules/bottom_navigation_bar/home/custom_widget_home.dart';

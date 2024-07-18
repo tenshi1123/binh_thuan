@@ -1,5 +1,6 @@
 import 'package:binh_thuan/constants/colors.dart';
 import 'package:binh_thuan/constants/styles.dart';
+import 'package:binh_thuan/models/models/detail_subject_models.dart';
 import 'package:binh_thuan/modules/exercise/exercise_screen.dart';
 import 'package:binh_thuan/modules/lesson_details/test_screen.dart';
 import 'package:binh_thuan/modules/videoplayer/animation_player.dart';
@@ -9,8 +10,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
 class LessonDetailsScreen extends StatefulWidget {
-  const LessonDetailsScreen({super.key});
-
+  const LessonDetailsScreen({super.key, required this.videoLesson});
+  final List<LessonModels> videoLesson;
   @override
   State<LessonDetailsScreen> createState() => _LessonDetailsScreenState();
 }
@@ -85,7 +86,10 @@ class _LessonDetailsScreenState extends State<LessonDetailsScreen> {
                 height: 20.h,
               ),
               const ItemDetails(),
-              _tabSection(context),
+              _tabSection(
+                context,
+                widget.videoLesson,
+              ),
               SizedBox(
                 height: 10.h,
               ),
@@ -260,7 +264,10 @@ class ItemDetails extends StatelessWidget {
   }
 }
 
-Widget _tabSection(BuildContext context) {
+Widget _tabSection(
+  BuildContext context,
+  List<LessonModels> videoLesson,
+) {
   return DefaultTabController(
     length: 3,
     child: Column(
@@ -280,10 +287,12 @@ Widget _tabSection(BuildContext context) {
         SizedBox(
           //Add this to give height
           height: MediaQuery.of(context).size.height * 0.4,
-          child: const TabBarView(children: [
-            DocumentTab(),
-            MissionItem(),
-            QuestionTab(),
+          child: TabBarView(children: [
+            DocumentTab(
+              videoLesson: videoLesson,
+            ),
+            const MissionItem(),
+            const QuestionTab(),
           ]),
         ),
       ],
@@ -292,8 +301,8 @@ Widget _tabSection(BuildContext context) {
 }
 
 class DocumentTab extends StatelessWidget {
-  const DocumentTab({super.key});
-
+  const DocumentTab({super.key, required this.videoLesson});
+  final List<LessonModels> videoLesson;
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
@@ -301,7 +310,9 @@ class DocumentTab extends StatelessWidget {
         padding: const EdgeInsets.all(8),
         itemCount: 4,
         itemBuilder: (BuildContext context, int index) {
-          return const DocumentItem();
+          return DocumentItem(
+            videoLesson: videoLesson,
+          );
         });
   }
 }
@@ -410,8 +421,8 @@ class MissionItem extends StatelessWidget {
 }
 
 class DocumentItem extends StatelessWidget {
-  const DocumentItem({super.key});
-
+  const DocumentItem({super.key, required this.videoLesson});
+  final List<LessonModels> videoLesson;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(

@@ -1,6 +1,7 @@
 import 'package:binh_thuan/constants/colors.dart';
 import 'package:binh_thuan/constants/string.dart';
 import 'package:binh_thuan/constants/styles.dart';
+import 'package:binh_thuan/models/models/login_model.dart';
 import 'package:binh_thuan/modules/auth/login/login_screen.dart';
 import 'package:binh_thuan/modules/bottom_navigation_bar/home/custom_widget_home.dart';
 import 'package:binh_thuan/modules/chat/screen/list_conversation.dart';
@@ -13,8 +14,8 @@ import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
 import 'package:sp_util/sp_util.dart';
 
 class InfoScreen extends StatefulWidget {
-  const InfoScreen({super.key, this.useRouter = false});
-
+  const InfoScreen({super.key, this.useRouter = false, required this.info});
+  final HomeModel info;
   final bool useRouter;
 
   @override
@@ -277,14 +278,14 @@ class _InfoScreenState extends State<InfoScreen> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Text(
-                              'Nguyễn Hồng Ánh',
+                              widget.info.student.fullName,
                               style: defaultText20.copyWith(
                                 color: Colors.white,
                                 fontWeight: FontWeight.w800,
                               ),
                             ),
                             Text(
-                              'Mã học sinh: 10A1-32SD',
+                              'Mã học sinh: ${widget.info.student.code}',
                               style: defaultText12.copyWith(
                                   color: Colors.white,
                                   fontWeight: FontWeight.w700),
@@ -317,7 +318,7 @@ class _InfoScreenState extends State<InfoScreen> {
                                   color: Colors.white),
                             ),
                             Text(
-                              '10A1',
+                              widget.info.student.nameClass,
                               style: defaultBoldText.copyWith(
                                 color: Colors.white,
                               ),
@@ -343,7 +344,7 @@ class _InfoScreenState extends State<InfoScreen> {
                               ),
                             ),
                             Text(
-                              '4 bài tập',
+                              '${widget.info.unfinished} bài tập',
                               style: defaultBoldText.copyWith(
                                 color: Colors.white,
                               ),
@@ -452,12 +453,12 @@ class _InfoScreenState extends State<InfoScreen> {
                                         MainAxisAlignment.spaceAround,
                                     children: [
                                       Text(
-                                        'Nguyễn Hồng Ánh',
+                                        widget.info.student.fullName,
                                         style: defaultBoldText.copyWith(
                                             fontSize: 14.sp),
                                       ),
                                       Text(
-                                        'dd/mm/yyyy',
+                                        widget.info.student.dob,
                                         style: defaultBoldText.copyWith(
                                             fontSize: 14.sp),
                                       ),
@@ -465,17 +466,17 @@ class _InfoScreenState extends State<InfoScreen> {
                                         overflow: TextOverflow.ellipsis,
                                         maxLines: 2,
                                         softWrap: false,
-                                        'Bắc Xuân An, Phường Xuân An, Tp. Phan thiết, Tỉnh Bình Thuận.',
+                                        widget.info.student.address,
                                         style: defaultBoldText.copyWith(
                                             fontSize: 14.sp),
                                       ),
                                       Text(
-                                        'Nguyễn Hồng Quang',
+                                        widget.info.student.parentName,
                                         style: defaultBoldText.copyWith(
                                             fontSize: 14.sp),
                                       ),
                                       Text(
-                                        '0937558769',
+                                        widget.info.student.phone,
                                         style: defaultBoldText.copyWith(
                                             fontSize: 14.sp),
                                       ),

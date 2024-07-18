@@ -1,9 +1,8 @@
 class DetailSubjectModels {
   final InfoModels info;
-  final String lichHoc;
-  final String lesson;
-  final String document;
-
+  final List<LichHocModels> lichHoc;
+  final List<LessonModels> lesson;
+  final List<DocumentModels> document;
   DetailSubjectModels({
     required this.info,
     required this.lichHoc,
@@ -12,10 +11,22 @@ class DetailSubjectModels {
   });
   factory DetailSubjectModels.fromJson(Map<String, dynamic> json) {
     return DetailSubjectModels(
-      info: json['teachers_full_name'] ?? 'unknow',
-      lichHoc: json['subject_name'] ?? 'không xác định',
-      lesson: json['start_date'] ?? 'không xác định',
-      document: json['end_date'] ?? 'không xác định',
+      info: InfoModels.fromJson(json['info']),
+      lichHoc: List<LichHocModels>.from(
+        (json['lich_hoc'] ?? []).map(
+          (model) => LichHocModels.fromJson(model),
+        ),
+      ),
+      lesson: List<LessonModels>.from(
+        (json['lesson'] ?? []).map(
+          (model) => LessonModels.fromJson(model),
+        ),
+      ),
+      document: List<DocumentModels>.from(
+        (json['document'] ?? []).map(
+          (e) => DocumentModels.fromJson(e),
+        ),
+      ),
     );
   }
 }
@@ -35,8 +46,8 @@ class InfoModels {
     return InfoModels(
       teacherName: json['teachers_full_name'] ?? 'unknow',
       subjectName: json['subject_name'] ?? 'không xác định',
-      classSubjectId: json['start_date'] ?? 'không xác định',
-      subjectId: json['end_date'] ?? 'không xác định',
+      classSubjectId: json['class_subject_id'] ?? 'không xác định',
+      subjectId: json['subject_id'] ?? 'không xác định',
     );
   }
 }
@@ -71,8 +82,8 @@ class LichHocModels {
       name: json['subject_name'] ?? 'không xác định',
       classroom: json['start_date'] ?? 'không xác định',
       timeType: json['end_date'] ?? 'không xác định',
-      timeStart: json['time_start'],
-      timeEnd: json['time_'],
+      timeStart: json['time_start'] ?? '',
+      timeEnd: json['time_end'] ?? '',
       status: json['status'] ?? 'không xác định',
       hinhThuc: json['hinh_thuc_hoc'] ?? '',
       dayofWeek: json['day_of_week'] ?? '',

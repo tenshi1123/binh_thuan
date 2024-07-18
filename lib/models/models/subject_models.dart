@@ -5,6 +5,7 @@ class SubjectModels {
   final String endDate;
   final String status;
   final String id;
+  final String statusValue;
   SubjectModels({
     required this.teacherName,
     required this.subjectName,
@@ -12,6 +13,7 @@ class SubjectModels {
     required this.endDate,
     required this.status,
     required this.id,
+    required this.statusValue,
   });
   factory SubjectModels.fromJson(Map<String, dynamic> json) {
     return SubjectModels(
@@ -21,6 +23,7 @@ class SubjectModels {
       endDate: json['end_date'] ?? 'không xác định',
       status: json['status'] ?? 'không xác định',
       id: json['id'] ?? '',
+      statusValue: json['status_value'] ?? '',
     );
   }
 }
@@ -53,9 +56,9 @@ class ComingLessonModels {
       id: json['id'] ?? '',
       teacherName: json['teachers_full_name'] ?? 'unknow',
       subjectName: json['subject_name'] ?? 'không xác định',
-      timeName: json['start_date'] ?? 'không xác định',
-      timeType: json['end_date'] ?? 'không xác định',
-      timeStart: json['status'] ?? 'không xác định',
+      timeName: json['time_slot_name'] ?? 'không xác định',
+      timeType: json['time_slot_type'] ?? 'không xác định',
+      timeStart: json['time_start'] ?? 'không xác định',
       timeEnd: json['time_end'] ?? '',
       roomName: json['class_room_name'] ?? '',
       dayOfWeek: json['day_of_week'] ?? '',

@@ -1,5 +1,6 @@
 import 'package:binh_thuan/constants/colors.dart';
 import 'package:binh_thuan/constants/styles.dart';
+import 'package:binh_thuan/models/models/detail_subject_models.dart';
 import 'package:binh_thuan/modules/bottom_navigation_bar/course/list_subject_screen.dart';
 import "package:flutter/material.dart";
 import "package:flutter_screenutil/flutter_screenutil.dart";
@@ -11,9 +12,10 @@ import 'subject_tab/tab_infomation.dart';
 import 'subject_tab/tab_schedule.dart';
 
 class SubjectScreen extends StatelessWidget {
-  const SubjectScreen({super.key, this.useRouter = false});
+  const SubjectScreen(
+      {super.key, this.useRouter = false, required this.detailSubject});
   final bool useRouter;
-
+  final DetailSubjectModels detailSubject;
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -143,7 +145,7 @@ class SubjectScreen extends StatelessWidget {
                   fontWeight: FontWeight.w200,
                   decoration: TextDecoration.none),
               tabs: _getTabs1(),
-              children: getChildren2(),
+              children: getChildren2(detailSubject),
             ),
           ),
         ),
@@ -152,7 +154,7 @@ class SubjectScreen extends StatelessWidget {
   }
 }
 
-const List<String> _tabs = <String>['Lịch học', 'Bài tập', 'Thông tin'];
+const List<String> _tabs = <String>['Lịch học', 'Thông tin'];
 List<Widget> _getTabs1() {
   return _tabs
       .map((e) => Text(
@@ -161,15 +163,17 @@ List<Widget> _getTabs1() {
       .toList();
 }
 
-List<Widget> getChildren2() {
+List<Widget> getChildren2(DetailSubjectModels detailSubject) {
   return [
     TabSchedule(
       name: _tabs[0],
     ),
-    TabExercise(
-      name: _tabs[1],
-    ),
-    const TabInfomation()
+    // TabExercise(
+    //   name: _tabs[1],
+    // ),
+    TabInfomation(
+      detailSubject: detailSubject,
+    )
   ];
 }
 
@@ -183,7 +187,9 @@ class Schedule extends StatelessWidget {
         padding: const EdgeInsets.all(8),
         itemCount: 4,
         itemBuilder: (BuildContext context, int index) {
-          return const CommingLesson();
+          return const CommingLesson(
+            videoLesson: [],
+          );
         });
   }
 }

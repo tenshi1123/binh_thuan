@@ -1,19 +1,26 @@
-import 'dart:convert';
-
 import 'package:binh_thuan/constants/api_path.dart';
+import 'package:binh_thuan/models/models/login_model.dart';
+import 'package:binh_thuan/repo/repo/login_repo.dart';
 import 'package:dio/dio.dart';
 
 class HomeRepo {
-  Future<String> home(String code, String password) async {
+  Future home({required String token}) async {
     Dio dio = Dio();
-    dio.options.headers['Token'] = 'BT123456789';
+    dio.options.headers['Authorization'] = 'Bearer $token';
     Response response;
-    response = await dio.post(ApiPath.login,
-        data: jsonEncode({
-          'code': '2302682572',
-          'password': 'e10adc3949ba59abbe56e057f20f883e'
-        }));
-
-    return response.data["token"];
+    try {
+      response = await dio.get(
+        ApiPath.home,
+      );
+      return HomeModel.fromJson(response.data["data"]);
+    } on DioException {
+      // in case of a code that is not success, you can get it here through object 'e'
+      String newToken = await LoginRepo().refreshToken();
+      dio.options.headers['Authorization'] = 'Bearer $newToken';
+      response = await dio.get(
+        ApiPath.home,
+      );
+      return HomeModel.fromJson(response.data["data"]);
+    }
   }
 }
