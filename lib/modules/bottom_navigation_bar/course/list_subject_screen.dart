@@ -1,11 +1,14 @@
 import 'package:binh_thuan/constants/colors.dart';
 import 'package:binh_thuan/constants/styles.dart';
 import 'package:binh_thuan/models/models/detail_subject_models.dart';
+import 'package:binh_thuan/models/models/lesson_model.dart';
 import 'package:binh_thuan/models/models/login_model.dart';
 import 'package:binh_thuan/models/models/subject_models.dart';
 import 'package:binh_thuan/modules/bottom_navigation_bar/course/subject_screen.dart';
+import 'package:binh_thuan/modules/bottom_navigation_bar/home/custom_widget_home.dart';
 import 'package:binh_thuan/modules/chat/screen/list_conversation.dart';
 import 'package:binh_thuan/modules/lesson_details/screen/lesson_details_screen.dart';
+import 'package:binh_thuan/repo/repo/lesson_repo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -93,19 +96,32 @@ class NestedScroll extends StatelessWidget {
                             fontWeight: FontWeight.bold,
                             fontFamily: 'Nunito-Bold'),
                       ),
-                      SizedBox(
-                        width: 380.w,
-                        height: 111.h,
-                        child: ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            padding: const EdgeInsets.all(8),
-                            itemCount: 4,
-                            itemBuilder: (BuildContext context, int index) {
-                              return const CommingLesson(
-                                videoLesson: [],
-                              );
-                            }),
-                      ),
+                      (info.comming.isEmpty)
+                          ? Center(
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text('Hiện không có lớp học nào',
+                                    style: defaultText14),
+                              ),
+                            )
+                          : SizedBox(
+                              width: 380.w,
+                              height: 111.h,
+                              child: ListView.builder(
+                                scrollDirection: Axis.horizontal,
+                                shrinkWrap: true,
+                                physics: const ScrollPhysics(),
+                                //itemExtent: 390.0.w,
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 0, vertical: 0),
+                                itemCount: info.comming.length,
+                                itemBuilder: (BuildContext context, int index) {
+                                  return ComingLesson(
+                                    comingLessonModels: info.comming[index],
+                                  );
+                                },
+                              ),
+                            ),
                       Text(
                         '\t    Môn học của tôi',
                         style:
@@ -115,7 +131,7 @@ class NestedScroll extends StatelessWidget {
                   ),
                 ),
                 pinned: false,
-                toolbarHeight: 220.h,
+                toolbarHeight: (info.comming.isEmpty) ? 150.h : 220.h,
                 forceElevated: innerBoxIsScrolled,
                 // bottom: TabBar(
                 //   tabs: tabs.map((String name) => Tab(text: name)).toList(),
@@ -127,6 +143,7 @@ class NestedScroll extends StatelessWidget {
         },
         body: Container(
           decoration: BoxDecoration(color: Colors.grey.shade300),
+          padding: EdgeInsets.only(bottom: 40.h),
           width: 390.w,
           child: AspectRatio(
             aspectRatio: 10 / 8,
@@ -191,7 +208,7 @@ List<Widget> getChildren1({
                     NestedScrollView.sliverOverlapAbsorberHandleFor(context),
               ),
               SliverPadding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(12.0),
                 sliver: SliverFixedExtentList(
                   itemExtent: 136.h,
                   delegate: SliverChildBuilderDelegate(
@@ -239,12 +256,15 @@ class CommingLesson extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
+      onTap: () async {
+        ChiTietBuoiHocModel lessonModels = await LessonRepo().lessonDetails();
         pushWithoutNavBar(
           context,
           MaterialPageRoute(
             builder: (context) => LessonDetailsScreen(
               videoLesson: videoLesson,
+              chiTiet: lessonModels,
+              document: const [],
             ),
           ),
         );
@@ -384,10 +404,36 @@ class CourseItem extends StatelessWidget {
         Positioned(
           top: 0,
           right: 0,
+          child: Container(
+            height: 25.h,
+            decoration: const BoxDecoration(color: Colors.white),
+            child: Text(
+              subject.status,
+              style: defaultText12.copyWith(
+                fontFamily: 'Nunito-Bold',
+              ),
+            ),
+          ),
+        ),
+        Positioned(
+          bottom: 40.h,
+          left: 8.w,
           child: Text(
-            subject.status,
-            style: defaultText12.copyWith(
+            subject.startDate,
+            style: defaultText14.copyWith(
               fontFamily: 'Nunito-Bold',
+              color: Colors.white,
+            ),
+          ),
+        ),
+        Positioned(
+          bottom: 40.h,
+          left: 128.w,
+          child: Text(
+            subject.endDate,
+            style: defaultText14.copyWith(
+              fontFamily: 'Nunito-Bold',
+              color: Colors.white,
             ),
           ),
         ),

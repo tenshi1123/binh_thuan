@@ -7,16 +7,19 @@ import 'package:dio/dio.dart';
 import 'package:sp_util/sp_util.dart';
 
 class LessonRepo {
-  Future<LessonModel> lessonDetails() async {
+  Future<ChiTietBuoiHocModel> lessonDetails({String id = '1'}) async {
     Dio dio = Dio();
-    dio.options.headers['Authorization'] = SpUtil.getString(
-      ConstString.token,
-    );
+    dio.options.headers['Authorization'] =
+        'Bearer ${SpUtil.getString(ConstString.token)}';
     Response response;
-    response = await dio.post(ApiPath.lesson,
-        data: jsonEncode({
-          'id': '1',
-        }));
-    return LessonModel.fromJson(response.data);
+    response = await dio.post(
+      ApiPath.lesson,
+      data: jsonEncode(
+        {
+          'id': int.parse(id),
+        },
+      ),
+    );
+    return ChiTietBuoiHocModel.fromJson(response.data);
   }
 }

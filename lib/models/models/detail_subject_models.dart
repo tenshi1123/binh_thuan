@@ -1,8 +1,10 @@
+import 'package:binh_thuan/models/models/lesson_model.dart';
+
 class DetailSubjectModels {
   final InfoModels info;
   final List<LichHocModels> lichHoc;
   final List<LessonModels> lesson;
-  final List<DocumentModels> document;
+  final List<DocumentModel> document;
   DetailSubjectModels({
     required this.info,
     required this.lichHoc,
@@ -22,9 +24,9 @@ class DetailSubjectModels {
           (model) => LessonModels.fromJson(model),
         ),
       ),
-      document: List<DocumentModels>.from(
+      document: List<DocumentModel>.from(
         (json['document'] ?? []).map(
-          (e) => DocumentModels.fromJson(e),
+          (e) => DocumentModel.fromJson(e),
         ),
       ),
     );
@@ -61,7 +63,7 @@ class LichHocModels {
   final String timeEnd;
   final String hinhThuc;
   final String dayofWeek;
-  final String day;
+  final DateTime day;
   final String status;
   final String statusValue;
   LichHocModels(
@@ -78,16 +80,16 @@ class LichHocModels {
       required this.statusValue});
   factory LichHocModels.fromJson(Map<String, dynamic> json) {
     return LichHocModels(
-      id: json['teachers_full_name'] ?? 'unknow',
+      id: json['id'] ?? '1',
       name: json['subject_name'] ?? 'không xác định',
-      classroom: json['start_date'] ?? 'không xác định',
-      timeType: json['end_date'] ?? 'không xác định',
+      classroom: json['class_room_name'] ?? 'online/zoom',
+      timeType: json['time_slot_type'] ?? 'không xác định',
       timeStart: json['time_start'] ?? '',
       timeEnd: json['time_end'] ?? '',
       status: json['status'] ?? 'không xác định',
       hinhThuc: json['hinh_thuc_hoc'] ?? '',
       dayofWeek: json['day_of_week'] ?? '',
-      day: json['day'] ?? '',
+      day: DateTime.parse(json['day'] ?? ''),
       statusValue: json['status_value'] ?? '',
     );
   }

@@ -65,6 +65,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   child: TextField(
                     style: defaultText16,
+                    keyboardType: const TextInputType.numberWithOptions(),
                     controller: studenIdController,
                     //focusNode: _focusNode,
                     scrollPadding: EdgeInsets.symmetric(

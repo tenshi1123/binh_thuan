@@ -6,8 +6,6 @@ import "package:flutter/material.dart";
 import "package:flutter_screenutil/flutter_screenutil.dart";
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:tab_container/tab_container.dart';
-
-import 'subject_tab/tab_exercise.dart';
 import 'subject_tab/tab_infomation.dart';
 import 'subject_tab/tab_schedule.dart';
 
@@ -166,7 +164,8 @@ List<Widget> _getTabs1() {
 List<Widget> getChildren2(DetailSubjectModels detailSubject) {
   return [
     TabSchedule(
-      name: _tabs[0],
+      lichHoc: detailSubject.lichHoc,
+      document: detailSubject.document,
     ),
     // TabExercise(
     //   name: _tabs[1],

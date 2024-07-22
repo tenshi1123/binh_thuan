@@ -2,6 +2,7 @@ import 'package:binh_thuan/constants/colors.dart';
 import 'package:binh_thuan/constants/string.dart';
 import 'package:binh_thuan/constants/styles.dart';
 import 'package:binh_thuan/models/models/login_model.dart';
+import 'package:binh_thuan/modules/auth/forgor_password/change_password_screen.dart';
 import 'package:binh_thuan/modules/auth/login/login_screen.dart';
 import 'package:binh_thuan/modules/bottom_navigation_bar/home/custom_widget_home.dart';
 import 'package:binh_thuan/modules/chat/screen/list_conversation.dart';
@@ -498,9 +499,23 @@ class _InfoScreenState extends State<InfoScreen> {
                 style: defaultBoldText,
               ),
             ),
-            const ManagementItem(
-              title: 'Đổi mật khẩu',
-              icon: 'assets/icons/bell_icon.svg',
+            GestureDetector(
+              onTap: () {
+                pushWithoutNavBar(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const ChangePassScreen(),
+                  ),
+                );
+                // AppRouter.toPage(
+                //   context, AppPages.ChangePassScreen,
+                //   // blocValue: _authBloc,
+                // );
+              },
+              child: const ManagementItem(
+                title: 'Đổi mật khẩu',
+                icon: 'assets/icons/bell_icon.svg',
+              ),
             ),
             Divider(
               indent: 20.w,

@@ -266,7 +266,10 @@ class IsComingItem extends StatelessWidget {
 }
 
 Widget homeTab(
-    {required String title, bool isSeprator = true, bool hasNumber = true}) {
+    {required String title,
+    bool isSeprator = true,
+    bool hasNumber = true,
+    int count = 21}) {
   return Tab(
     child: Container(
       // width: 130.w,
@@ -300,7 +303,7 @@ Widget homeTab(
                   margin: EdgeInsets.only(left: 8.h),
                   child: Center(
                     child: Text(
-                      '21',
+                      '$count',
                       style: defaultText12.copyWith(color: Colors.white),
                     ),
                   ),

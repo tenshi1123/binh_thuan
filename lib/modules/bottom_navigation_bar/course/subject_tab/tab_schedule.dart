@@ -1,11 +1,18 @@
 import 'package:binh_thuan/constants/styles.dart';
+import 'package:binh_thuan/models/models/detail_subject_models.dart';
+import 'package:binh_thuan/models/models/lesson_model.dart';
 import 'package:binh_thuan/modules/bottom_navigation_bar/course/subject_tab/schedule_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class TabSchedule extends StatelessWidget {
-  final String name;
-  const TabSchedule({super.key, required this.name});
+  final List<LichHocModels> lichHoc;
+  final List<DocumentModel> document;
+  const TabSchedule({
+    super.key,
+    required this.lichHoc,
+    required this.document,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +38,12 @@ class TabSchedule extends StatelessWidget {
               ' \rThời khóa biểu',
               style: defaultBoldText,
             ),
-            const Expanded(child: ScheduleItem()),
+            Expanded(
+                child: ScheduleItem(
+              lichHocSaptoi: [...lichHoc.where((e) => e.statusValue == '0')],
+              daHoanThanh: [...lichHoc.where((e) => e.statusValue == '1')],
+              document: document,
+            )),
           ],
         ),
       ),

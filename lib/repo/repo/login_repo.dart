@@ -6,6 +6,7 @@ import 'package:binh_thuan/models/models/login_model.dart';
 import 'package:binh_thuan/repo/repo/home_repo.dart';
 import 'package:dio/dio.dart';
 import 'package:sp_util/sp_util.dart';
+import 'package:crypto/crypto.dart';
 
 class LoginRepo {
   Future<HomeModel> login(String code, String password) async {
@@ -42,17 +43,25 @@ class LoginRepo {
     return response.data["token"];
   }
 
-  Future<String> changePassword(String code, String password) async {
+  Future<String> changePassword(
+    String oldPass,
+    String newPass,
+  ) async {
     Dio dio = Dio();
     Response response;
+    String md5OldPass = md5.convert(utf8.encode(oldPass)).toString();
+    String md5NewPass = md5.convert(utf8.encode(newPass)).toString();
+    response = await dio.post(
+      ApiPath.changePass,
+      data: jsonEncode(
+        {
+          'password_old': md5OldPass,
+          'pass_new': md5NewPass,
+          're_pass_new': md5NewPass,
+        },
+      ),
+    );
 
-    response = await dio.post(ApiPath.changePass,
-        data: jsonEncode({
-          'password_old': '2302682572',
-          'pass_new': 'e10adc3949ba59abbe56e057f20f883e',
-          're_pass_new': ''
-        }));
-
-    return response.data["token"];
+    return response.data["type"];
   }
 }

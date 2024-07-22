@@ -1,5 +1,6 @@
 import 'package:binh_thuan/constants/colors.dart';
 import 'package:binh_thuan/models/models/detail_subject_models.dart';
+import 'package:binh_thuan/models/models/lesson_model.dart';
 import 'package:binh_thuan/modules/bottom_navigation_bar/home/custom_widget_home.dart';
 import 'package:binh_thuan/modules/exercise/exercise_screen.dart';
 import 'package:binh_thuan/modules/lesson_details/screen/lesson_details_screen.dart';
@@ -7,8 +8,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ScheduleItem extends StatelessWidget {
-  const ScheduleItem({super.key});
-
+  const ScheduleItem({
+    super.key,
+    required this.lichHocSaptoi,
+    required this.daHoanThanh,
+    required this.document,
+  });
+  final List<LichHocModels> lichHocSaptoi;
+  final List<LichHocModels> daHoanThanh;
+  final List<DocumentModel> document;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,7 +39,7 @@ class ScheduleItem extends StatelessWidget {
         unselectedLabelColor: keyBlack.withOpacity(0.3),
         labelColor: keyBlack,
 
-        tabs: _tabSchedule(), //list of tabs
+        tabs: _tabSchedule(lichHocSaptoi, daHoanThanh), //list of tabs
       ),
       body: TabBarView(
         children: _tabs.map((String name) {
@@ -53,13 +61,19 @@ class ScheduleItem extends StatelessWidget {
                         itemExtent: 120.h,
                         delegate: SliverChildBuilderDelegate(
                           (BuildContext context, int index) {
-                            return
-                                // (name == 'Tất cả')
-                                //     ?  ComingLesson(comingLessonModels: ,)
-                                //     :
-                                const CompleteLesson();
+                            return (name == 'Sắp tới')
+                                ? CompleteLesson(
+                                    lichHoc: lichHocSaptoi[index],
+                                    document: document,
+                                  )
+                                : CompleteLesson(
+                                    lichHoc: daHoanThanh[index],
+                                    document: document,
+                                  );
                           },
-                          childCount: 30,
+                          childCount: (name == 'Sắp tới')
+                              ? lichHocSaptoi.length
+                              : daHoanThanh.length,
                         ),
                       ),
                     ),
@@ -74,21 +88,24 @@ class ScheduleItem extends StatelessWidget {
   }
 }
 
-List<Widget> _tabSchedule() => [
-      homeTab(title: "Sắp tới", isSeprator: false),
-      homeTab(title: "Đã hoàn thành"),
-      const SizedBox()
+List<Widget> _tabSchedule(
+        List<LichHocModels> lichHocSaptoi, List<LichHocModels> daHoanThanh) =>
+    [
+      homeTab(title: "Sắp tới", isSeprator: false, count: lichHocSaptoi.length),
+      homeTab(title: "Đã hoàn thành", count: daHoanThanh.length),
+      //const SizedBox()
     ];
 List<Widget> _tabScroll() => [
       homeTab(title: "Video", isSeprator: false),
       homeTab(title: "PDF"),
       const SizedBox()
     ];
-const List<String> _tabs = <String>['Tất cả', 'Đang học', 'Chờ'];
+const List<String> _tabs = <String>['Sắp tới', 'Đã hoàn thành'];
 
 class InfoItem extends StatelessWidget {
-  const InfoItem({super.key, required this.videoLesson});
+  const InfoItem({super.key, required this.videoLesson, required this.taiLieu});
   final List<LessonModels> videoLesson;
+  final List<DocumentModel> taiLieu;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -132,11 +149,15 @@ class InfoItem extends StatelessWidget {
                         itemExtent: 83.h,
                         delegate: SliverChildBuilderDelegate(
                           (BuildContext context, int index) {
-                            return DocumentItem(
-                              videoLesson: videoLesson,
-                            );
+                            if (taiLieu.isNotEmpty) {
+                              return DocumentItem(
+                                videoLesson: videoLesson,
+                                taiLieu: taiLieu[index],
+                              );
+                            }
+                            return const SizedBox();
                           },
-                          childCount: 2,
+                          childCount: taiLieu.length,
                         ),
                       ),
                     ),

@@ -475,82 +475,89 @@ class _HomeScreenState extends State<HomeScreen> {
                 padding: EdgeInsets.fromLTRB(20.w, 15.h, 0, 5.h),
                 child: Text('Đang diễn ra', style: defaultBoldText),
               ),
-              Container(
-                width: 390.w,
-                height: 100.h,
-                padding: EdgeInsets.symmetric(horizontal: 20.w),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(10.r)),
-                  boxShadow: [
-                    BoxShadow(
-                      color: kPrimaryColor.withOpacity(0.1),
-                      spreadRadius: 8,
-                      blurRadius: 6,
-                      offset: const Offset(4, 6),
-                    ),
-                  ],
-                  color: Colors.white,
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('Lorem ipsum',
-                            style: defaultBoldText.copyWith(fontSize: 18.sp)),
-                        Container(
-                          margin: const EdgeInsetsDirectional.only(
-                              start: 1.0, end: 1.0),
-                          height: 1.h,
-                          width: 42.w,
-                          color: Colors.black,
-                        ),
-                        Text(
-                          'Tiết 8: Lorem ipsum dolor sit amet',
-                          style: defaultText14,
-                        ),
-                        Row(
-                          children: [
-                            Row(children: [
-                              SvgPicture.asset('assets/icons/online.svg'),
-                              SizedBox(
-                                width: 10.w,
-                              ),
-                              Text(
-                                '07:15 - 08:15',
-                                style: defaultText14.copyWith(
-                                    color: const Color(0xff666666)),
-                              ),
-                            ]),
-                          ],
-                        )
-                      ],
-                    ),
-                    Container(
-                      alignment: Alignment.center,
-                      margin: const EdgeInsets.all(6),
-                      height: 76.h,
-                      width: 76.w,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(8.r),
-                        ),
-                        color: const Color(0xffFF6667),
-                      ),
-                      child: GestureDetector(
-                        onTap: () {
-                          showDialog(
-                              context: context,
-                              builder: (_) => const CustomDialog());
-                        },
-                        child: Text('Vào \nhọc',
-                            style:
-                                defaultBoldText.copyWith(color: Colors.white)),
-                      ),
-                    ),
-                  ],
+              // Container(
+              //   width: 390.w,
+              //   height: 100.h,
+              //   padding: EdgeInsets.symmetric(horizontal: 20.w),
+              //   decoration: BoxDecoration(
+              //     borderRadius: BorderRadius.all(Radius.circular(10.r)),
+              //     boxShadow: [
+              //       BoxShadow(
+              //         color: kPrimaryColor.withOpacity(0.1),
+              //         spreadRadius: 8,
+              //         blurRadius: 6,
+              //         offset: const Offset(4, 6),
+              //       ),
+              //     ],
+              //     color: Colors.white,
+              //   ),
+              //   child: Row(
+              //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //     children: [
+              //       Column(
+              //         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              //         crossAxisAlignment: CrossAxisAlignment.start,
+              //         children: [
+              //           Text('Lorem ipsum',
+              //               style: defaultBoldText.copyWith(fontSize: 18.sp)),
+              //           Container(
+              //             margin: const EdgeInsetsDirectional.only(
+              //                 start: 1.0, end: 1.0),
+              //             height: 1.h,
+              //             width: 42.w,
+              //             color: Colors.black,
+              //           ),
+              //           Text(
+              //             'Tiết 8: Lorem ipsum dolor sit amet',
+              //             style: defaultText14,
+              //           ),
+              //           Row(
+              //             children: [
+              //               Row(children: [
+              //                 SvgPicture.asset('assets/icons/online.svg'),
+              //                 SizedBox(
+              //                   width: 10.w,
+              //                 ),
+              //                 Text(
+              //                   '07:15 - 08:15',
+              //                   style: defaultText14.copyWith(
+              //                       color: const Color(0xff666666)),
+              //                 ),
+              //               ]),
+              //             ],
+              //           )
+              //         ],
+              //       ),
+              //       Container(
+              //         alignment: Alignment.center,
+              //         margin: const EdgeInsets.all(6),
+              //         height: 76.h,
+              //         width: 76.w,
+              //         decoration: BoxDecoration(
+              //           borderRadius: BorderRadius.all(
+              //             Radius.circular(8.r),
+              //           ),
+              //           color: const Color(0xffFF6667),
+              //         ),
+              //         child: GestureDetector(
+              //           onTap: () {
+              //             showDialog(
+              //                 context: context,
+              //                 builder: (_) => const CustomDialog());
+              //           },
+              //           child: Text('Vào \nhọc',
+              //               style:
+              //                   defaultBoldText.copyWith(color: Colors.white)),
+              //         ),
+              //       ),
+              //     ],
+              //   ),
+              // ),
+              Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child:
+                      Text('Hiện không có lớp học nào', style: defaultText14),
                 ),
               ),
               Padding(
@@ -610,7 +617,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 scrollDirection: Axis.vertical,
                 shrinkWrap: true,
                 physics: const ScrollPhysics(),
-                padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 8.h),
+                padding: EdgeInsets.symmetric(vertical: 8.h),
                 itemCount: widget.info.comming.length,
                 itemBuilder: (BuildContext context, int index) {
                   return ComingLesson(

@@ -1,6 +1,7 @@
 import 'package:binh_thuan/constants/colors.dart';
 import 'package:binh_thuan/constants/styles.dart';
 import 'package:binh_thuan/models/models/detail_subject_models.dart';
+import 'package:binh_thuan/models/models/lesson_model.dart';
 import 'package:binh_thuan/modules/exercise/exercise_screen.dart';
 import 'package:binh_thuan/modules/lesson_details/test_screen.dart';
 import 'package:binh_thuan/modules/videoplayer/animation_player.dart';
@@ -10,8 +11,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
 class LessonDetailsScreen extends StatefulWidget {
-  const LessonDetailsScreen({super.key, required this.videoLesson});
+  const LessonDetailsScreen(
+      {super.key,
+      required this.videoLesson,
+      required this.chiTiet,
+      required this.document});
   final List<LessonModels> videoLesson;
+  final ChiTietBuoiHocModel chiTiet;
+  final List<DocumentModel> document;
   @override
   State<LessonDetailsScreen> createState() => _LessonDetailsScreenState();
 }
@@ -19,7 +26,6 @@ class LessonDetailsScreen extends StatefulWidget {
 class _LessonDetailsScreenState extends State<LessonDetailsScreen> {
   // late Timer _timer;
   // int _start = 200;
-
   // void startTimer() {
   //   const oneSec = Duration(seconds: 1);
   //   _timer = Timer.periodic(
@@ -85,10 +91,13 @@ class _LessonDetailsScreenState extends State<LessonDetailsScreen> {
               SizedBox(
                 height: 20.h,
               ),
-              const ItemDetails(),
+              ItemDetails(
+                chiTiet: widget.chiTiet,
+              ),
               _tabSection(
                 context,
                 widget.videoLesson,
+                widget.chiTiet,
               ),
               SizedBox(
                 height: 10.h,
@@ -147,8 +156,8 @@ class _LessonDetailsScreenState extends State<LessonDetailsScreen> {
 }
 
 class ItemDetails extends StatelessWidget {
-  const ItemDetails({super.key});
-
+  const ItemDetails({super.key, required this.chiTiet});
+  final ChiTietBuoiHocModel chiTiet;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -178,26 +187,13 @@ class ItemDetails extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Bài 8: Lorem ipsum dolor sit amet',
+            chiTiet.info.name,
             style: defaultBoldText,
           ),
           Divider(
             color: keyBlack,
             indent: 0.w,
             endIndent: 240.w,
-          ),
-          Text(
-            'Nội dung ',
-            style: defaultBoldText.copyWith(fontSize: 14.sp),
-          ),
-          SizedBox(
-            height: 6.h,
-          ),
-          Text(
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ',
-            style: defaultText14,
-            overflow: TextOverflow.ellipsis,
-            maxLines: 3,
           ),
           SizedBox(
             height: 12.h,
@@ -209,14 +205,28 @@ class ItemDetails extends StatelessWidget {
           SizedBox(
             height: 6.h,
           ),
-          Text(
-            '• Lorem ipsum',
-            style: defaultText14,
-          ),
-          Text(
-            '• Seo do eiusm',
-            style: defaultText14,
-          ),
+          (chiTiet.document.isEmpty)
+              ? Text(
+                  'Không có tài liệu cần chuẩn bị',
+                  style: defaultText14,
+                )
+              : SizedBox(
+                  height: 50.h,
+                  child: ListView.builder(
+                      scrollDirection: Axis.vertical,
+                      padding: const EdgeInsets.all(8),
+                      itemCount: chiTiet.document.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return Text(
+                          '• ${chiTiet.document[0].name}',
+                          style: defaultText14,
+                        );
+                      }),
+                ),
+          // Text(
+          //     '• ${chiTiet.document[0].name}',
+          //     style: defaultText14,
+          //   ),
           SizedBox(
             height: 12.h,
           ),
@@ -227,36 +237,40 @@ class ItemDetails extends StatelessWidget {
                 color: keyBlack,
               ),
               Text(
-                '  07:15 - 08:00 ',
+                ' ${chiTiet.info.timeStart} - ${chiTiet.info.timeEnd} ',
                 style: defaultText14,
               ),
               SizedBox(
-                width: 20.w,
+                width: 40.w,
               ),
               SvgPicture.asset(
                 'assets/icons/teacher_icon.svg',
                 color: keyBlack,
               ),
               Text(
-                '  HươngNN',
+                ' ${chiTiet.info.teacherName}',
+                style: defaultText14,
+              ),
+            ],
+          ),
+          Row(
+            children: [
+              Text(
+                '    ${chiTiet.info.timeType}',
                 style: defaultText14,
               ),
               SizedBox(
-                width: 20.w,
+                width: 84.w,
               ),
               SvgPicture.asset(
                 'assets/icons/book_online.svg',
                 color: keyBlack,
               ),
               Text(
-                '  Online',
+                ' ${chiTiet.info.hinhThuc}',
                 style: defaultText14,
               ),
             ],
-          ),
-          Text(
-            '    Tiết 1',
-            style: defaultText14,
           ),
         ],
       ),
@@ -267,6 +281,7 @@ class ItemDetails extends StatelessWidget {
 Widget _tabSection(
   BuildContext context,
   List<LessonModels> videoLesson,
+  ChiTietBuoiHocModel chiTiet,
 ) {
   return DefaultTabController(
     length: 3,
@@ -290,6 +305,7 @@ Widget _tabSection(
           child: TabBarView(children: [
             DocumentTab(
               videoLesson: videoLesson,
+              taiLieu: chiTiet.document,
             ),
             const MissionItem(),
             const QuestionTab(),
@@ -301,17 +317,28 @@ Widget _tabSection(
 }
 
 class DocumentTab extends StatelessWidget {
-  const DocumentTab({super.key, required this.videoLesson});
+  const DocumentTab(
+      {super.key, required this.videoLesson, required this.taiLieu});
   final List<LessonModels> videoLesson;
+  final List<DocumentModel> taiLieu;
   @override
   Widget build(BuildContext context) {
+    if (taiLieu.isEmpty) {
+      return Center(
+        child: Text(
+          'Không có tài liệu',
+          style: defaultText14,
+        ),
+      );
+    }
     return ListView.builder(
         scrollDirection: Axis.vertical,
         padding: const EdgeInsets.all(8),
-        itemCount: 4,
+        itemCount: taiLieu.length,
         itemBuilder: (BuildContext context, int index) {
           return DocumentItem(
             videoLesson: videoLesson,
+            taiLieu: taiLieu[index],
           );
         });
   }
@@ -421,8 +448,10 @@ class MissionItem extends StatelessWidget {
 }
 
 class DocumentItem extends StatelessWidget {
-  const DocumentItem({super.key, required this.videoLesson});
+  const DocumentItem(
+      {super.key, required this.videoLesson, required this.taiLieu});
   final List<LessonModels> videoLesson;
+  final DocumentModel taiLieu;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -475,7 +504,7 @@ class DocumentItem extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Text(
-                  'Lorem ipsum',
+                  taiLieu.name,
                   style: defaultBoldText,
                 ),
                 Text(

@@ -5,8 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class TabInfomation extends StatelessWidget {
-  const TabInfomation({super.key, required this.detailSubject});
+  const TabInfomation({
+    super.key,
+    required this.detailSubject,
+  });
   final DetailSubjectModels detailSubject;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,6 +76,7 @@ class TabInfomation extends StatelessWidget {
             Expanded(
                 child: InfoItem(
               videoLesson: detailSubject.lesson,
+              taiLieu: detailSubject.document,
             )),
           ],
         ),

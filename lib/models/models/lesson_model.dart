@@ -27,7 +27,7 @@ class InfoModel {
   });
   factory InfoModel.fromJson(Map<String, dynamic> json) {
     return InfoModel(
-      name: (json['name']),
+      name: (json['name']) ?? json['day'],
       teacherName: json['teachers_full_name'] ?? 'không xác định',
       semesterName: json['semester_name'] ?? 'không xác định',
       timeType: json['time_slot_type'] ?? 'không xác định',
@@ -56,29 +56,35 @@ class DocumentModel {
   });
   factory DocumentModel.fromJson(Map<String, dynamic> json) {
     return DocumentModel(
-      name: (json['name']),
-      fileName: json['file_name'] ?? 'không xác định',
-      urlFile: json['url_file'] ?? 'không xác định',
-      fileType: json['file_type'] ?? 'không xác định',
+      name: json['name'] ?? 'Không có tài liệu cần chuẩn bị',
+      fileName: json['file_name'] ?? 'không tồn tại',
+      urlFile: json['url_file'] ?? 'không tồn tại',
+      fileType: json['file_type'] ?? 'không tồn tại',
     );
   }
 }
 
-class LessonModel {
+class ChiTietBuoiHocModel {
   final String libraryId;
   final InfoModel info;
-  final DocumentModel document;
+  final List<DocumentModel> document;
 
-  LessonModel({
+  ChiTietBuoiHocModel({
     required this.libraryId,
     required this.info,
     required this.document,
   });
-  factory LessonModel.fromJson(Map<String, dynamic> json) {
-    return LessonModel(
+  factory ChiTietBuoiHocModel.fromJson(Map<String, dynamic> json) {
+    return ChiTietBuoiHocModel(
       libraryId: (json['libraryId']),
-      info: json['info'] ?? 'không xác định',
-      document: json['document'] ?? 'không xác định',
+      info: InfoModel.fromJson(json['info']),
+      document: (json['document'] != [])
+          ? List<DocumentModel>.from(
+              (json['document'] ?? []).map(
+                (model) => DocumentModel.fromJson(model),
+              ),
+            )
+          : [],
     );
   }
 }
