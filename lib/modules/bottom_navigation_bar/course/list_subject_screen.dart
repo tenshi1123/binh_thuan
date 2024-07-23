@@ -1,14 +1,11 @@
 import 'package:binh_thuan/constants/colors.dart';
 import 'package:binh_thuan/constants/styles.dart';
 import 'package:binh_thuan/models/models/detail_subject_models.dart';
-import 'package:binh_thuan/models/models/lesson_model.dart';
 import 'package:binh_thuan/models/models/login_model.dart';
 import 'package:binh_thuan/models/models/subject_models.dart';
 import 'package:binh_thuan/modules/bottom_navigation_bar/course/subject_screen.dart';
 import 'package:binh_thuan/modules/bottom_navigation_bar/home/custom_widget_home.dart';
 import 'package:binh_thuan/modules/chat/screen/list_conversation.dart';
-import 'package:binh_thuan/modules/lesson_details/screen/lesson_details_screen.dart';
-import 'package:binh_thuan/repo/repo/lesson_repo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -118,6 +115,7 @@ class NestedScroll extends StatelessWidget {
                                 itemBuilder: (BuildContext context, int index) {
                                   return ComingLesson(
                                     comingLessonModels: info.comming[index],
+                                    id: info.comming[index].id,
                                   );
                                 },
                               ),
@@ -250,128 +248,6 @@ List<Widget> getChildren1({
   }).toList();
 }
 
-class CommingLesson extends StatelessWidget {
-  const CommingLesson({super.key, required this.videoLesson});
-  final List<LessonModels> videoLesson;
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () async {
-        ChiTietBuoiHocModel lessonModels = await LessonRepo().lessonDetails();
-        pushWithoutNavBar(
-          context,
-          MaterialPageRoute(
-            builder: (context) => LessonDetailsScreen(
-              videoLesson: videoLesson,
-              chiTiet: lessonModels,
-              document: const [],
-            ),
-          ),
-        );
-      },
-      child: Container(
-        margin: EdgeInsets.symmetric(vertical: 10.h, horizontal: 10.w),
-        width: 200.w,
-        height: 110.h,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(8.r)),
-          boxShadow: [
-            BoxShadow(
-              color: kPrimaryColor.withOpacity(0.2),
-              spreadRadius: 3,
-              blurRadius: 7,
-              offset: const Offset(0, 1),
-            ),
-          ],
-          color: Colors.white,
-        ),
-        child: Row(
-          children: [
-            Container(
-              margin: const EdgeInsets.all(6),
-              height: 76.h,
-              width: 76.w,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(
-                  Radius.circular(8.r),
-                ),
-                color: const Color(0xffF7926E),
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Text(
-                    'Thứ 6',
-                    style: defaultText12.copyWith(
-                      color: Colors.white,
-                    ),
-                  ),
-                  Container(
-                    margin:
-                        const EdgeInsetsDirectional.only(start: 1.0, end: 1.0),
-                    height: 1.h,
-                    width: 42.w,
-                    color: Colors.white,
-                  ),
-                  Text(
-                    '27',
-                    style: defaultText20.copyWith(
-                      fontWeight: FontWeight.w900,
-                      color: Colors.white,
-                    ),
-                  ),
-                  Text(
-                    'tháng 4',
-                    style: defaultText12.copyWith(
-                      color: Colors.white,
-                    ),
-                  )
-                ],
-              ),
-            ),
-            SizedBox(
-              width: 10.w,
-            ),
-            SizedBox(
-              height: 80.h,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Toán',
-                    style: defaultText16.copyWith(
-                      fontWeight: FontWeight.w800,
-                    ),
-                  ),
-                  Row(
-                    children: [
-                      SvgPicture.asset('assets/icons/time_icon.svg'),
-                      Text(
-                        ' 07:15 - 08:00',
-                        style: defaultText12,
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      SvgPicture.asset('assets/icons/bookmark.svg'),
-                      Text(
-                        ' Buổi 9',
-                        style: defaultText12,
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            )
-          ],
-        ),
-      ),
-    );
-  }
-}
-
 class CourseItem extends StatelessWidget {
   const CourseItem({super.key, required this.subject});
   final SubjectModels subject;
@@ -468,3 +344,126 @@ class CourseItem extends StatelessWidget {
     );
   }
 }
+// class CommingLesson extends StatelessWidget {
+//   const CommingLesson({super.key, required this.videoLesson});
+//   final List<LessonModels> videoLesson;
+//   final String id;
+//   @override
+//   Widget build(BuildContext context) {
+//     return GestureDetector(
+//       onTap: () async {
+//         ChiTietBuoiHocModel lessonModels = await LessonRepo().lessonDetails(id:id);
+//         pushWithoutNavBar(
+//           context,
+//           MaterialPageRoute(
+//             builder: (context) => LessonDetailsScreen(
+//               videoLesson: videoLesson,
+//               chiTiet: lessonModels,
+//               document: const [],
+//               id: '',
+//             ),
+//           ),
+//         );
+//       },
+//       child: Container(
+//         margin: EdgeInsets.symmetric(vertical: 10.h, horizontal: 10.w),
+//         width: 200.w,
+//         height: 110.h,
+//         decoration: BoxDecoration(
+//           borderRadius: BorderRadius.all(Radius.circular(8.r)),
+//           boxShadow: [
+//             BoxShadow(
+//               color: kPrimaryColor.withOpacity(0.2),
+//               spreadRadius: 3,
+//               blurRadius: 7,
+//               offset: const Offset(0, 1),
+//             ),
+//           ],
+//           color: Colors.white,
+//         ),
+//         child: Row(
+//           children: [
+//             Container(
+//               margin: const EdgeInsets.all(6),
+//               height: 76.h,
+//               width: 76.w,
+//               decoration: BoxDecoration(
+//                 borderRadius: BorderRadius.all(
+//                   Radius.circular(8.r),
+//                 ),
+//                 color: const Color(0xffF7926E),
+//               ),
+//               child: Column(
+//                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//                 children: [
+//                   Text(
+//                     'Thứ 6',
+//                     style: defaultText12.copyWith(
+//                       color: Colors.white,
+//                     ),
+//                   ),
+//                   Container(
+//                     margin:
+//                         const EdgeInsetsDirectional.only(start: 1.0, end: 1.0),
+//                     height: 1.h,
+//                     width: 42.w,
+//                     color: Colors.white,
+//                   ),
+//                   Text(
+//                     '27',
+//                     style: defaultText20.copyWith(
+//                       fontWeight: FontWeight.w900,
+//                       color: Colors.white,
+//                     ),
+//                   ),
+//                   Text(
+//                     'tháng 4',
+//                     style: defaultText12.copyWith(
+//                       color: Colors.white,
+//                     ),
+//                   )
+//                 ],
+//               ),
+//             ),
+//             SizedBox(
+//               width: 10.w,
+//             ),
+//             SizedBox(
+//               height: 80.h,
+//               child: Column(
+//                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//                 crossAxisAlignment: CrossAxisAlignment.start,
+//                 children: [
+//                   Text(
+//                     'Toán',
+//                     style: defaultText16.copyWith(
+//                       fontWeight: FontWeight.w800,
+//                     ),
+//                   ),
+//                   Row(
+//                     children: [
+//                       SvgPicture.asset('assets/icons/time_icon.svg'),
+//                       Text(
+//                         ' 07:15 - 08:00',
+//                         style: defaultText12,
+//                       ),
+//                     ],
+//                   ),
+//                   Row(
+//                     children: [
+//                       SvgPicture.asset('assets/icons/bookmark.svg'),
+//                       Text(
+//                         ' Buổi 9',
+//                         style: defaultText12,
+//                       ),
+//                     ],
+//                   ),
+//                 ],
+//               ),
+//             )
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }

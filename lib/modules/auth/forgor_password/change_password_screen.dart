@@ -1,7 +1,8 @@
 import 'package:binh_thuan/constants/colors.dart';
+import 'package:binh_thuan/constants/styles.dart';
+import 'package:binh_thuan/repo/repo/login_repo.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ChangePassScreen extends StatefulWidget {
@@ -12,7 +13,19 @@ class ChangePassScreen extends StatefulWidget {
 }
 
 class _ChangePassScreenState extends State<ChangePassScreen> {
-  TextEditingController? studenIdController = TextEditingController();
+  final TextEditingController oldPassController = TextEditingController();
+  final TextEditingController newPassController = TextEditingController();
+  final TextEditingController reNewPassController = TextEditingController();
+  @override
+  void dispose() {
+    // Clean up the controller when the widget is removed from the
+    // widget tree.
+    oldPassController.dispose();
+    newPassController.dispose();
+    reNewPassController.dispose();
+    super.dispose();
+  }
+
   void showErrorDialog(BuildContext context, String message) {
     // set up the AlertDialog
     final CupertinoAlertDialog alert = CupertinoAlertDialog(
@@ -65,113 +78,97 @@ class _ChangePassScreenState extends State<ChangePassScreen> {
         child: SizedBox(
           width: 390.w,
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Container(
-                width: 299.w,
-                height: 49.h,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(8.r),
-                    topRight: Radius.circular(8.r),
-                    bottomLeft: Radius.circular(8.r),
-                    bottomRight: Radius.circular(8.r),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    '  Mật khẩu cũ',
+                    style: defaultText14,
                   ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: kPrimaryColor.withOpacity(0.2),
-                      spreadRadius: 5,
-                      blurRadius: 7,
-                      offset: const Offset(4, 6), // changes position of shadow
+                  Container(
+                    width: 350.w,
+                    height: 45.h,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(8.r)),
+                      color: const Color(0xffDEE4ED),
                     ),
-                  ],
-                  color: Colors.white,
-                ),
-                child: TextField(
-                  controller: studenIdController,
-                  //focusNode: _focusNode,
-                  scrollPadding: EdgeInsets.symmetric(
-                      vertical: MediaQuery.of(context).viewInsets.bottom),
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(borderSide: BorderSide.none),
-                    hintText: 'Mật khẩu cũ ',
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 15.h,
-              ),
-              Container(
-                width: 299.w,
-                height: 49.h,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(8.r),
-                    topRight: Radius.circular(8.r),
-                    bottomLeft: Radius.circular(8.r),
-                    bottomRight: Radius.circular(8.r),
-                  ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: kPrimaryColor.withOpacity(0.2),
-                      spreadRadius: 5,
-                      blurRadius: 7,
-                      offset: const Offset(4, 6), // changes position of shadow
+                    child: TextField(
+                      controller: oldPassController,
+                      style: defaultText16,
+                      //focusNode: _focusNode,
+                      scrollPadding: EdgeInsets.symmetric(
+                          vertical: MediaQuery.of(context).viewInsets.bottom),
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(borderSide: BorderSide.none),
+                      ),
                     ),
-                  ],
-                  color: Colors.white,
-                ),
-                child: TextField(
-                  controller: studenIdController,
-                  //focusNode: _focusNode,
-                  scrollPadding: EdgeInsets.symmetric(
-                      vertical: MediaQuery.of(context).viewInsets.bottom),
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(borderSide: BorderSide.none),
-                    hintText: 'Mật khẩu mới (8-12 ký tự)',
                   ),
-                ),
-              ),
-              SizedBox(
-                height: 15.h,
-              ),
-              Container(
-                width: 299.w,
-                height: 49.h,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(8.r),
-                    topRight: Radius.circular(8.r),
-                    bottomLeft: Radius.circular(8.r),
-                    bottomRight: Radius.circular(8.r),
+                  SizedBox(
+                    height: 15.h,
                   ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: kPrimaryColor.withOpacity(0.2),
-                      spreadRadius: 5,
-                      blurRadius: 7,
-                      offset: const Offset(4, 6), // changes position of shadow
+                  Text(
+                    '  Mật khẩu mới',
+                    style: defaultText14,
+                  ),
+                  Container(
+                    width: 350.w,
+                    height: 45.h,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(8.r)),
+                      color: const Color(0xffDEE4ED),
                     ),
-                  ],
-                  color: Colors.white,
-                ),
-                child: TextField(
-                  controller: studenIdController,
-                  //focusNode: _focusNode,
-                  scrollPadding: EdgeInsets.symmetric(
-                      vertical: MediaQuery.of(context).viewInsets.bottom),
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(borderSide: BorderSide.none),
-                    hintText: 'Xác nhận mật khẩu (8-12 ký tự)',
+                    child: TextField(
+                      style: defaultText16,
+                      controller: newPassController,
+                      //focusNode: _focusNode,
+                      scrollPadding: EdgeInsets.symmetric(
+                          vertical: MediaQuery.of(context).viewInsets.bottom),
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(borderSide: BorderSide.none),
+                      ),
+                    ),
                   ),
-                ),
+                  SizedBox(
+                    height: 15.h,
+                  ),
+                  Text(
+                    '  Xác nhận mật khẩu mới',
+                    style: defaultText14,
+                  ),
+                  Container(
+                    width: 350.w,
+                    height: 49.h,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(8.r)),
+                      color: const Color(0xffDEE4ED),
+                    ),
+                    child: TextField(
+                      style: defaultText16,
+                      controller: reNewPassController,
+                      //focusNode: _focusNode,
+                      scrollPadding: EdgeInsets.symmetric(
+                          vertical: MediaQuery.of(context).viewInsets.bottom),
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(borderSide: BorderSide.none),
+                      ),
+                    ),
+                  ),
+                ],
               ),
               SizedBox(
                 height: 30.h,
               ),
               GestureDetector(
                 onTap: () {
-                  showErrorDialog(context, 'Đổi mật khẩu thành công');
+                  if (oldPassController.text.isNotEmpty &&
+                      newPassController.text == reNewPassController.text) {
+                    LoginRepo().changePassword(
+                      oldPass: oldPassController.text,
+                      newPass: newPassController.text,
+                    );
+                    showErrorDialog(context, 'Đổi mật khẩu thành công');
+                  }
                 },
                 child: Container(
                   height: 45.h,

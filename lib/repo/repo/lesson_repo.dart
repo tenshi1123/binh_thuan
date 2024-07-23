@@ -22,4 +22,21 @@ class LessonRepo {
     );
     return ChiTietBuoiHocModel.fromJson(response.data);
   }
+
+  Future sendQuestion({required String id, required String content}) async {
+    Dio dio = Dio();
+    dio.options.headers['Authorization'] =
+        'Bearer ${SpUtil.getString(ConstString.token)}';
+    Response response;
+    response = await dio.post(
+      ApiPath.thacMac,
+      data: jsonEncode(
+        {
+          'id': int.parse(id),
+          'question': content,
+        },
+      ),
+    );
+    return response.data["type"];
+  }
 }

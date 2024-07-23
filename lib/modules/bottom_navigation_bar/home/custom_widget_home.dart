@@ -55,12 +55,18 @@ class CustomDialog extends StatelessWidget {
 final _random = Random();
 
 class ComingLesson extends StatelessWidget {
-  const ComingLesson({super.key, required this.comingLessonModels});
+  const ComingLesson({
+    super.key,
+    required this.comingLessonModels,
+    required this.id,
+  });
   final ComingLessonModels comingLessonModels;
+  final String id;
   @override
   Widget build(BuildContext context) => GestureDetector(
         onTap: () async {
-          ChiTietBuoiHocModel lessonModels = await LessonRepo().lessonDetails();
+          ChiTietBuoiHocModel lessonModels =
+              await LessonRepo().lessonDetails(id: id);
           pushWithoutNavBar(
             context,
             MaterialPageRoute(
@@ -68,6 +74,7 @@ class ComingLesson extends StatelessWidget {
                 videoLesson: const [],
                 chiTiet: lessonModels,
                 document: const [],
+                id: id,
               ),
             ),
           );
@@ -186,6 +193,7 @@ class CompleteLesson extends StatelessWidget {
                 videoLesson: const [],
                 chiTiet: lessonModels,
                 document: document,
+                id: lichHoc.id,
               ),
             ),
           );

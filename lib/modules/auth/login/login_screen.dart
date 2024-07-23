@@ -40,28 +40,22 @@ class _LoginScreenState extends State<LoginScreen> {
             },
             child: Stack(children: <Widget>[
               Positioned(
-                top: 476.h - MediaQuery.of(context).viewInsets.bottom,
+                top: 452.h - MediaQuery.of(context).viewInsets.bottom,
+                left: 52.w,
+                child: Text(
+                  'Mã học sinh',
+                  style: defaultText14,
+                ),
+              ),
+              Positioned(
+                top: 472.h - MediaQuery.of(context).viewInsets.bottom,
                 left: 46.w,
                 child: Container(
                   width: 299.w,
                   height: 49.h,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(8.r),
-                      topRight: Radius.circular(8.r),
-                      bottomLeft: Radius.circular(8.r),
-                      bottomRight: Radius.circular(8.r),
-                    ),
-                    boxShadow: [
-                      BoxShadow(
-                        color: kPrimaryColor.withOpacity(0.2),
-                        spreadRadius: 5,
-                        blurRadius: 7,
-                        offset:
-                            const Offset(4, 6), // changes position of shadow
-                      ),
-                    ],
-                    color: Colors.white,
+                    borderRadius: BorderRadius.all(Radius.circular(8.r)),
+                    color: const Color(0xffDEE4ED),
                   ),
                   child: TextField(
                     style: defaultText16,
@@ -72,7 +66,6 @@ class _LoginScreenState extends State<LoginScreen> {
                         vertical: MediaQuery.of(context).viewInsets.bottom),
                     decoration: const InputDecoration(
                       border: OutlineInputBorder(borderSide: BorderSide.none),
-                      hintText: 'Mã học sinh',
                       hintStyle: TextStyle(
                         fontSize: 16.0,
                         color: Color(0xff999999),
@@ -83,27 +76,21 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               Positioned(
                 top: 542.h - MediaQuery.of(context).viewInsets.bottom,
+                left: 52.w,
+                child: Text(
+                  'Mật khẩu',
+                  style: defaultText14,
+                ),
+              ),
+              Positioned(
+                top: 562.h - MediaQuery.of(context).viewInsets.bottom,
                 left: 46.w,
                 child: Container(
                   width: 299.w,
                   height: 49.h,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(8.r),
-                      topRight: Radius.circular(8.r),
-                      bottomLeft: Radius.circular(8.r),
-                      bottomRight: Radius.circular(8.r),
-                    ),
-                    boxShadow: [
-                      BoxShadow(
-                        color: kPrimaryColor.withOpacity(0.2),
-                        spreadRadius: 5,
-                        blurRadius: 7,
-                        offset:
-                            const Offset(4, 6), // changes position of shadow
-                      ),
-                    ],
-                    color: Colors.white,
+                    borderRadius: BorderRadius.all(Radius.circular(8.r)),
+                    color: const Color(0xffDEE4ED),
                   ),
                   child: TextField(
                     obscureText: _isObscure,
@@ -116,7 +103,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     decoration: InputDecoration(
                       border:
                           const OutlineInputBorder(borderSide: BorderSide.none),
-                      hintText: 'Mật khẩu',
                       hintStyle: const TextStyle(
                         fontSize: 16.0,
                         color: Color(0xff999999),

@@ -23,30 +23,43 @@ class LoginRepo {
     //String type = response.data['type'];
     //if (type == 'success') {
     SpUtil.putString(ConstString.token, response.data["token"]);
+    SpUtil.putString('id_user', response.data["student_id"]);
     info = await HomeRepo().home(token: response.data["token"]);
     //}
 
     return info;
   }
 
+  static String? get idUser => SpUtil.getString('id_user', defValue: null);
   Future<String> refreshToken() async {
+    // Dio dio = Dio();
+    // dio.options.headers['Authorization'] =
+    //     'Bearer ${SpUtil.getString(ConstString.token)}';
+
+    // Response response;
+
+    // response = await dio.post(
+    //   ApiPath.refreshToken,
+    // );
+    // SpUtil.putString(ConstString.token, response.data["token"]);
+    // return response.data["token"];
     Dio dio = Dio();
-    dio.options.headers['Authorization'] =
-        'Bearer ${SpUtil.getString(ConstString.token)}';
-
+    dio.options.headers['Token'] = 'BT123456789';
     Response response;
-
-    response = await dio.post(
-      ApiPath.refreshToken,
-    );
+    response = await dio.post(ApiPath.login,
+        data: jsonEncode({
+          'code': '2302682572',
+          'password': 'e10adc3949ba59abbe56e057f20f883e',
+        }));
     SpUtil.putString(ConstString.token, response.data["token"]);
+
     return response.data["token"];
   }
 
-  Future<String> changePassword(
-    String oldPass,
-    String newPass,
-  ) async {
+  Future<String> changePassword({
+    required String oldPass,
+    required String newPass,
+  }) async {
     Dio dio = Dio();
     Response response;
     String md5OldPass = md5.convert(utf8.encode(oldPass)).toString();

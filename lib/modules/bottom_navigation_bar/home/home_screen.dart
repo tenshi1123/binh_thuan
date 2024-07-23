@@ -622,6 +622,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 itemBuilder: (BuildContext context, int index) {
                   return ComingLesson(
                     comingLessonModels: widget.info.comming[index],
+                    id: widget.info.comming[index].id,
                   );
                 },
               ),

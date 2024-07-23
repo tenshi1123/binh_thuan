@@ -1,7 +1,6 @@
 import 'package:binh_thuan/constants/colors.dart';
 import 'package:binh_thuan/constants/styles.dart';
 import 'package:binh_thuan/models/models/detail_subject_models.dart';
-import 'package:binh_thuan/modules/bottom_navigation_bar/course/list_subject_screen.dart';
 import "package:flutter/material.dart";
 import "package:flutter_screenutil/flutter_screenutil.dart";
 import 'package:flutter_svg/flutter_svg.dart';
@@ -176,22 +175,22 @@ List<Widget> getChildren2(DetailSubjectModels detailSubject) {
   ];
 }
 
-class Schedule extends StatelessWidget {
-  const Schedule({super.key});
+// class Schedule extends StatelessWidget {
+//   const Schedule({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return ListView.builder(
-        scrollDirection: Axis.vertical,
-        padding: const EdgeInsets.all(8),
-        itemCount: 4,
-        itemBuilder: (BuildContext context, int index) {
-          return const CommingLesson(
-            videoLesson: [],
-          );
-        });
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return ListView.builder(
+//         scrollDirection: Axis.vertical,
+//         padding: const EdgeInsets.all(8),
+//         itemCount: 4,
+//         itemBuilder: (BuildContext context, int index) {
+//           return const CommingLesson(
+//             videoLesson: [],
+//           );
+//         });
+//   }
+// }
 
 class Exercise extends StatelessWidget {
   const Exercise({super.key});

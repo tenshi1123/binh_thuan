@@ -4,21 +4,25 @@ import 'package:binh_thuan/models/models/detail_subject_models.dart';
 import 'package:binh_thuan/models/models/lesson_model.dart';
 import 'package:binh_thuan/modules/exercise/exercise_screen.dart';
 import 'package:binh_thuan/modules/lesson_details/test_screen.dart';
-import 'package:binh_thuan/modules/videoplayer/animation_player.dart';
+import 'package:binh_thuan/repo/repo/lesson_repo.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class LessonDetailsScreen extends StatefulWidget {
-  const LessonDetailsScreen(
-      {super.key,
-      required this.videoLesson,
-      required this.chiTiet,
-      required this.document});
+  const LessonDetailsScreen({
+    super.key,
+    required this.videoLesson,
+    required this.chiTiet,
+    required this.document,
+    required this.id,
+  });
   final List<LessonModels> videoLesson;
   final ChiTietBuoiHocModel chiTiet;
   final List<DocumentModel> document;
+  final String id;
   @override
   State<LessonDetailsScreen> createState() => _LessonDetailsScreenState();
 }
@@ -98,6 +102,7 @@ class _LessonDetailsScreenState extends State<LessonDetailsScreen> {
                 context,
                 widget.videoLesson,
                 widget.chiTiet,
+                widget.id,
               ),
               SizedBox(
                 height: 10.h,
@@ -282,6 +287,7 @@ Widget _tabSection(
   BuildContext context,
   List<LessonModels> videoLesson,
   ChiTietBuoiHocModel chiTiet,
+  String id,
 ) {
   return DefaultTabController(
     length: 3,
@@ -308,7 +314,9 @@ Widget _tabSection(
               taiLieu: chiTiet.document,
             ),
             const MissionItem(),
-            const QuestionTab(),
+            QuestionTab(
+              id: id,
+            ),
           ]),
         ),
       ],
@@ -455,13 +463,10 @@ class DocumentItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const AnimationPlayer(),
-          ),
-        );
+      onTap: () async {
+        if (!await launchUrl(Uri.parse(taiLieu.urlFile))) {
+          throw Exception('Could not launch ');
+        }
       },
       child: Container(
         width: 350.w,
@@ -508,7 +513,7 @@ class DocumentItem extends StatelessWidget {
                   style: defaultBoldText,
                 ),
                 Text(
-                  'Video',
+                  taiLieu.fileType,
                   style: defaultText14.copyWith(color: color999),
                 ),
               ],
@@ -521,14 +526,15 @@ class DocumentItem extends StatelessWidget {
 }
 
 class QuestionTab extends StatefulWidget {
-  const QuestionTab({super.key});
+  const QuestionTab({super.key, required this.id});
+  final String id;
 
   @override
   State<QuestionTab> createState() => _QuestionTabState();
 }
 
 class _QuestionTabState extends State<QuestionTab> {
-  TextEditingController? questionController = TextEditingController();
+  final TextEditingController questionController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -540,17 +546,14 @@ class _QuestionTabState extends State<QuestionTab> {
             children: [
               SizedBox(
                 width: 320.w,
-                //height: 60.h,
                 child: TextField(
                   style: defaultText16,
                   onTapOutside: (event) {
                     FocusManager.instance.primaryFocus?.unfocus();
                   },
-                  //keyboardType: TextInputType.multiline,
                   minLines: 1,
                   maxLines: 5,
                   controller: questionController,
-                  //focusNode: _focusNode,
                   scrollPadding: EdgeInsets.symmetric(
                       vertical: MediaQuery.of(context).viewInsets.bottom),
                   decoration: InputDecoration(
@@ -566,7 +569,9 @@ class _QuestionTabState extends State<QuestionTab> {
               ),
               GestureDetector(
                 onTap: () {
-                  questionController?.clear();
+                  LessonRepo().sendQuestion(
+                      id: widget.id, content: questionController.text);
+                  questionController.clear();
                 },
                 child: SvgPicture.asset('assets/icons/plane.svg'),
               ),
