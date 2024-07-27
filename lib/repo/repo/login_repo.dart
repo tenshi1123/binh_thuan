@@ -2,32 +2,35 @@ import 'dart:convert';
 
 import 'package:binh_thuan/constants/api_path.dart';
 import 'package:binh_thuan/constants/string.dart';
-import 'package:binh_thuan/models/models/login_model.dart';
-import 'package:binh_thuan/repo/repo/home_repo.dart';
 import 'package:dio/dio.dart';
 import 'package:sp_util/sp_util.dart';
 import 'package:crypto/crypto.dart';
 
 class LoginRepo {
-  Future<HomeModel> login(String code, String password) async {
+  Future<bool> login(String code, String password) async {
     Dio dio = Dio();
     dio.options.headers['Token'] = 'BT123456789';
-
     Response response;
-    HomeModel info;
-    response = await dio.post(ApiPath.login,
-        data: jsonEncode({
-          'code': code,
-          'password': password,
-        }));
+
     //String type = response.data['type'];
     //if (type == 'success') {
-    SpUtil.putString(ConstString.token, response.data["token"]);
-    SpUtil.putString('id_user', response.data["student_id"]);
-    info = await HomeRepo().home(token: response.data["token"]);
     //}
+    try {
+      response = await dio.post(ApiPath.login,
+          data: jsonEncode({
+            'code': code,
+            'password': password,
+          }));
+      SpUtil.putString(ConstString.token, response.data["token"]);
+      SpUtil.putString('id_user', response.data["student_id"]);
+      SpUtil.putString(ConstString.idStudent, code);
+      SpUtil.putString(ConstString.md5Pass, password);
+    } on DioException {
+      // in case of a code that is not success, you can get it here through object 'e'
+      return false;
+    }
 
-    return info;
+    return response.data["token"] != null;
   }
 
   static String? get idUser => SpUtil.getString('id_user', defValue: null);
@@ -48,8 +51,8 @@ class LoginRepo {
     Response response;
     response = await dio.post(ApiPath.login,
         data: jsonEncode({
-          'code': '2302682572',
-          'password': 'e10adc3949ba59abbe56e057f20f883e',
+          'code': SpUtil.getString(ConstString.idStudent),
+          'password': SpUtil.getString(ConstString.md5Pass),
         }));
     SpUtil.putString(ConstString.token, response.data["token"]);
 

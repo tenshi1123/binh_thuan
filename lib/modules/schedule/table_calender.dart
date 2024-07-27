@@ -1,5 +1,6 @@
 import 'package:binh_thuan/constants/colors.dart';
 import 'package:binh_thuan/constants/styles.dart';
+import 'package:binh_thuan/models/calender_model.dart';
 import 'package:binh_thuan/modules/bottom_navigation_bar/home/custom_widget_home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -7,27 +8,28 @@ import 'package:table_calendar/table_calendar.dart';
 import 'utils.dart';
 
 class TableEventsExample extends StatefulWidget {
-  const TableEventsExample({super.key});
-
+  const TableEventsExample({super.key, required this.listCalender});
+  final List<CalenderEventModel> listCalender;
   @override
   _TableEventsExampleState createState() => _TableEventsExampleState();
 }
 
 class _TableEventsExampleState extends State<TableEventsExample> {
-  late final ValueNotifier<List<Event>> _selectedEvents;
   CalendarFormat _calendarFormat = CalendarFormat.month;
   RangeSelectionMode _rangeSelectionMode = RangeSelectionMode
       .toggledOff; // Can be toggled on/off by longpressing a date
   DateTime _focusedDay = DateTime.now();
+  late final ValueNotifier<List<CalenderEventModel>> _selectedEvents;
   DateTime? _selectedDay;
   DateTime? _rangeStart;
   DateTime? _rangeEnd;
+  late List<CalenderEventModel> listCalender;
   @override
   void initState() {
     super.initState();
-
+    listCalender = widget.listCalender;
     _selectedDay = _focusedDay;
-    _selectedEvents = ValueNotifier(_getEventsForDay(_selectedDay!));
+    _selectedEvents = ValueNotifier(_getEventModels(_selectedDay!));
   }
 
   @override
@@ -36,17 +38,24 @@ class _TableEventsExampleState extends State<TableEventsExample> {
     super.dispose();
   }
 
-  List<Event> _getEventsForDay(DateTime day) {
-    // Implementation example
-    return kEvents[day] ?? [];
+  // List<Event> _getEventsForDay(DateTime day) {
+  //   // Implementation example
+  //   return kEvents[day] ?? [];
+  // }
+
+  List<CalenderEventModel> _getEventModels(DateTime day) {
+    List<CalenderEventModel> test = [
+      ...listCalender.where((e) => e.day.day == day.day)
+    ];
+    return test;
   }
 
-  List<Event> _getEventsForRange(DateTime start, DateTime end) {
+  List<CalenderEventModel> _getEventsForRange(DateTime start, DateTime end) {
     // Implementation example
     final days = daysInRange(start, end);
 
     return [
-      for (final d in days) ..._getEventsForDay(d),
+      for (final d in days) ..._getEventModels(d),
     ];
   }
 
@@ -60,7 +69,7 @@ class _TableEventsExampleState extends State<TableEventsExample> {
         _rangeSelectionMode = RangeSelectionMode.toggledOff;
       });
 
-      _selectedEvents.value = _getEventsForDay(selectedDay);
+      _selectedEvents.value = _getEventModels(selectedDay);
     }
   }
 
@@ -77,9 +86,9 @@ class _TableEventsExampleState extends State<TableEventsExample> {
     if (start != null && end != null) {
       _selectedEvents.value = _getEventsForRange(start, end);
     } else if (start != null) {
-      _selectedEvents.value = _getEventsForDay(start);
+      _selectedEvents.value = _getEventModels(start);
     } else if (end != null) {
-      _selectedEvents.value = _getEventsForDay(end);
+      _selectedEvents.value = _getEventModels(end);
     }
   }
 
@@ -131,7 +140,7 @@ class _TableEventsExampleState extends State<TableEventsExample> {
       ),
       body: Column(
         children: [
-          TableCalendar<Event>(
+          TableCalendar<CalenderEventModel>(
             locale: 'vi_VI',
             firstDay: kFirstDay,
             lastDay: kLastDay,
@@ -150,7 +159,7 @@ class _TableEventsExampleState extends State<TableEventsExample> {
                 )),
             calendarFormat: _calendarFormat,
             rangeSelectionMode: _rangeSelectionMode,
-            eventLoader: _getEventsForDay,
+            eventLoader: _getEventModels,
             startingDayOfWeek: StartingDayOfWeek.monday,
             calendarBuilders: CalendarBuilders(
               markerBuilder: (context, date, events) {
@@ -180,7 +189,7 @@ class _TableEventsExampleState extends State<TableEventsExample> {
           ),
           const SizedBox(height: 8.0),
           Expanded(
-            child: ValueListenableBuilder<List<Event>>(
+            child: ValueListenableBuilder<List<CalenderEventModel>>(
               valueListenable: _selectedEvents,
               builder: (context, value, _) {
                 return value.isEmpty
@@ -197,33 +206,11 @@ class _TableEventsExampleState extends State<TableEventsExample> {
                         padding: const EdgeInsets.all(8),
                         itemCount: value.length,
                         itemBuilder: (BuildContext context, int index) {
-                          return ItemTableCalender();
+                          return ItemTableCalender(
+                            model: value[index],
+                          );
                         },
                       );
-                // ListView.builder(
-                //   itemCount: value.length,
-                //   itemBuilder: (context, index) {
-                //     return Container(
-                //       margin: const EdgeInsets.symmetric(
-                //         horizontal: 12.0,
-                //         vertical: 4.0,
-                //       ),
-                //       decoration: BoxDecoration(
-                //         border: Border.all(),
-                //         borderRadius: BorderRadius.circular(12.0),
-                //       ),
-                //       child: ListTile(
-                //         onTap: () => print('${value[index]}'),
-                //         title: Text(
-                //           '${value[index]}',
-                //           style: const TextStyle(
-                //             color: Colors.orange,
-                //           ),
-                //         ),
-                //       ),
-                //     );
-                //   },
-                // );
               },
             ),
           ),

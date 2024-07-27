@@ -3,12 +3,14 @@ import 'dart:convert';
 import 'package:binh_thuan/constants/colors.dart';
 import 'package:binh_thuan/constants/string.dart';
 import 'package:binh_thuan/constants/styles.dart';
-import 'package:binh_thuan/models/models/login_model.dart';
-import 'package:binh_thuan/models/models/subject_models.dart';
+import 'package:binh_thuan/models/login_model.dart';
+import 'package:binh_thuan/models/subject_models.dart';
+import 'package:binh_thuan/repo/repo/home_repo.dart';
 import 'package:binh_thuan/repo/repo/login_repo.dart';
 import 'package:binh_thuan/repo/repo/subject_repo.dart';
 import 'package:binh_thuan/router/app_pages.dart';
 import 'package:binh_thuan/router/app_router.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -188,23 +190,54 @@ class _LoginScreenState extends State<LoginScreen> {
                   onTap: () async {
                     // "code": "2302682572",
                     // "password": "123456"
-                    HomeModel info = await LoginRepo().login(
+                    bool loged = await LoginRepo().login(
                         studenIdController?.text ?? '',
                         md5
                             .convert(utf8.encode(passController?.text ?? ''))
                             .toString());
-                    List<SubjectModels> listSubjectModels = await SubjectRepo()
-                        .subject(
-                            token: SpUtil.getString(ConstString.token,
-                                    defValue: '') ??
-                                '');
-                    AppRouter.toPage(context, AppPages.NavigationBar,
-                        arguments: {
-                          'info': info,
-                          'listSubjectModel': listSubjectModels
-                        }
-                        // blocValue: _authBloc,
-                        );
+                    if (loged == true) {
+                      HomeModel info = await HomeRepo().home(
+                          token: SpUtil.getString(ConstString.token) ?? '');
+                      List<SubjectModels> listSubjectModels =
+                          await SubjectRepo().subject(
+                              token: SpUtil.getString(ConstString.token,
+                                      defValue: null) ??
+                                  '');
+                      AppRouter.toPage(context, AppPages.NavigationBar,
+                          arguments: {
+                            'info': info,
+                            'listSubjectModel': listSubjectModels
+                          }
+                          // blocValue: _authBloc,
+                          );
+                    } else {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return CupertinoAlertDialog(
+                            title: const Text('Vui lòng thử lại'),
+                            content: const Text(
+                                'Vui lòng kiểm tra lại mã học sinh và mật khẩu của bạn'),
+                            actions: <Widget>[
+                              CupertinoDialogAction(
+                                isDefaultAction: true,
+                                child: const Text(
+                                  'Yes',
+                                  style: TextStyle(
+                                      fontSize: 20, color: kPrimaryColor),
+                                ),
+                                onPressed: () {
+                                  Navigator.of(context, rootNavigator: true)
+                                      .pop(
+                                    (_) => false,
+                                  );
+                                },
+                              )
+                            ],
+                          );
+                        },
+                      );
+                    }
                   },
                   child: Container(
                     height: 48.h,

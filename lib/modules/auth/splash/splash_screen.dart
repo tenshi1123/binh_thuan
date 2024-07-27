@@ -1,7 +1,7 @@
 import 'package:binh_thuan/constants/string.dart';
 import 'package:binh_thuan/main.dart' as main;
-import 'package:binh_thuan/models/models/login_model.dart';
-import 'package:binh_thuan/models/models/subject_models.dart';
+import 'package:binh_thuan/models/login_model.dart';
+import 'package:binh_thuan/models/subject_models.dart';
 import 'package:binh_thuan/modules/auth/login/login_screen.dart';
 import 'package:binh_thuan/modules/bottom_navigation_bar/bottom_nav_bar.dart';
 import 'package:binh_thuan/modules/notification/noti_repo.dart';
@@ -34,7 +34,7 @@ class _SplashScreenAppState extends State<SplashScreenApp> {
   Future<Widget> checkToken() async {
     main.listNotification = await NotificationRepo().getAllNotification();
     String token = SpUtil.getString(ConstString.token, defValue: '') ?? '';
-    sendUserTag(1423);
+    //sendUserTag(1423);
 
     if (token != '') {
       HomeModel info = await HomeRepo().home(token: token);

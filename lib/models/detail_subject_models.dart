@@ -1,4 +1,4 @@
-import 'package:binh_thuan/models/models/lesson_model.dart';
+import 'package:binh_thuan/models/lesson_model.dart';
 
 class DetailSubjectModels {
   final InfoModels info;

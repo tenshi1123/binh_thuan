@@ -1,5 +1,5 @@
 import 'package:binh_thuan/constants/styles.dart';
-import 'package:binh_thuan/models/models/detail_subject_models.dart';
+import 'package:binh_thuan/models/detail_subject_models.dart';
 import 'package:binh_thuan/modules/bottom_navigation_bar/course/subject_tab/schedule_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

@@ -1,13 +1,15 @@
 import 'package:binh_thuan/constants/styles.dart';
-import 'package:binh_thuan/models/models/detail_subject_models.dart';
-import 'package:binh_thuan/models/models/lesson_model.dart';
+import 'package:binh_thuan/models/detail_subject_models.dart';
+import 'package:binh_thuan/models/lesson_model.dart';
 import 'package:binh_thuan/modules/bottom_navigation_bar/course/subject_tab/schedule_item.dart';
+import 'package:binh_thuan/modules/bottom_navigation_bar/home/custom_widget_home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class TabSchedule extends StatelessWidget {
   final List<LichHocModels> lichHoc;
   final List<DocumentModel> document;
+
   const TabSchedule({
     super.key,
     required this.lichHoc,
@@ -16,6 +18,14 @@ class TabSchedule extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // LichHocModels? firstDay =
+    //     [...lichHoc.where((e) => e.statusValue == '0')].first;
+    bool happenning =
+        [...lichHoc.where((e) => e.statusValue == '0')].isNotEmpty &&
+            [...lichHoc.where((e) => e.statusValue == '0')].first.day.day ==
+                DateTime.now().day &&
+            [...lichHoc.where((e) => e.statusValue == '0')].first.day.month ==
+                DateTime.now().month;
     return Scaffold(
       backgroundColor: Colors.white,
       body: Padding(
@@ -31,7 +41,13 @@ class TabSchedule extends StatelessWidget {
             Center(
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Text('Hiện không có lớp học nào', style: defaultText14),
+                child: happenning
+                    ? CompleteLesson(
+                        lichHoc: [...lichHoc.where((e) => e.statusValue == '0')]
+                            .first,
+                        document: document,
+                      )
+                    : Text('Hiện không có lớp học nào ', style: defaultText14),
               ),
             ),
             Text(

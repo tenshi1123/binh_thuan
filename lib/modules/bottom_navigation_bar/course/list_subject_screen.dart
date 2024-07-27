@@ -1,17 +1,17 @@
 import 'package:binh_thuan/constants/colors.dart';
 import 'package:binh_thuan/constants/styles.dart';
-import 'package:binh_thuan/models/models/detail_subject_models.dart';
-import 'package:binh_thuan/models/models/login_model.dart';
-import 'package:binh_thuan/models/models/subject_models.dart';
+import 'package:binh_thuan/models/detail_subject_models.dart';
+import 'package:binh_thuan/models/login_model.dart';
+import 'package:binh_thuan/models/subject_models.dart';
 import 'package:binh_thuan/modules/bottom_navigation_bar/course/subject_screen.dart';
 import 'package:binh_thuan/modules/bottom_navigation_bar/home/custom_widget_home.dart';
-import 'package:binh_thuan/modules/chat/screen/list_conversation.dart';
+import 'package:binh_thuan/router/app_pages.dart';
+import 'package:binh_thuan/router/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
 import 'package:tab_container/tab_container.dart';
-
 import '../../../repo/repo/subject_repo.dart';
 
 class NestedScroll extends StatelessWidget {
@@ -24,154 +24,159 @@ class NestedScroll extends StatelessWidget {
   final List<SubjectModels> listSubjectModel;
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: tabs.length,
-      child: NestedScrollView(
-        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-          return <Widget>[
-            SliverOverlapAbsorber(
-              handle: NestedScrollView.sliverOverlapAbsorberHandleFor(context),
-              sliver: SliverAppBar(
-                flexibleSpace: SafeArea(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(
-                        height: 20.h,
-                      ),
-                      Row(
-                        children: [
-                          SizedBox(
-                            width: 20.w,
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              pushWithoutNavBar(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      const ListConversation(),
+    return SafeArea(
+      child: DefaultTabController(
+        length: tabs.length,
+        child: NestedScrollView(
+          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+            return <Widget>[
+              SliverOverlapAbsorber(
+                handle:
+                    NestedScrollView.sliverOverlapAbsorberHandleFor(context),
+                sliver: SliverAppBar(
+                  flexibleSpace: SafeArea(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          height: 20.h,
+                        ),
+                        Row(
+                          children: [
+                            SizedBox(
+                              width: 20.w,
+                            ),
+                            chatIcon(
+                              context: context,
+                              icon: 'assets/icons/message_icon_blue.svg',
+                            ),
+                            SizedBox(
+                              width: 240.w,
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                AppRouter.toPage(
+                                  context,
+                                  AppPages.NotificationScreen,
+                                  arguments: {},
+                                );
+                              },
+                              child: Container(
+                                height: 32.h,
+                                width: 65.w,
+                                decoration: const BoxDecoration(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(30)),
+                                  color: kPrimaryColor,
                                 ),
-                              );
-                            },
-                            child: SvgPicture.asset(
-                              'assets/icons/message_icon_blue.svg',
-                            ),
-                          ),
-                          SizedBox(
-                            width: 240.w,
-                          ),
-                          Container(
-                            height: 32.h,
-                            width: 65.w,
-                            decoration: const BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(30)),
-                              color: kPrimaryColor,
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                Text(
-                                  '  04',
-                                  style: defaultText12.copyWith(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w700),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    Text(
+                                      '  04',
+                                      style: defaultText12.copyWith(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.w700),
+                                    ),
+                                    SvgPicture.asset(
+                                        'assets/icons/noti_icon.svg')
+                                  ],
                                 ),
-                                SvgPicture.asset('assets/icons/noti_icon.svg')
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 10.h,
-                      ),
-                      Text(
-                        '\t    Sắp diễn ra',
-                        style: defaultText16.copyWith(
-                            fontWeight: FontWeight.bold,
-                            fontFamily: 'Nunito-Bold'),
-                      ),
-                      (info.comming.isEmpty)
-                          ? Center(
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text('Hiện không có lớp học nào',
-                                    style: defaultText14),
-                              ),
-                            )
-                          : SizedBox(
-                              width: 380.w,
-                              height: 111.h,
-                              child: ListView.builder(
-                                scrollDirection: Axis.horizontal,
-                                shrinkWrap: true,
-                                physics: const ScrollPhysics(),
-                                //itemExtent: 390.0.w,
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 0, vertical: 0),
-                                itemCount: info.comming.length,
-                                itemBuilder: (BuildContext context, int index) {
-                                  return ComingLesson(
-                                    comingLessonModels: info.comming[index],
-                                    id: info.comming[index].id,
-                                  );
-                                },
                               ),
                             ),
-                      Text(
-                        '\t    Môn học của tôi',
-                        style:
-                            defaultText16.copyWith(fontFamily: 'Nunito-Bold'),
-                      ),
-                    ],
+                          ],
+                        ),
+                        SizedBox(
+                          height: 10.h,
+                        ),
+                        Text(
+                          '\t    Sắp diễn ra',
+                          style: defaultText16.copyWith(
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Nunito-Bold'),
+                        ),
+                        (info.comming.isEmpty)
+                            ? Center(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text('Hiện không có lớp học nào',
+                                      style: defaultText14),
+                                ),
+                              )
+                            : SizedBox(
+                                width: 380.w,
+                                height: 111.h,
+                                child: ListView.builder(
+                                  scrollDirection: Axis.horizontal,
+                                  shrinkWrap: true,
+                                  physics: const ScrollPhysics(),
+                                  //itemExtent: 390.0.w,
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 0, vertical: 0),
+                                  itemCount: info.comming.length,
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    return ComingLesson(
+                                      comingLessonModels: info.comming[index],
+                                      id: info.comming[index].id,
+                                    );
+                                  },
+                                ),
+                              ),
+                        Text(
+                          '\t    Môn học của tôi',
+                          style:
+                              defaultText16.copyWith(fontFamily: 'Nunito-Bold'),
+                        ),
+                      ],
+                    ),
                   ),
+                  pinned: false,
+                  toolbarHeight: (info.comming.isEmpty) ? 150.h : 220.h,
+                  forceElevated: innerBoxIsScrolled,
+                  // bottom: TabBar(
+                  //   tabs: tabs.map((String name) => Tab(text: name)).toList(),
+                  // ),
+                  backgroundColor: Colors.white,
                 ),
-                pinned: false,
-                toolbarHeight: (info.comming.isEmpty) ? 150.h : 220.h,
-                forceElevated: innerBoxIsScrolled,
-                // bottom: TabBar(
-                //   tabs: tabs.map((String name) => Tab(text: name)).toList(),
-                // ),
-                backgroundColor: Colors.white,
               ),
-            ),
-          ];
-        },
-        body: Container(
-          decoration: BoxDecoration(color: Colors.grey.shade300),
-          padding: EdgeInsets.only(bottom: 40.h),
-          width: 390.w,
-          child: AspectRatio(
-            aspectRatio: 10 / 8,
-            child: TabContainer(
-              borderRadius: BorderRadius.circular(20.r),
-              tabBorderRadius: BorderRadius.circular(30.r),
-              tabEdge: TabEdge.top,
-              curve: Curves.easeIn,
-              transitionBuilder: (child, animation) {
-                animation =
-                    CurvedAnimation(curve: Curves.easeIn, parent: animation);
-                return SlideTransition(
-                  position: Tween(
-                    begin: const Offset(0.2, 0.0),
-                    end: const Offset(0.0, 0.0),
-                  ).animate(animation),
-                  child: FadeTransition(
-                    opacity: animation,
-                    child: child,
-                  ),
-                );
-              },
-              color: Colors.white,
-              selectedTextStyle: defaultBoldText.copyWith(fontSize: 15.sp),
-              unselectedTextStyle: defaultBoldText.copyWith(
-                  color: kPrimaryColor,
-                  fontSize: 13,
-                  fontWeight: FontWeight.w200),
-              tabs: getTabs1(),
-              children: getChildren1(listSubjectModel: listSubjectModel),
+            ];
+          },
+          body: Container(
+            decoration: BoxDecoration(color: Colors.grey.shade300),
+            //padding: EdgeInsets.only(bottom: 20.h),
+            width: 390.w,
+            child: AspectRatio(
+              aspectRatio: 10 / 10,
+              child: TabContainer(
+                borderRadius: BorderRadius.circular(20.r),
+                tabBorderRadius: BorderRadius.circular(30.r),
+                tabEdge: TabEdge.top,
+                curve: Curves.easeIn,
+                transitionBuilder: (child, animation) {
+                  animation =
+                      CurvedAnimation(curve: Curves.easeIn, parent: animation);
+                  return SlideTransition(
+                    position: Tween(
+                      begin: const Offset(0.2, 0.0),
+                      end: const Offset(0.0, 0.0),
+                    ).animate(animation),
+                    child: FadeTransition(
+                      opacity: animation,
+                      child: child,
+                    ),
+                  );
+                },
+                color: Colors.white,
+                selectedTextStyle: defaultBoldText.copyWith(fontSize: 15.sp),
+                unselectedTextStyle: defaultBoldText.copyWith(
+                    color: kPrimaryColor,
+                    fontSize: 13,
+                    fontWeight: FontWeight.w200),
+                tabs: getTabs1(),
+                children: getChildren1(listSubjectModel: listSubjectModel),
+              ),
             ),
           ),
         ),
@@ -193,155 +198,154 @@ List<Widget> getChildren1({
   required List<SubjectModels> listSubjectModel,
 }) {
   return tabs.map((String name) {
-    return SafeArea(
-      top: false,
-      bottom: false,
-      child: Builder(
-        builder: (BuildContext context) {
-          return CustomScrollView(
-            key: PageStorageKey<String>(name),
-            slivers: <Widget>[
-              SliverOverlapInjector(
-                handle:
-                    NestedScrollView.sliverOverlapAbsorberHandleFor(context),
-              ),
-              SliverPadding(
-                padding: const EdgeInsets.all(12.0),
-                sliver: SliverFixedExtentList(
-                  itemExtent: 136.h,
-                  delegate: SliverChildBuilderDelegate(
-                    (BuildContext context, int index) {
-                      return Padding(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 12.w,
-                          vertical: 12.h,
-                        ),
-                        child: InkWell(
-                          onTap: () async {
-                            DetailSubjectModels detailSubject =
-                                await SubjectRepo().detailSubject(
-                                    id: listSubjectModel[index].id);
-                            pushWithoutNavBar(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => SubjectScreen(
-                                  detailSubject: detailSubject,
-                                ),
+    return Builder(
+      builder: (BuildContext context) {
+        return CustomScrollView(
+          key: PageStorageKey<String>(name),
+          slivers: <Widget>[
+            SliverOverlapInjector(
+              handle: NestedScrollView.sliverOverlapAbsorberHandleFor(context),
+            ),
+            SliverPadding(
+              padding: const EdgeInsets.all(12.0),
+              sliver: SliverFixedExtentList(
+                itemExtent: 136.h,
+                delegate: SliverChildBuilderDelegate(
+                  (BuildContext context, int index) {
+                    return Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 12.w,
+                        vertical: 12.h,
+                      ),
+                      child: GestureDetector(
+                        onTap: () async {
+                          DetailSubjectModels detailSubject =
+                              await SubjectRepo().detailSubject(
+                                  id: listSubjectModel[index].id);
+                          pushWithoutNavBar(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => SubjectScreen(
+                                detailSubject: detailSubject,
                               ),
-                            );
-                          },
-                          child: CourseItem(
-                            subject: listSubjectModel[index],
-                          ),
+                            ),
+                          );
+                        },
+                        child: CourseItem(
+                          subject: listSubjectModel[index],
+                          name: name,
                         ),
-                      );
-                    },
-                    childCount: listSubjectModel.length,
-                  ),
+                      ),
+                    );
+                  },
+                  childCount: listSubjectModel.length,
                 ),
               ),
-            ],
-          );
-        },
-      ),
+            ),
+          ],
+        );
+      },
     );
   }).toList();
 }
 
 class CourseItem extends StatelessWidget {
-  const CourseItem({super.key, required this.subject});
+  const CourseItem({super.key, required this.subject, required this.name});
   final SubjectModels subject;
+  final String name;
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Positioned(
-          left: 0.w,
-          top: 0.h,
-          child: Image(
-            height: 117.h,
-            width: 350.w,
-            image: const AssetImage('assets/images/course_bg1.png'),
-            fit: BoxFit.fill,
-            //color: listColor[Random().nextInt(listColor.length)],
-            //color: Colors.pink.withOpacity(0.5),
-          ),
-        ),
-        Positioned(
-          top: 0,
-          right: 0,
-          child: Text(
-            subject.status,
-            style: defaultText12.copyWith(
-              fontFamily: 'Nunito-Bold',
-            ),
-          ),
-        ),
-        Positioned(
-          top: 0,
-          right: 0,
-          child: Container(
-            height: 25.h,
-            decoration: const BoxDecoration(color: Colors.white),
-            child: Text(
-              subject.status,
-              style: defaultText12.copyWith(
-                fontFamily: 'Nunito-Bold',
+    return (name != 'Tất cả' && name != subject.status)
+        ? const SizedBox()
+        : Stack(
+            children: [
+              Positioned(
+                top: 0,
+                right: 0,
+                child: Text(
+                  subject.status,
+                  style: defaultText12.copyWith(
+                    fontFamily: 'Nunito-Bold',
+                  ),
+                ),
               ),
-            ),
-          ),
-        ),
-        Positioned(
-          bottom: 40.h,
-          left: 8.w,
-          child: Text(
-            subject.startDate,
-            style: defaultText14.copyWith(
-              fontFamily: 'Nunito-Bold',
-              color: Colors.white,
-            ),
-          ),
-        ),
-        Positioned(
-          bottom: 40.h,
-          left: 128.w,
-          child: Text(
-            subject.endDate,
-            style: defaultText14.copyWith(
-              fontFamily: 'Nunito-Bold',
-              color: Colors.white,
-            ),
-          ),
-        ),
-        Positioned(
-          bottom: 5.h,
-          left: 8.w,
-          child: Text(
-            'Giáo viên: ${subject.teacherName}',
-            style: defaultText16.copyWith(
-              fontFamily: 'Nunito-Bold',
-              color: Colors.white,
-            ),
-          ),
-        ),
-        Positioned(
-          top: 5.h,
-          left: 8.w,
-          child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 8.w),
-            decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.all(Radius.circular(10))),
-            child: Text(
-              subject.subjectName,
-              style: defaultText16.copyWith(
-                fontFamily: 'Nunito-Bold',
+              Positioned(
+                left: 0.w,
+                top: 0.h,
+                child: Image(
+                  height: 117.h,
+                  width: 350.w,
+                  image: const AssetImage('assets/images/course_bg1.png'),
+                  fit: BoxFit.fill,
+                  //color: listColor[Random().nextInt(listColor.length)],
+                  //color: Colors.pink.withOpacity(0.5),
+                ),
               ),
-            ),
-          ),
-        ),
-      ],
-    );
+              Positioned(
+                top: 0,
+                right: 0,
+                child: Container(
+                  height: 25.h,
+                  decoration: const BoxDecoration(color: Colors.white),
+                  child: Text(
+                    subject.status,
+                    style: defaultText12.copyWith(
+                      fontFamily: 'Nunito-Bold',
+                    ),
+                  ),
+                ),
+              ),
+              Positioned(
+                bottom: 40.h,
+                left: 8.w,
+                child: Text(
+                  subject.startDate,
+                  style: defaultText14.copyWith(
+                    fontFamily: 'Nunito-Bold',
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+              Positioned(
+                bottom: 40.h,
+                left: 128.w,
+                child: Text(
+                  subject.endDate,
+                  style: defaultText14.copyWith(
+                    fontFamily: 'Nunito-Bold',
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+              Positioned(
+                bottom: 5.h,
+                left: 8.w,
+                child: Text(
+                  'Giáo viên: ${subject.teacherName}',
+                  style: defaultText16.copyWith(
+                    fontFamily: 'Nunito-Bold',
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+              Positioned(
+                top: 5.h,
+                left: 8.w,
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 8.w),
+                  decoration: const BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.all(Radius.circular(10))),
+                  child: Text(
+                    subject.subjectName,
+                    style: defaultText16.copyWith(
+                      fontFamily: 'Nunito-Bold',
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          );
   }
 }
 // class CommingLesson extends StatelessWidget {

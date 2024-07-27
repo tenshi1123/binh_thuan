@@ -1,6 +1,6 @@
 import 'package:binh_thuan/constants/colors.dart';
-import 'package:binh_thuan/models/models/detail_subject_models.dart';
-import 'package:binh_thuan/models/models/lesson_model.dart';
+import 'package:binh_thuan/models/detail_subject_models.dart';
+import 'package:binh_thuan/models/lesson_model.dart';
 import 'package:binh_thuan/modules/bottom_navigation_bar/home/custom_widget_home.dart';
 import 'package:binh_thuan/modules/exercise/exercise_screen.dart';
 import 'package:binh_thuan/modules/lesson_details/screen/lesson_details_screen.dart';
@@ -95,9 +95,9 @@ List<Widget> _tabSchedule(
       homeTab(title: "Đã hoàn thành", count: daHoanThanh.length),
       //const SizedBox()
     ];
-List<Widget> _tabScroll() => [
-      homeTab(title: "Video", isSeprator: false),
-      homeTab(title: "PDF"),
+List<Widget> _tabScroll(int count) => [
+      homeTab(title: "Video", isSeprator: false, count: count),
+      homeTab(title: "PDF", count: count),
       const SizedBox()
     ];
 const List<String> _tabs = <String>['Sắp tới', 'Đã hoàn thành'];
@@ -127,7 +127,7 @@ class InfoItem extends StatelessWidget {
         unselectedLabelColor: keyBlack.withOpacity(0.3),
         labelColor: keyBlack,
 
-        tabs: _tabScroll(), //list of tabs
+        tabs: _tabScroll(taiLieu.length), //list of tabs
       ),
       body: TabBarView(
         children: _tabs.map((String name) {

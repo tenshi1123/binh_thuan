@@ -86,7 +86,7 @@ class _LoginScreenState extends State<ForgotPassScreen> {
               Positioned(
                 top: 560.h,
                 left: 46.w,
-                child: InkWell(
+                child: GestureDetector(
                   onTap: () {
                     AppRouter.toPage(context, AppPages.OtpScreen,
                         // blocValue: _authBloc,

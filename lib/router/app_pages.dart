@@ -1,7 +1,7 @@
 // ignore_for_file: constant_identifier_names
 
-import 'package:binh_thuan/models/models/login_model.dart';
-import 'package:binh_thuan/models/models/subject_models.dart';
+import 'package:binh_thuan/models/login_model.dart';
+import 'package:binh_thuan/models/subject_models.dart';
 import 'package:binh_thuan/modules/auth/forgor_password/change_password_screen.dart';
 import 'package:binh_thuan/modules/auth/forgor_password/forgot_password_screen.dart';
 import 'package:binh_thuan/modules/auth/forgor_password/otp_screen.dart';

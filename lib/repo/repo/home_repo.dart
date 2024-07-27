@@ -1,5 +1,5 @@
 import 'package:binh_thuan/constants/api_path.dart';
-import 'package:binh_thuan/models/models/login_model.dart';
+import 'package:binh_thuan/models/login_model.dart';
 import 'package:binh_thuan/repo/repo/login_repo.dart';
 import 'package:dio/dio.dart';
 

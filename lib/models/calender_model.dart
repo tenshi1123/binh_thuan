@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 class CalenderEventModel {
   final String subjectName;
   final String timeSlotName;
@@ -9,7 +11,7 @@ class CalenderEventModel {
   final String teachersFullName;
   final String id;
   final String dayOfWeek;
-  final String day;
+  final DateTime day;
   final String classSessionsName;
   CalenderEventModel({
     required this.subjectName,
@@ -36,7 +38,7 @@ class CalenderEventModel {
       classRoomName: json['class_room_name'] ?? '',
       teachersFullName: json['teachers_full_name'] ?? '',
       id: json['id'] ?? '',
-      day: json['day'] ?? '',
+      day: DateFormat("yyyy-MM-dd").parse(json['day']),
       dayOfWeek: json['day_of_week'] ?? '',
       classSessionsName: json['class_sessions_name'] ?? '',
     );

@@ -3,10 +3,14 @@ import 'dart:math';
 
 import 'package:binh_thuan/constants/colors.dart';
 import 'package:binh_thuan/constants/styles.dart';
-import 'package:binh_thuan/models/models/detail_subject_models.dart';
-import 'package:binh_thuan/models/models/lesson_model.dart';
-import 'package:binh_thuan/models/models/subject_models.dart';
+import 'package:binh_thuan/models/calender_model.dart';
+import 'package:binh_thuan/models/chat_model.dart';
+import 'package:binh_thuan/models/detail_subject_models.dart';
+import 'package:binh_thuan/models/lesson_model.dart';
+import 'package:binh_thuan/models/subject_models.dart';
+import 'package:binh_thuan/modules/chat/screen/list_conversation.dart';
 import 'package:binh_thuan/modules/notification/noti_model.dart';
+import 'package:binh_thuan/repo/repo/chat_repo.dart';
 import 'package:binh_thuan/repo/repo/lesson_repo.dart';
 import 'package:binh_thuan/router/app_pages.dart';
 import 'package:binh_thuan/router/app_router.dart';
@@ -301,9 +305,10 @@ class CompleteLesson extends StatelessWidget {
 
 class ItemTableCalender extends StatelessWidget {
   final Color color = listColor[_random.nextInt(listColor.length)];
-
+  final CalenderEventModel model;
   ItemTableCalender({
     super.key,
+    required this.model,
   });
 
   @override
@@ -328,7 +333,7 @@ class ItemTableCalender extends StatelessWidget {
             Container(
               margin: const EdgeInsets.all(6),
               height: 68.h,
-              width: 69.w,
+              width: 120.w,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.all(
                   Radius.circular(8.r),
@@ -339,7 +344,7 @@ class ItemTableCalender extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Text(
-                    'Toán',
+                    model.subjectName,
                     style: defaultBoldText.copyWith(
                       color: color,
                     ),
@@ -352,7 +357,7 @@ class ItemTableCalender extends StatelessWidget {
                     color: color,
                   ),
                   Text(
-                    '07:00',
+                    model.timeStart,
                     style: defaultText20.copyWith(
                       fontWeight: FontWeight.w900,
                       color: color,
@@ -369,11 +374,11 @@ class ItemTableCalender extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  '•   Tiết 1',
+                  '•   ${model.timeSlotName}',
                   style: defaultBoldText.copyWith(color: Colors.white),
                 ),
                 Text(
-                  '•   Giáo viên: HươngNN',
+                  '•   ${model.teachersFullName}',
                   style: defaultBoldText.copyWith(color: Colors.white),
                 ),
               ],
@@ -530,4 +535,23 @@ class MenuItem extends StatelessWidget {
       ),
     );
   }
+}
+
+Widget chatIcon({required BuildContext context, required String icon}) {
+  return GestureDetector(
+    onTap: () async {
+      List<ConversationModel> listConversation = await ChatRepo().getListChat();
+      pushWithoutNavBar(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ListConversation(
+            listConversation: listConversation,
+          ),
+        ),
+      );
+    },
+    child: SvgPicture.asset(
+      icon,
+    ),
+  );
 }

@@ -1,6 +1,9 @@
 import 'package:binh_thuan/constants/colors.dart';
 import 'package:binh_thuan/constants/styles.dart';
-import 'package:binh_thuan/models/models/detail_subject_models.dart';
+import 'package:binh_thuan/models/detail_subject_models.dart';
+import 'package:binh_thuan/modules/bottom_navigation_bar/home/custom_widget_home.dart';
+import 'package:binh_thuan/router/app_pages.dart';
+import 'package:binh_thuan/router/app_router.dart';
 import "package:flutter/material.dart";
 import "package:flutter_screenutil/flutter_screenutil.dart";
 import 'package:flutter_svg/flutter_svg.dart';
@@ -42,32 +45,45 @@ class SubjectScreen extends StatelessWidget {
                     Positioned(
                       top: 50.h,
                       left: 20.w,
-                      child: SvgPicture.asset('assets/icons/message_icon.svg'),
+                      child: chatIcon(
+                          context: context,
+                          icon: 'assets/icons/message_icon.svg'),
+                      //SvgPicture.asset('assets/icons/message_icon.svg'),
                     ),
                     Positioned(
                       top: 50.h,
                       left: 300.w,
-                      child: Container(
-                          height: 32.h,
-                          width: 65.w,
-                          decoration: BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(30.r)),
-                              color: Colors.transparent,
-                              border:
-                                  Border.all(color: Colors.white, width: 1)),
-                          child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  '  04',
-                                  style: defaultText12.copyWith(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w700,
-                                      fontFamily: 'Nunito-Bold'),
-                                ),
-                                SvgPicture.asset('assets/icons/noti_icon.svg')
-                              ])),
+                      child: GestureDetector(
+                        onTap: () {
+                          AppRouter.toPage(
+                            context,
+                            AppPages.NotificationScreen,
+                            arguments: {},
+                          );
+                        },
+                        child: Container(
+                            height: 32.h,
+                            width: 65.w,
+                            decoration: BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(30.r)),
+                                color: Colors.transparent,
+                                border:
+                                    Border.all(color: Colors.white, width: 1)),
+                            child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    '  04',
+                                    style: defaultText12.copyWith(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w700,
+                                        fontFamily: 'Nunito-Bold'),
+                                  ),
+                                  SvgPicture.asset('assets/icons/noti_icon.svg')
+                                ])),
+                      ),
                     ),
                     Positioned(
                       bottom: 10.h,

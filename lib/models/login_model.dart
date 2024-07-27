@@ -1,4 +1,4 @@
-import 'package:binh_thuan/models/models/subject_models.dart';
+import 'package:binh_thuan/models/subject_models.dart';
 
 class StudentModel {
   final String nameClass;

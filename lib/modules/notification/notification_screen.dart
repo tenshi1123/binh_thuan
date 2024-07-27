@@ -52,28 +52,6 @@ class NotificationScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              children: [
-                SizedBox(width: 20.w),
-                Text(
-                  'Hôm nay',
-                  style: defaultText16.copyWith(
-                    color: keyBlack,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-                SizedBox(
-                  width: 200.w,
-                ),
-                Text(
-                  '15.04.2024',
-                  style: defaultText16.copyWith(
-                    color: color666,
-                    fontWeight: FontWeight.w700,
-                  ),
-                )
-              ],
-            ),
             SizedBox(
               height: 8.h,
             ),
@@ -91,16 +69,6 @@ class NotificationScreen extends StatelessWidget {
               indent: 20.w,
               endIndent: 20.w,
               thickness: 2,
-            ),
-            Padding(
-              padding: EdgeInsets.only(left: 20.w, top: 8.h),
-              child: Text(
-                '14.04.2024',
-                style: defaultText16.copyWith(
-                  color: kPrimaryColor,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
             ),
           ],
         ),

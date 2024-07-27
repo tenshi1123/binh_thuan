@@ -1,6 +1,6 @@
 import "package:binh_thuan/constants/colors.dart";
-import "package:binh_thuan/models/models/login_model.dart";
-import "package:binh_thuan/models/models/subject_models.dart";
+import "package:binh_thuan/models/login_model.dart";
+import "package:binh_thuan/models/subject_models.dart";
 import "package:binh_thuan/modules/bottom_navigation_bar/home/home_screen.dart";
 import "package:binh_thuan/modules/bottom_navigation_bar/course/list_subject_screen.dart";
 import "package:binh_thuan/utils/onesignal.dart";

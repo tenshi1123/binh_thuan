@@ -269,7 +269,7 @@ Widget homeTab(
     {required String title,
     bool isSeprator = true,
     bool hasNumber = true,
-    int count = 21}) {
+    int count = 0}) {
   return Tab(
     child: Container(
       // width: 130.w,

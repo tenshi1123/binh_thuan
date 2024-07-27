@@ -1,10 +1,11 @@
 import 'package:binh_thuan/constants/colors.dart';
 import 'package:binh_thuan/constants/styles.dart';
-import 'package:binh_thuan/models/models/detail_subject_models.dart';
-import 'package:binh_thuan/models/models/lesson_model.dart';
+import 'package:binh_thuan/models/detail_subject_models.dart';
+import 'package:binh_thuan/models/lesson_model.dart';
 import 'package:binh_thuan/modules/exercise/exercise_screen.dart';
 import 'package:binh_thuan/modules/lesson_details/test_screen.dart';
 import 'package:binh_thuan/repo/repo/lesson_repo.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -89,7 +90,7 @@ class _LessonDetailsScreenState extends State<LessonDetailsScreen> {
                   SizedBox(
                     width: 200.w,
                   ),
-                  SvgPicture.asset('assets/icons/three_dots_icon.svg'),
+                  //SvgPicture.asset('assets/icons/three_dots_icon.svg'),
                 ],
               ),
               SizedBox(
@@ -127,7 +128,32 @@ class _LessonDetailsScreenState extends State<LessonDetailsScreen> {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      //startTimer();
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return CupertinoAlertDialog(
+                            title: const Text('Chức năng đang phát triển'),
+                            content: const Text(
+                                'Đây là chức năng mở sang lớp học zoom'),
+                            actions: <Widget>[
+                              CupertinoDialogAction(
+                                isDefaultAction: true,
+                                child: const Text(
+                                  'Yes',
+                                  style: TextStyle(
+                                      fontSize: 20, color: kPrimaryColor),
+                                ),
+                                onPressed: () {
+                                  Navigator.of(context, rootNavigator: true)
+                                      .pop(
+                                    (_) => false,
+                                  );
+                                },
+                              )
+                            ],
+                          );
+                        },
+                      );
                     },
                     child: Container(
                       height: 57.h,
@@ -568,10 +594,34 @@ class _QuestionTabState extends State<QuestionTab> {
                 ),
               ),
               GestureDetector(
-                onTap: () {
-                  LessonRepo().sendQuestion(
+                onTap: () async {
+                  await LessonRepo().sendQuestion(
                       id: widget.id, content: questionController.text);
                   questionController.clear();
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return CupertinoAlertDialog(
+                        title: const Text('Gửi thành công'),
+                        content: const Text('Thắc mắc đã được gửi đi'),
+                        actions: <Widget>[
+                          CupertinoDialogAction(
+                            isDefaultAction: true,
+                            child: const Text(
+                              'Yes',
+                              style:
+                                  TextStyle(fontSize: 20, color: kPrimaryColor),
+                            ),
+                            onPressed: () {
+                              Navigator.of(context, rootNavigator: true).pop(
+                                (_) => false,
+                              );
+                            },
+                          )
+                        ],
+                      );
+                    },
+                  );
                 },
                 child: SvgPicture.asset('assets/icons/plane.svg'),
               ),

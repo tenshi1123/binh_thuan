@@ -1,43 +1,94 @@
+import 'dart:io';
+
 import 'package:binh_thuan/constants/colors.dart';
 import 'package:binh_thuan/constants/styles.dart';
-import 'package:binh_thuan/modules/chat/model/chat_message_model.dart';
-import 'package:binh_thuan/service/database_service.dart';
+import 'package:binh_thuan/models/chat_model.dart';
+import 'package:binh_thuan/repo/repo/chat_repo.dart';
+import 'package:binh_thuan/repo/repo/login_repo.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:camera_camera/camera_camera.dart';
+import 'package:image_picker/image_picker.dart';
 
 class ChatScreen extends StatefulWidget {
   final String groupId;
   final String groupName;
   final String userName;
-  const ChatScreen(
-      {super.key,
-      required this.groupId,
-      required this.groupName,
-      required this.userName});
+  final List<MessageModel> listMessage;
+  const ChatScreen({
+    super.key,
+    required this.groupId,
+    required this.groupName,
+    required this.userName,
+    required this.listMessage,
+  });
 
   @override
   State<ChatScreen> createState() => _ChatScreenState();
 }
 
 class _ChatScreenState extends State<ChatScreen> {
-  List<ChatMessageModel> messages = [
-    ChatMessageModel(messageContent: "Hello, Will", messageType: "receiver"),
-    ChatMessageModel(
-        messageContent:
-            "Lorem ipsum dolor sit amet, conse adi elit, sed do eiusmod temporetur ipiscing elit, sed do eiusmod por. ",
-        messageType: "receiver"),
-    ChatMessageModel(
-        messageContent: "Hey Kriss, I am doing fine dude. wbu?",
-        messageType: "sender"),
-    ChatMessageModel(
-        messageContent: "ehhhh, doing OK.", messageType: "receiver"),
-    ChatMessageModel(
-        messageContent:
-            "Lorem ipsum dolor sit amet, conse adi elit, sed do eiusmod temporetur ipiscing elit, sed do eiusmod por. ",
-        messageType: "sender"),
-  ];
+  late List<MessageModel> listMessage;
   TextEditingController messageController = TextEditingController();
+  List<File> photos = <File>[];
+  void openCamera() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => CameraCamera(
+          onFile: (file) {
+            photos.add(file);
+            //Navigator.pop(context);
+            ChatRepo().sendImageMessage(widget.groupId, photos);
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return CupertinoAlertDialog(
+                  title: const Text('Tin nhắn đã được gửi'),
+                  actions: <Widget>[
+                    CupertinoDialogAction(
+                      isDefaultAction: true,
+                      child: const Text(
+                        'ok',
+                        style: TextStyle(fontSize: 20, color: kPrimaryColor),
+                      ),
+                      onPressed: () {
+                        Navigator.pop(context);
+                        Navigator.pop(context);
+                      },
+                    )
+                  ],
+                );
+              },
+            );
+            setState(() {});
+          },
+        ),
+      ),
+    );
+  }
+
+  Future _pickImageFromGallery() async {
+    final returnedImage = await ImagePicker().pickMultiImage();
+    photos = List<File>.from(
+      (returnedImage).map(
+        (e) => File(e.path),
+      ),
+    );
+    //File(returnedImage!.path);
+    if (photos.isNotEmpty) {
+      ChatRepo().sendImageMessage(widget.groupId, photos);
+    }
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    listMessage = widget.listMessage;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +116,7 @@ class _ChatScreenState extends State<ChatScreen> {
               width: 10.w,
             ),
             Text(
-              'Nhóm SD-125',
+              widget.groupName,
               style: defaultBoldText.copyWith(color: Colors.white),
             ),
             SizedBox(
@@ -78,36 +129,81 @@ class _ChatScreenState extends State<ChatScreen> {
       body: Stack(
         children: <Widget>[
           ListView.builder(
-            itemCount: messages.length,
+            itemCount: listMessage.length,
             shrinkWrap: true,
-            padding: EdgeInsets.only(bottom: 10.h),
-            physics: const NeverScrollableScrollPhysics(),
+            padding: EdgeInsets.only(bottom: 50.h),
+            reverse: true,
+            //physics: const NeverScrollableScrollPhysics(),
             itemBuilder: (context, index) {
               return Container(
                 padding: const EdgeInsets.only(
                     left: 14, right: 14, top: 10, bottom: 10),
                 child: Align(
-                  alignment: (messages[index].messageType == "receiver"
-                      ? Alignment.topLeft
-                      : Alignment.topRight),
+                  alignment: ((listMessage[index].senderType == "1" &&
+                          listMessage[index].senderId == LoginRepo.idUser)
+                      ? Alignment.topRight
+                      : Alignment.topLeft),
                   child: Container(
                     constraints: const BoxConstraints(maxWidth: 300),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
-                      color: (messages[index].messageType == "receiver"
-                          ? rec14Marine
-                          : kPrimaryColor),
+                      color: ((listMessage[index].senderType == "1" &&
+                              listMessage[index].senderId == LoginRepo.idUser)
+                          ? kPrimaryColor
+                          : rec14Marine),
                     ),
                     padding: const EdgeInsets.all(16),
-                    //width: 290.w,
-                    child: Text(
-                      messages[index].messageContent,
-                      style: defaultText14.copyWith(
-                        color: (messages[index].messageType == "receiver"
-                            ? keyBlack
-                            : keyWhite),
-                      ),
-                    ),
+                    child: (listMessage[index].messageType == '0')
+                        ? Text(
+                            listMessage[index].content,
+                            style: defaultText14.copyWith(
+                              color: ((listMessage[index].senderType == "1" &&
+                                      listMessage[index].senderId ==
+                                          LoginRepo.idUser)
+                                  ? keyWhite
+                                  : keyBlack),
+                            ),
+                          )
+                        : GridView.builder(
+                            physics: const NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount:
+                                  listMessage[index].content.length == 1
+                                      ? 1
+                                      : 2,
+                              crossAxisSpacing: 5,
+                              mainAxisSpacing: 5,
+                            ),
+                            itemCount: listMessage[index].content.length,
+                            itemBuilder: (context, index2) {
+                              return Column(
+                                children: [
+                                  GestureDetector(
+                                    onTap: () {
+                                      Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                          builder: (context) => FullsizeImage(
+                                            url: listMessage[index]
+                                                .content[index2],
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                    child: Image.network(
+                                      listMessage[index].content[index2],
+                                      height:
+                                          listMessage[index].content.length == 1
+                                              ? 250.h
+                                              : 125.h,
+                                      fit: BoxFit.fitHeight,
+                                    ),
+                                  ),
+                                ],
+                              );
+                            },
+                          ),
                   ),
                 ),
               );
@@ -123,13 +219,17 @@ class _ChatScreenState extends State<ChatScreen> {
               child: Row(
                 children: <Widget>[
                   GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        openCamera();
+                      },
                       child: SvgPicture.asset('assets/icons/camera_icon.svg')),
                   const SizedBox(
                     width: 15,
                   ),
                   GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        _pickImageFromGallery();
+                      },
                       child: SvgPicture.asset('assets/icons/picture_icon.svg')),
                   const SizedBox(
                     width: 15,
@@ -155,7 +255,37 @@ class _ChatScreenState extends State<ChatScreen> {
                     width: 15,
                   ),
                   GestureDetector(
-                      onTap: () {},
+                      onTap: () async {
+                        if (messageController.text.isNotEmpty) {
+                          await ChatRepo().sendTextMessage(
+                              widget.groupId, messageController.text);
+                          messageController.clear();
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return CupertinoAlertDialog(
+                                title: const Text('Tin nhắn đã được gửi'),
+                                actions: <Widget>[
+                                  CupertinoDialogAction(
+                                    isDefaultAction: true,
+                                    child: const Text(
+                                      'ok',
+                                      style: TextStyle(
+                                          fontSize: 20, color: kPrimaryColor),
+                                    ),
+                                    onPressed: () {
+                                      Navigator.of(context, rootNavigator: true)
+                                          .pop(
+                                        (_) => false,
+                                      );
+                                    },
+                                  )
+                                ],
+                              );
+                            },
+                          );
+                        }
+                      },
                       child:
                           SvgPicture.asset('assets/icons/plane_outline.svg')),
                   const SizedBox(
@@ -169,19 +299,35 @@ class _ChatScreenState extends State<ChatScreen> {
       ),
     );
   }
+}
 
-  sendMessage() {
-    if (messageController.text.isNotEmpty) {
-      Map<String, dynamic> chatMessageMap = {
-        "message": messageController.text,
-        "sender": widget.userName,
-        "time": DateTime.now().millisecondsSinceEpoch,
-      };
-
-      DatabaseService().sendMessage(widget.groupId, chatMessageMap);
-      setState(() {
-        messageController.clear();
-      });
-    }
+class FullsizeImage extends StatelessWidget {
+  const FullsizeImage({
+    super.key,
+    required this.url,
+  });
+  final String url;
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(),
+        body: Center(
+          child: InteractiveViewer(
+            panEnabled: true,
+            boundaryMargin: const EdgeInsets.all(200),
+            minScale: 0.5,
+            maxScale: 4,
+            child: Image.network(
+              url,
+              fit: BoxFit.fitWidth,
+              height: double.infinity,
+              width: double.infinity,
+              alignment: Alignment.center,
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }

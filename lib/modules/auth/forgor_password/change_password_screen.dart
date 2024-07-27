@@ -34,7 +34,10 @@ class _ChangePassScreenState extends State<ChangePassScreen> {
       actions: <Widget>[
         CupertinoDialogAction(
           isDefaultAction: true,
-          child: const Text('Yes'),
+          child: const Text(
+            'Yes',
+            style: TextStyle(fontSize: 20, color: kPrimaryColor),
+          ),
           onPressed: () {
             Navigator.of(context, rootNavigator: true).pop(
               (_) => false,

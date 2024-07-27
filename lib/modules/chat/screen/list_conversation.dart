@@ -1,14 +1,15 @@
 import 'package:binh_thuan/constants/colors.dart';
 import 'package:binh_thuan/constants/styles.dart';
-import 'package:binh_thuan/custom_widget/search_field.dart';
+import 'package:binh_thuan/models/chat_model.dart';
 import 'package:binh_thuan/modules/chat/screen/chat_screen.dart';
+import 'package:binh_thuan/repo/repo/chat_repo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:intl/intl.dart';
 
 class ListConversation extends StatelessWidget {
-  const ListConversation({super.key});
-
+  const ListConversation({super.key, required this.listConversation});
+  final List<ConversationModel> listConversation;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,47 +50,37 @@ class ListConversation extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(
-              height: 18.h,
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20.w),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const SearchField(),
-                  SvgPicture.asset(
-                    'assets/icons/add_member.svg',
-                    color: kPrimaryColor,
-                    width: 24.w,
-                    height: 24.h,
-                  )
-                ],
-              ),
-            ),
+            // SizedBox(
+            //   height: 18.h,
+            // ),
+            // Padding(
+            //   padding: EdgeInsets.symmetric(horizontal: 20.w),
+            //   child: Row(
+            //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //     children: [
+            //       const SearchField(),
+            //       SvgPicture.asset(
+            //         'assets/icons/add_member.svg',
+            //         color: kPrimaryColor,
+            //         width: 24.w,
+            //         height: 24.h,
+            //       )
+            //     ],
+            //   ),
+            // ),
             SizedBox(
               height: 20.h,
             ),
-            const ConversationItem(
-              icon: 'assets/icons/wallet.svg',
-              title: 'GVCV',
-              title2: 'Lorem ipsum dolor sit amet, consectetur adipisci...',
-              time: '18:06',
-              isRead: false,
-            ),
-            const ConversationItem(
-              icon: 'assets/icons/wallet.svg',
-              title: 'Tenshii',
-              title2: 'Lorem ipsum dolor sit amet, consectetur adipisci...',
-              time: 'CN',
-              isRead: true,
-            ),
-            const ConversationItem(
-              icon: 'assets/icons/wallet.svg',
-              title: 'Catarina',
-              title2: 'Lorem ipsum dolor sit amet, consectetur adipisci...',
-              time: 'T7',
-              isRead: true,
+            ListView.builder(
+              scrollDirection: Axis.vertical,
+              shrinkWrap: true,
+              physics: const ScrollPhysics(),
+              //itemExtent: 390.0.w,
+              padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+              itemCount: listConversation.length,
+              itemBuilder: (BuildContext context, int index) {
+                return ConversationItem(model: listConversation[index]);
+              },
             ),
           ],
         ),
@@ -99,31 +90,29 @@ class ListConversation extends StatelessWidget {
 }
 
 class ConversationItem extends StatelessWidget {
-  final String icon;
-  final String title;
-  final String title2;
-  final String time;
-  final bool isRead;
-  const ConversationItem(
-      {super.key,
-      required this.icon,
-      required this.title,
-      required this.title2,
-      required this.time,
-      required this.isRead});
+  final ConversationModel model;
+  const ConversationItem({
+    super.key,
+    required this.model,
+  });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
+      onTap: () async {
+        List<MessageModel> listMessage =
+            await ChatRepo().getListMessage(model.chatId);
         Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => const ChatScreen(
-                      groupId: '',
-                      groupName: '',
-                      userName: '',
-                    )));
+          context,
+          MaterialPageRoute(
+            builder: (context) => ChatScreen(
+              groupId: model.chatId,
+              groupName: model.chatName ?? model.teacherChatName,
+              userName: '',
+              listMessage: listMessage,
+            ),
+          ),
+        );
       },
       child: SizedBox(
         width: 390.w,
@@ -136,62 +125,68 @@ class ConversationItem extends StatelessWidget {
                   width: 20.w,
                 ),
                 CircleAvatar(
-                  radius: 20.r, // Image radius
-                  backgroundImage: const AssetImage(
-                    'assets/images/placeholder_avatar.png',
-                  ),
+                  radius: 20.r,
+                  backgroundImage: model.teacherAvatar != ''
+                      ? NetworkImage(model.teacherAvatar)
+                      : const AssetImage('assets/images/placeholder_avatar.png')
+                          as ImageProvider,
                 ),
                 SizedBox(
                   width: 12.w,
                 ),
                 SizedBox(
-                  width: 250.w,
+                  width: 220.w,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        title,
+                        model.chatName ?? model.teacherChatName,
                         overflow: TextOverflow.ellipsis,
                         maxLines: 1,
                         softWrap: false,
                         style: defaultBoldText.copyWith(fontSize: 14.sp),
                       ),
                       Text(
-                        title2,
+                        model.messageType == '0'
+                            ? model.content
+                            : 'Đã gửi hình ảnh',
                         overflow: TextOverflow.ellipsis,
                         maxLines: 1,
                         softWrap: false,
                         style: defaultText12.copyWith(
-                            color:
-                                isRead ? keyBlack.withOpacity(0.5) : keyBlack),
+                            color: model.unreadMessage == '0'
+                                ? keyBlack.withOpacity(0.5)
+                                : keyBlack),
                       ),
                     ],
                   ),
                 ),
                 SizedBox(
-                  width: 12.w,
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Text(
-                      time,
-                      style: defaultText12.copyWith(color: kPrimaryColor),
-                    ),
-                    SizedBox(
-                      height: 8.h,
-                    ),
-                    isRead
-                        ? const SizedBox()
-                        : Container(
-                            width: 8.w,
-                            height: 8.h,
-                            decoration: const BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: rec21Red,
+                  width: 76.w,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Text(
+                        (model.createdAt.day == DateTime.now().day)
+                            ? DateFormat("hh:mm").format(model.createdAt)
+                            : DateFormat("dd/MM/yyyy").format(model.createdAt),
+                        style: defaultText12.copyWith(color: kPrimaryColor),
+                      ),
+                      SizedBox(
+                        height: 8.h,
+                      ),
+                      model.unreadMessage == '0'
+                          ? const SizedBox()
+                          : Container(
+                              width: 8.w,
+                              height: 8.h,
+                              decoration: const BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: rec21Red,
+                              ),
                             ),
-                          ),
-                  ],
+                    ],
+                  ),
                 ),
               ],
             ),
