@@ -22,6 +22,8 @@ class LoginRepo {
             'password': password,
           }));
       SpUtil.putString(ConstString.token, response.data["token"]);
+      SpUtil.putString(
+          ConstString.refreshToken, response.data["refresh_token"]);
       SpUtil.putString('id_user', response.data["student_id"]);
       SpUtil.putString(ConstString.idStudent, code);
       SpUtil.putString(ConstString.md5Pass, password);

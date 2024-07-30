@@ -75,7 +75,6 @@ class ComingLesson extends StatelessWidget {
             context,
             MaterialPageRoute(
               builder: (context) => LessonDetailsScreen(
-                videoLesson: const [],
                 chiTiet: lessonModels,
                 document: const [],
                 id: id,
@@ -194,7 +193,6 @@ class CompleteLesson extends StatelessWidget {
             context,
             MaterialPageRoute(
               builder: (context) => LessonDetailsScreen(
-                videoLesson: const [],
                 chiTiet: lessonModels,
                 document: document,
                 id: lichHoc.id,

@@ -129,45 +129,77 @@ class InfoItem extends StatelessWidget {
 
         tabs: _tabScroll(taiLieu.length), //list of tabs
       ),
-      body: TabBarView(
-        children: _tabs.map((String name) {
-          return SafeArea(
-            top: false,
-            bottom: false,
-            child: Builder(
-              builder: (BuildContext context) {
-                return CustomScrollView(
-                  key: PageStorageKey<String>(name),
-                  slivers: <Widget>[
-                    SliverOverlapInjector(
-                      handle: NestedScrollView.sliverOverlapAbsorberHandleFor(
-                          context),
-                    ),
-                    SliverPadding(
-                      padding: const EdgeInsets.all(8.0),
-                      sliver: SliverFixedExtentList(
-                        itemExtent: 83.h,
-                        delegate: SliverChildBuilderDelegate(
-                          (BuildContext context, int index) {
-                            if (taiLieu.isNotEmpty) {
-                              return DocumentItem(
-                                videoLesson: videoLesson,
-                                taiLieu: taiLieu[index],
-                              );
-                            }
-                            return const SizedBox();
-                          },
-                          childCount: taiLieu.length,
-                        ),
+      body: TabBarView(children: [
+        SafeArea(
+          top: false,
+          bottom: false,
+          child: Builder(
+            builder: (BuildContext context) {
+              return CustomScrollView(
+                key: const PageStorageKey<String>('video'),
+                slivers: <Widget>[
+                  SliverOverlapInjector(
+                    handle: NestedScrollView.sliverOverlapAbsorberHandleFor(
+                        context),
+                  ),
+                  SliverPadding(
+                    padding: const EdgeInsets.all(8.0),
+                    sliver: SliverFixedExtentList(
+                      itemExtent: 83.h,
+                      delegate: SliverChildBuilderDelegate(
+                        (BuildContext context, int index) {
+                          if (videoLesson.isNotEmpty) {
+                            return DocumentItem(
+                              videoLesson: videoLesson[index],
+                              isVideo: true,
+                            );
+                          }
+                          return const SizedBox();
+                        },
+                        childCount: videoLesson.length,
                       ),
                     ),
-                  ],
-                );
-              },
-            ),
-          );
-        }).toList(),
-      ),
+                  ),
+                ],
+              );
+            },
+          ),
+        ),
+        SafeArea(
+          top: false,
+          bottom: false,
+          child: Builder(
+            builder: (BuildContext context) {
+              return CustomScrollView(
+                key: const PageStorageKey<String>('pdf'),
+                slivers: <Widget>[
+                  SliverOverlapInjector(
+                    handle: NestedScrollView.sliverOverlapAbsorberHandleFor(
+                        context),
+                  ),
+                  SliverPadding(
+                    padding: const EdgeInsets.all(8.0),
+                    sliver: SliverFixedExtentList(
+                      itemExtent: 83.h,
+                      delegate: SliverChildBuilderDelegate(
+                        (BuildContext context, int index) {
+                          if (taiLieu.isNotEmpty) {
+                            return DocumentItem(
+                              taiLieu: taiLieu[index],
+                            );
+                          }
+                          return const SizedBox();
+                        },
+                        childCount: taiLieu.length,
+                      ),
+                    ),
+                  ),
+                ],
+              );
+            },
+          ),
+        ),
+      ]),
     );
   }
 }

@@ -4,6 +4,7 @@ import 'package:binh_thuan/models/detail_subject_models.dart';
 import 'package:binh_thuan/models/lesson_model.dart';
 import 'package:binh_thuan/modules/exercise/exercise_screen.dart';
 import 'package:binh_thuan/modules/lesson_details/test_screen.dart';
+import 'package:binh_thuan/modules/videoplayer/animation_player.dart';
 import 'package:binh_thuan/repo/repo/lesson_repo.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
@@ -15,12 +16,11 @@ import 'package:url_launcher/url_launcher.dart';
 class LessonDetailsScreen extends StatefulWidget {
   const LessonDetailsScreen({
     super.key,
-    required this.videoLesson,
     required this.chiTiet,
     required this.document,
     required this.id,
   });
-  final List<LessonModels> videoLesson;
+
   final ChiTietBuoiHocModel chiTiet;
   final List<DocumentModel> document;
   final String id;
@@ -101,7 +101,6 @@ class _LessonDetailsScreenState extends State<LessonDetailsScreen> {
               ),
               _tabSection(
                 context,
-                widget.videoLesson,
                 widget.chiTiet,
                 widget.id,
               ),
@@ -311,7 +310,6 @@ class ItemDetails extends StatelessWidget {
 
 Widget _tabSection(
   BuildContext context,
-  List<LessonModels> videoLesson,
   ChiTietBuoiHocModel chiTiet,
   String id,
 ) {
@@ -336,7 +334,6 @@ Widget _tabSection(
           height: MediaQuery.of(context).size.height * 0.4,
           child: TabBarView(children: [
             DocumentTab(
-              videoLesson: videoLesson,
               taiLieu: chiTiet.document,
             ),
             const MissionItem(),
@@ -351,9 +348,8 @@ Widget _tabSection(
 }
 
 class DocumentTab extends StatelessWidget {
-  const DocumentTab(
-      {super.key, required this.videoLesson, required this.taiLieu});
-  final List<LessonModels> videoLesson;
+  const DocumentTab({super.key, required this.taiLieu});
+
   final List<DocumentModel> taiLieu;
   @override
   Widget build(BuildContext context) {
@@ -371,7 +367,7 @@ class DocumentTab extends StatelessWidget {
         itemCount: taiLieu.length,
         itemBuilder: (BuildContext context, int index) {
           return DocumentItem(
-            videoLesson: videoLesson,
+            // videoLesson: videoLesson[index],
             taiLieu: taiLieu[index],
           );
         });
@@ -483,15 +479,25 @@ class MissionItem extends StatelessWidget {
 
 class DocumentItem extends StatelessWidget {
   const DocumentItem(
-      {super.key, required this.videoLesson, required this.taiLieu});
-  final List<LessonModels> videoLesson;
-  final DocumentModel taiLieu;
+      {super.key, this.videoLesson, this.taiLieu, this.isVideo = false});
+  final LessonModels? videoLesson;
+  final DocumentModel? taiLieu;
+  final bool isVideo;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async {
-        if (!await launchUrl(Uri.parse(taiLieu.urlFile))) {
-          throw Exception('Could not launch ');
+        if (taiLieu != null) {
+          if (!await launchUrl(Uri.parse(taiLieu!.urlFile))) {
+            throw Exception('Could not launch ');
+          }
+        } else {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const AnimationPlayer(),
+            ),
+          );
         }
       },
       child: Container(
@@ -526,8 +532,13 @@ class DocumentItem extends StatelessWidget {
                   ),
                 ),
               ),
-              child: SvgPicture.asset('assets/icons/video_icon.svg',
-                  width: 18.w, height: 18.h, fit: BoxFit.fill),
+              child: SvgPicture.asset(
+                  isVideo
+                      ? 'assets/icons/video_icon.svg'
+                      : 'assets/icons/home_work_icon.svg',
+                  width: 18.w,
+                  height: 18.h,
+                  fit: BoxFit.fill),
             ),
             SizedBox(width: 8.w),
             Column(
@@ -535,11 +546,11 @@ class DocumentItem extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Text(
-                  taiLieu.name,
+                  isVideo ? videoLesson!.name : taiLieu!.name,
                   style: defaultBoldText,
                 ),
                 Text(
-                  taiLieu.fileType,
+                  isVideo ? videoLesson!.type : taiLieu!.fileType,
                   style: defaultText14.copyWith(color: color999),
                 ),
               ],

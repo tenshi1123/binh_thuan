@@ -47,7 +47,7 @@ class _AppState extends State<App> with WidgetsBindingObserver {
       builder: (_, child) {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
-          title: 'Bình Thuận',
+          title: 'LSO',
           // You can use the library anywhere in the app even in theme
           theme: ThemeData(
             primarySwatch: Colors.blue,
