@@ -49,8 +49,10 @@
     <string>Can I use the camera please?</string>
     <key>NSMicrophoneUsageDescription</key>
     <string>Can I use the mic please?</string>
-	<key>NSPhotoLibraryUsageDescription </key>
-    <string>Can I use the library please?</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+    <string>This app requires access to the photo library to send image.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+    <string>This app requires access to location.</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>sms</string>
