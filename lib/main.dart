@@ -19,16 +19,16 @@ void main() async {
   await SpUtil.getInstance();
 
 //  handle in terminated state
-  var initialNotification =
-      await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
-  if (initialNotification?.didNotificationLaunchApp == true) {
-    // LocalNotifications.onClickNotification.stream.listen((event) {
-    Future.delayed(const Duration(seconds: 1), () {
-      // print(event);
-      navigatorKey.currentState!.pushNamed('/another',
-          arguments: initialNotification?.notificationResponse?.payload);
-    });
-  }
+  // var initialNotification =
+  //     await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
+  // if (initialNotification?.didNotificationLaunchApp == true) {
+  //   // LocalNotifications.onClickNotification.stream.listen((event) {
+  //   Future.delayed(const Duration(seconds: 1), () {
+  //     // print(event);
+  //     navigatorKey.currentState!.pushNamed('/another',
+  //         arguments: initialNotification?.notificationResponse?.payload);
+  //   });
+  // }
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
       .then((_) {
     initializeDateFormatting().then((_) => runApp(const App()));
