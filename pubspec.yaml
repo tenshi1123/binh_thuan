@@ -23,9 +23,9 @@ dependencies:
   easy_splash_screen: ^1.0.4
   provider: ^6.1.2
   flutter_bloc: ^8.1.5
-  firebase_core: ^3.1.1
-  cloud_firestore: ^5.0.2
-  firebase_auth: ^5.0.0
+  # firebase_core: ^3.1.1
+  # cloud_firestore: ^5.0.2
+  # firebase_auth: ^5.0.0
   otp_pin_field: ^1.2.4
   persistent_bottom_nav_bar_v2: ^5.2.3
   flutter_svg: ^2.0.10+1
