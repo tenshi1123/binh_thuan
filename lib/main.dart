@@ -2,16 +2,13 @@ import 'package:binh_thuan/modules/app.dart';
 import 'package:binh_thuan/modules/notification/local_notification.dart';
 import 'package:binh_thuan/modules/notification/noti_model.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:intl/date_symbol_data_local.dart';
+//import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:sp_util/sp_util.dart';
 
 final navigatorKey = GlobalKey<NavigatorState>();
 GlobalKey<ScaffoldState> key = GlobalKey();
-FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-    FlutterLocalNotificationsPlugin();
+
 List<NotiModel> listNotification = [];
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
