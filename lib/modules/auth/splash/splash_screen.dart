@@ -11,6 +11,7 @@ import 'package:binh_thuan/utils/onesignal.dart';
 import 'package:flutter/material.dart';
 
 import 'package:easy_splash_screen/easy_splash_screen.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:sp_util/sp_util.dart';
 
 import '../../app.dart';
