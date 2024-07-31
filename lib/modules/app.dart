@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'auth/splash/splash_screen.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
+import 'dart:io' show Platform;
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 final StreamController<bool> mainController = StreamController<bool>();
@@ -24,10 +25,14 @@ class _AppState extends State<App> with WidgetsBindingObserver {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    OneSignal.initialize('1f643336-9d73-4c65-ac00-38d499b8c462');
-    OneSignal.Notifications.requestPermission(true).then((value) {
-      print('signal value : $value');
-    });
+    if (Platform.isAndroid) {
+      OneSignal.initialize('1f643336-9d73-4c65-ac00-38d499b8c462');
+      OneSignal.Notifications.requestPermission(true).then((value) {
+        print('signal value : $value');
+      });
+    } else {
+      //do nothing :v
+    }
   }
 
   //  to listen to any notification clicked or not
