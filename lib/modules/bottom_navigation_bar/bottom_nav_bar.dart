@@ -101,6 +101,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
       controller: _controller,
       tabs: _tabs(),
       navBarBuilder: (navBarConfig) => Style2BottomNavBar(
+        itemPadding: EdgeInsets.all(5.h),
         navBarConfig: navBarConfig,
         navBarDecoration: NavBarDecoration(
           color: const Color(0xff4659B9),
@@ -108,7 +109,8 @@ class _BottomNavBarState extends State<BottomNavBar> {
         ),
         //itemAnimationProperties: const ItemAnimation(),
       ),
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.transparent,
+      navBarHeight: 50.h,
       // onWillPop: (context) async {
       //   await showDialog(
       //     context: context,

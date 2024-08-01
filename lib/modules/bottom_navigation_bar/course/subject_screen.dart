@@ -28,14 +28,14 @@ class SubjectScreen extends StatelessWidget {
               sliver: SliverAppBar(
                 flexibleSpace: SizedBox(
                   width: 390.w,
-                  height: 160.h,
+                  height: 170.h,
                   child: Stack(children: [
                     Positioned(
                       top: 0.h,
                       left: 0.h,
                       child: Image(
                         width: MediaQuery.of(context).size.width,
-                        height: 160.h,
+                        height: 170.h,
                         image: const AssetImage(
                           'assets/images/appbar_background2.png',
                         ),
@@ -126,7 +126,7 @@ class SubjectScreen extends StatelessWidget {
           decoration: const BoxDecoration(color: kPrimaryColor),
           width: 390.w,
           child: AspectRatio(
-            aspectRatio: 10 / 8,
+            aspectRatio: 12 / 8,
             child: TabContainer(
               borderRadius: BorderRadius.circular(20),
               tabBorderRadius: BorderRadius.circular(30),

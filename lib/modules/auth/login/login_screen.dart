@@ -162,12 +162,13 @@ class _LoginScreenState extends State<LoginScreen> {
                     'Thông tin đăng nhập được cung cấp bởi nhà trường',
                     textAlign: TextAlign.right,
                     style: TextStyle(
-                        color: const Color.fromRGBO(153, 153, 153, 1),
-                        fontFamily: 'Inter',
-                        fontSize: 12.sp,
-                        //letterSpacing: -0.5,
-                        fontWeight: FontWeight.normal,
-                        height: 1.1666666666666667.h),
+                      color: const Color.fromRGBO(153, 153, 153, 1),
+                      fontFamily: 'Inter',
+                      fontSize: 12.sp,
+                      //letterSpacing: -0.5,
+                      fontWeight: FontWeight.normal,
+                    ),
+                    overflow: TextOverflow.clip,
                   )),
               Positioned(
                   top: 386.h - MediaQuery.of(context).viewInsets.bottom,
@@ -175,13 +176,14 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Text(
                     'Đăng nhập để tiếp tục sử dụng ứng dụng',
                     textAlign: TextAlign.right,
+                    overflow: TextOverflow.clip,
                     style: TextStyle(
-                        color: kPrimaryColor,
-                        fontFamily: 'Inter',
-                        fontSize: 16.sp,
-                        //letterSpacing: -0.5,
-                        fontWeight: FontWeight.bold,
-                        height: 1.1666666666666667.h),
+                      color: kPrimaryColor,
+                      fontFamily: 'Inter',
+                      fontSize: 16.sp,
+                      //letterSpacing: -0.5,
+                      fontWeight: FontWeight.bold,
+                    ),
                   )),
               Positioned(
                 top: 670.h - MediaQuery.of(context).viewInsets.bottom,
@@ -260,7 +262,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 top: 56.h - MediaQuery.of(context).viewInsets.bottom,
                 left: 21.w,
                 child: Container(
-                  width: 348.w,
+                  width: 340.w,
                   height: 309.h,
                   decoration: const BoxDecoration(
                     image: DecorationImage(

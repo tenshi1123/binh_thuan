@@ -1,6 +1,8 @@
 import 'package:binh_thuan/modules/app.dart';
 import 'package:binh_thuan/modules/notification/noti_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:intl/date_symbol_data_local.dart';
 //import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:sp_util/sp_util.dart';
@@ -37,11 +39,11 @@ void main() async {
       // Setting to 1.0 will profile 100% of sampled transactions:
       options.profilesSampleRate = 1.0;
     },
-    // appRunner: () =>
-    //     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
-    //         .then((_) {
-    //   initializeDateFormatting().then((_) => runApp(const   App()));
-    // }),
-    appRunner: () => runApp(const App()),
+    appRunner: () =>
+        SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
+            .then((_) {
+      initializeDateFormatting().then((_) => runApp(const App()));
+    }),
+    //appRunner: () => runApp(const App()),
   );
 }

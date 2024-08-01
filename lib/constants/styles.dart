@@ -2,6 +2,12 @@ import 'package:binh_thuan/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+TextStyle defaultText10 = TextStyle(
+  fontSize: 10.sp,
+  color: keyBlack,
+  fontWeight: FontWeight.w600,
+  fontFamily: 'Nunito',
+);
 TextStyle defaultText12 = TextStyle(
   fontSize: 12.sp,
   color: keyBlack,
