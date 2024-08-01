@@ -66,12 +66,7 @@ class _InfoScreenState extends State<InfoScreen> {
                     top: 60.h,
                     left: 300.w,
                     child: GestureDetector(
-                      onTap: () {
-                        LocalNotifications.showSimpleNotification(
-                            title: 'test',
-                            body: 'this is body',
-                            payload: 'this is payload');
-                      },
+                      onTap: () {},
                       child: Container(
                           height: 32.h,
                           width: 65.w,
@@ -368,12 +363,7 @@ class _InfoScreenState extends State<InfoScreen> {
                 endIndent: 20.w,
               ),
               GestureDetector(
-                onTap: () {
-                  LocalNotifications.showSimpleNotification(
-                      title: 'test',
-                      body: 'this is body',
-                      payload: 'this is payload');
-                },
+                onTap: () {},
                 child: const ManagementItem(
                   title: 'Thông báo',
                   icon: 'assets/icons/bell_icon.svg',

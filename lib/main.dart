@@ -1,5 +1,4 @@
 import 'package:binh_thuan/modules/app.dart';
-import 'package:binh_thuan/modules/notification/local_notification.dart';
 import 'package:binh_thuan/modules/notification/noti_model.dart';
 import 'package:flutter/material.dart';
 //import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -13,7 +12,7 @@ List<NotiModel> listNotification = [];
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   //await Firebase.initializeApp();
-  await LocalNotifications.init();
+  //await LocalNotifications.init();
   await SpUtil.getInstance();
 
 //  handle in terminated state
