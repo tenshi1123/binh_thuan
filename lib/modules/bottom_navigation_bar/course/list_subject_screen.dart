@@ -24,6 +24,7 @@ class NestedScroll extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
+      bottom: false,
       child: Scaffold(
         //appBar: AppBar(automaticallyImplyLeading: false),
         backgroundColor: Colors.white,
@@ -118,14 +119,14 @@ class NestedScroll extends StatelessWidget {
               height: 2.h,
             ),
             SizedBox(
-              height: 640.h,
+              height: 570.h,
               child: ListView.builder(
                   itemCount: listSubjectModel.length,
                   shrinkWrap: true,
                   scrollDirection: Axis.vertical,
                   physics: const ScrollPhysics(),
                   padding: EdgeInsets.only(bottom: 10.h),
-                  reverse: true,
+                  //reverse: true,
                   //physics: const NeverScrollableScrollPhysics(),
                   itemBuilder: (context, index) {
                     return Padding(
