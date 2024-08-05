@@ -6,7 +6,6 @@ import 'package:binh_thuan/models/login_model.dart';
 import 'package:binh_thuan/modules/bottom_navigation_bar/home/custom_widget_home.dart';
 import 'package:binh_thuan/modules/notification/local_notification.dart';
 import 'package:binh_thuan/modules/schedule/table_calender.dart';
-import 'package:binh_thuan/modules/tuition/tuition_screen.dart';
 import 'package:binh_thuan/repo/repo/calender_repo.dart';
 import 'package:binh_thuan/router/app_pages.dart';
 import 'package:binh_thuan/router/app_router.dart';
@@ -324,18 +323,19 @@ class _HomeScreenState extends State<HomeScreen> {
                   //   'assets/icons/score.svg',
                   //   height: 86.h,
                   // ),
-                  GestureDetector(
-                    onTap: () {
-                      pushWithoutNavBar(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const TuitionScreen()));
-                    },
-                    child: SvgPicture.asset(
-                      'assets/icons/tuition.svg',
-                      height: 86.h,
-                    ),
-                  ),
+                  // Học phí
+                  // GestureDetector(
+                  //   onTap: () {
+                  //     pushWithoutNavBar(
+                  //         context,
+                  //         MaterialPageRoute(
+                  //             builder: (context) => const TuitionScreen()));
+                  //   },
+                  //   child: SvgPicture.asset(
+                  //     'assets/icons/tuition.svg',
+                  //     height: 86.h,
+                  //   ),
+                  // ),
                 ],
               ),
               Padding(
@@ -420,13 +420,34 @@ class _HomeScreenState extends State<HomeScreen> {
               //     ],
               //   ),
               // ),
-              Center(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child:
-                      Text('Hiện không có lớp học nào', style: defaultText14),
-                ),
-              ),
+              (widget.info.comming.isEmpty)
+                  ? Center(
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text('Hiện không có lớp học nào',
+                            style: defaultText14),
+                      ),
+                    )
+                  : SizedBox(
+                      width: 380.w,
+                      height: 111.h,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        shrinkWrap: true,
+                        physics: const ScrollPhysics(),
+                        //itemExtent: 390.0.w,
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 0, vertical: 0),
+                        itemCount: widget.info.comming.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return ComingLesson(
+                            comingLessonModels: widget.info.comming[index],
+                            id: widget.info.comming[index].id,
+                          );
+                        },
+                      ),
+                    ),
+
               Padding(
                 padding: EdgeInsets.fromLTRB(20.w, 15.w, 0, 0),
                 child: Text('Thông báo', style: defaultBoldText),

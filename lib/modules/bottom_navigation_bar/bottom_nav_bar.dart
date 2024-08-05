@@ -109,7 +109,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
         ),
         //itemAnimationProperties: const ItemAnimation(),
       ),
-      backgroundColor: Colors.transparent,
+      backgroundColor: Colors.white,
       navBarHeight: 50.h,
       // onWillPop: (context) async {
       //   await showDialog(

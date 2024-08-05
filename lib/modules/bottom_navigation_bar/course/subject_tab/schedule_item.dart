@@ -102,10 +102,17 @@ List<Widget> _tabScroll(int count) => [
     ];
 const List<String> _tabs = <String>['Sắp tới', 'Đã hoàn thành'];
 
-class InfoItem extends StatelessWidget {
+class InfoItem extends StatefulWidget {
   const InfoItem({super.key, required this.videoLesson, required this.taiLieu});
   final List<LessonModels> videoLesson;
   final List<DocumentModel> taiLieu;
+
+  @override
+  State<InfoItem> createState() => _InfoItemState();
+}
+
+class _InfoItemState extends State<InfoItem>
+    with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -126,8 +133,11 @@ class InfoItem extends StatelessWidget {
         ),
         unselectedLabelColor: keyBlack.withOpacity(0.3),
         labelColor: keyBlack,
-
-        tabs: _tabScroll(taiLieu.length), //list of tabs
+        controller: TabController(
+          length: 2,
+          vsync: this,
+        ),
+        tabs: _tabScroll(widget.taiLieu.length), //list of tabs
       ),
       body: TabBarView(children: [
         SafeArea(
@@ -148,15 +158,15 @@ class InfoItem extends StatelessWidget {
                       itemExtent: 83.h,
                       delegate: SliverChildBuilderDelegate(
                         (BuildContext context, int index) {
-                          if (videoLesson.isNotEmpty) {
+                          if (widget.videoLesson.isNotEmpty) {
                             return DocumentItem(
-                              videoLesson: videoLesson[index],
+                              videoLesson: widget.videoLesson[index],
                               isVideo: true,
                             );
                           }
                           return const SizedBox();
                         },
-                        childCount: videoLesson.length,
+                        childCount: widget.videoLesson.length,
                       ),
                     ),
                   ),
@@ -183,14 +193,14 @@ class InfoItem extends StatelessWidget {
                       itemExtent: 83.h,
                       delegate: SliverChildBuilderDelegate(
                         (BuildContext context, int index) {
-                          if (taiLieu.isNotEmpty) {
+                          if (widget.taiLieu.isNotEmpty) {
                             return DocumentItem(
-                              taiLieu: taiLieu[index],
+                              taiLieu: widget.taiLieu[index],
                             );
                           }
                           return const SizedBox();
                         },
-                        childCount: taiLieu.length,
+                        childCount: widget.taiLieu.length,
                       ),
                     ),
                   ),

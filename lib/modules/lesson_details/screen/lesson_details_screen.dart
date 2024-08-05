@@ -314,7 +314,7 @@ Widget _tabSection(
   String id,
 ) {
   return DefaultTabController(
-    length: 3,
+    length: 2,
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -326,7 +326,7 @@ Widget _tabSection(
             indicatorColor: keyBlack,
             tabs: [
               homeTab(title: "Tài liệu", isSeprator: false, hasNumber: false),
-              homeTab(title: "Nhiệm vụ", hasNumber: false),
+              //homeTab(title: "Nhiệm vụ", hasNumber: false),
               homeTab(title: "Thắc mắc", hasNumber: false),
             ]),
         SizedBox(
@@ -336,7 +336,7 @@ Widget _tabSection(
             DocumentTab(
               taiLieu: chiTiet.document,
             ),
-            const MissionItem(),
+            //const MissionItem(),
             QuestionTab(
               id: id,
             ),

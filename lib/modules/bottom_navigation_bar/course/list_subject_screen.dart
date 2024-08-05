@@ -125,7 +125,7 @@ class NestedScroll extends StatelessWidget {
                   scrollDirection: Axis.vertical,
                   physics: const ScrollPhysics(),
                   padding: EdgeInsets.only(bottom: 10.h),
-
+                  reverse: true,
                   //physics: const NeverScrollableScrollPhysics(),
                   itemBuilder: (context, index) {
                     return Padding(
