@@ -7,10 +7,10 @@ import 'package:binh_thuan/modules/bottom_navigation_bar/bottom_nav_bar.dart';
 import 'package:binh_thuan/modules/notification/noti_repo.dart';
 import 'package:binh_thuan/repo/repo/home_repo.dart';
 import 'package:binh_thuan/repo/repo/subject_repo.dart';
-import 'package:binh_thuan/utils/onesignal.dart';
 import 'package:flutter/material.dart';
 
 import 'package:easy_splash_screen/easy_splash_screen.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sp_util/sp_util.dart';
 
 import '../../app.dart';
@@ -57,7 +57,7 @@ class _SplashScreenAppState extends State<SplashScreenApp> {
         'assets/images/Logo.png',
         color: Colors.transparent,
       ),
-      logoWidth: 170,
+      logoWidth: 170.w,
       backgroundImage: const AssetImage('assets/images/splash.png'),
     );
 

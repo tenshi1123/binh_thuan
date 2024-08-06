@@ -27,9 +27,7 @@ class _AppState extends State<App> with WidgetsBindingObserver {
     WidgetsBinding.instance.addObserver(this);
     if (Platform.isAndroid) {
       OneSignal.initialize('1f643336-9d73-4c65-ac00-38d499b8c462');
-      OneSignal.Notifications.requestPermission(true).then((value) {
-        print('signal value : $value');
-      });
+      OneSignal.Notifications.requestPermission(true).then((value) {});
     } else {
       //do nothing :v
     }

@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 class SubjectModels {
   final String teacherName;
   final String subjectName;
@@ -37,7 +39,7 @@ class ComingLessonModels {
   final String roomName;
   final String teacherName;
   final String dayOfWeek;
-  final String day;
+  final DateTime day;
   final String id;
   ComingLessonModels({
     required this.subjectName,
@@ -62,7 +64,7 @@ class ComingLessonModels {
       timeEnd: json['time_end'] ?? '',
       roomName: json['class_room_name'] ?? '',
       dayOfWeek: json['day_of_week'] ?? '',
-      day: json['day'] ?? '',
+      day: DateFormat("yyyy-MM-dd").parse(json['day']),
     );
   }
 }

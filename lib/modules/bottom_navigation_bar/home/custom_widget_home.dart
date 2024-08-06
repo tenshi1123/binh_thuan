@@ -127,14 +127,14 @@ class ComingLesson extends StatelessWidget {
                       color: Colors.white,
                     ),
                     Text(
-                      '27',
+                      "${comingLessonModels.day.day}",
                       style: defaultText20.copyWith(
                         fontWeight: FontWeight.w900,
                         color: Colors.white,
                       ),
                     ),
                     Text(
-                      'tháng 4',
+                      'tháng ${comingLessonModels.day.month}',
                       style: defaultText12.copyWith(
                         color: Colors.white,
                       ),
