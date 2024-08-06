@@ -122,7 +122,7 @@ class _ChatScreenState extends State<ChatScreen> {
             SizedBox(
               width: 150.w,
             ),
-            SvgPicture.asset('assets/icons/group.svg')
+            //SvgPicture.asset('assets/icons/group.svg')
           ],
         ),
       ),

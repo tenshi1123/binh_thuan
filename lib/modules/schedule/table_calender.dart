@@ -124,7 +124,7 @@ class _TableEventsExampleState extends State<TableEventsExample> {
               ),
               Positioned(
                   left: 10.w,
-                  bottom: 10.h,
+                  bottom: 20.h,
                   child: IconButton(
                     icon: const Icon(
                       Icons.arrow_back_ios_new,

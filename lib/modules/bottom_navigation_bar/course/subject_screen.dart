@@ -96,7 +96,7 @@ class _SubjectScreenState extends State<SubjectScreen>
                       bottom: 10.h,
                       left: 120.w,
                       child: Text(
-                        'Toán nâng cao',
+                        widget.detailSubject.info.subjectName,
                         style: defaultText20.copyWith(
                           color: Colors.white,
                           fontFamily: 'Nunito-Bold',
