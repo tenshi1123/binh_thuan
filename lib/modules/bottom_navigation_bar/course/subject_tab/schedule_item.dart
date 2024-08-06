@@ -111,8 +111,7 @@ class InfoItem extends StatefulWidget {
   State<InfoItem> createState() => _InfoItemState();
 }
 
-class _InfoItemState extends State<InfoItem>
-    with SingleTickerProviderStateMixin {
+class _InfoItemState extends State<InfoItem> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -133,10 +132,10 @@ class _InfoItemState extends State<InfoItem>
         ),
         unselectedLabelColor: keyBlack.withOpacity(0.3),
         labelColor: keyBlack,
-        controller: TabController(
-          length: 2,
-          vsync: this,
-        ),
+        // controller: TabController(
+        //   length: 2,
+        //   vsync: this,
+        // ),
         tabs: _tabScroll(widget.taiLieu.length), //list of tabs
       ),
       body: TabBarView(children: [

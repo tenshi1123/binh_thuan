@@ -11,11 +11,18 @@ import 'package:tab_container/tab_container.dart';
 import 'subject_tab/tab_infomation.dart';
 import 'subject_tab/tab_schedule.dart';
 
-class SubjectScreen extends StatelessWidget {
+class SubjectScreen extends StatefulWidget {
   const SubjectScreen(
       {super.key, this.useRouter = false, required this.detailSubject});
   final bool useRouter;
   final DetailSubjectModels detailSubject;
+
+  @override
+  State<SubjectScreen> createState() => _SubjectScreenState();
+}
+
+class _SubjectScreenState extends State<SubjectScreen>
+    with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -128,6 +135,10 @@ class SubjectScreen extends StatelessWidget {
           child: AspectRatio(
             aspectRatio: 12 / 8,
             child: TabContainer(
+              controller: TabController(
+                length: 2,
+                vsync: this,
+              ),
               borderRadius: BorderRadius.circular(20),
               tabBorderRadius: BorderRadius.circular(30),
               tabEdge: TabEdge.top,
@@ -158,7 +169,7 @@ class SubjectScreen extends StatelessWidget {
                   fontWeight: FontWeight.w200,
                   decoration: TextDecoration.none),
               tabs: _getTabs1(),
-              children: getChildren2(detailSubject),
+              children: getChildren2(widget.detailSubject),
             ),
           ),
         ),
@@ -167,13 +178,15 @@ class SubjectScreen extends StatelessWidget {
   }
 }
 
-const List<String> _tabs = <String>['Lịch học', 'Thông tin'];
 List<Widget> _getTabs1() {
-  return _tabs
-      .map((e) => Text(
-            e,
-          ))
-      .toList();
+  return [
+    const Text(
+      'Lịch học',
+    ),
+    const Text(
+      'Thông tin',
+    )
+  ];
 }
 
 List<Widget> getChildren2(DetailSubjectModels detailSubject) {
