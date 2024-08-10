@@ -259,7 +259,23 @@ class _ChatScreenState extends State<ChatScreen> {
                         if (messageController.text.isNotEmpty) {
                           await ChatRepo().sendTextMessage(
                               widget.groupId, messageController.text);
+
+                          setState(() {
+                            widget.listMessage.insert(
+                              0,
+                              MessageModel(
+                                  content: messageController.text,
+                                  messageType: "0",
+                                  senderId: LoginRepo.idUser ?? '',
+                                  senderType: "1",
+                                  createdAt: DateTime.now(),
+                                  teacherName: '',
+                                  studentName: '',
+                                  teacherAvatar: ''),
+                            );
+                          });
                           messageController.clear();
+
                           showDialog(
                             context: context,
                             builder: (BuildContext context) {

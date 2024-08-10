@@ -3,6 +3,7 @@ import 'package:binh_thuan/constants/styles.dart';
 import 'package:binh_thuan/models/detail_subject_models.dart';
 import 'package:binh_thuan/models/lesson_model.dart';
 import 'package:binh_thuan/modules/exercise/exercise_screen.dart';
+import 'package:binh_thuan/modules/lesson_details/screen/webview_screen.dart';
 import 'package:binh_thuan/modules/lesson_details/test_screen.dart';
 import 'package:binh_thuan/modules/videoplayer/animation_player.dart';
 import 'package:binh_thuan/repo/repo/lesson_repo.dart';
@@ -19,11 +20,13 @@ class LessonDetailsScreen extends StatefulWidget {
     required this.chiTiet,
     required this.document,
     required this.id,
+    required this.listQuestion,
   });
 
   final ChiTietBuoiHocModel chiTiet;
   final List<DocumentModel> document;
   final String id;
+  final List<QuestionModel> listQuestion;
   @override
   State<LessonDetailsScreen> createState() => _LessonDetailsScreenState();
 }
@@ -103,6 +106,7 @@ class _LessonDetailsScreenState extends State<LessonDetailsScreen> {
                 context,
                 widget.chiTiet,
                 widget.id,
+                widget.listQuestion,
               ),
               SizedBox(
                 height: 10.h,
@@ -312,6 +316,7 @@ Widget _tabSection(
   BuildContext context,
   ChiTietBuoiHocModel chiTiet,
   String id,
+  List<QuestionModel> listQuestion,
 ) {
   return DefaultTabController(
     length: 2,
@@ -339,6 +344,7 @@ Widget _tabSection(
             //const MissionItem(),
             QuestionTab(
               id: id,
+              listQuestions: listQuestion,
             ),
           ]),
         ),
@@ -488,7 +494,14 @@ class DocumentItem extends StatelessWidget {
     return GestureDetector(
       onTap: () async {
         if (taiLieu != null) {
-          if (!await launchUrl(Uri.parse(taiLieu!.urlFile))) {
+          if (taiLieu!.fileType == 'Word Document') {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const WebViewExample(),
+              ),
+            );
+          } else if (!await launchUrl(Uri.parse(taiLieu!.urlFile))) {
             throw Exception('Could not launch ');
           }
         } else {
@@ -563,88 +576,180 @@ class DocumentItem extends StatelessWidget {
 }
 
 class QuestionTab extends StatefulWidget {
-  const QuestionTab({super.key, required this.id});
+  const QuestionTab({
+    super.key,
+    required this.id,
+    required this.listQuestions,
+  });
   final String id;
-
+  final List<QuestionModel> listQuestions;
   @override
   State<QuestionTab> createState() => _QuestionTabState();
 }
 
 class _QuestionTabState extends State<QuestionTab> {
   final TextEditingController questionController = TextEditingController();
+  late List<QuestionModel> listQuestions;
+  @override
+  void initState() {
+    listQuestions = widget.listQuestions;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        SizedBox(height: 20.h),
-        SizedBox(
-          width: 350.w,
-          child: Row(
-            children: [
-              SizedBox(
-                width: 320.w,
-                child: TextField(
-                  style: defaultText16,
-                  onTapOutside: (event) {
-                    FocusManager.instance.primaryFocus?.unfocus();
-                  },
-                  minLines: 1,
-                  maxLines: 5,
-                  controller: questionController,
-                  scrollPadding: EdgeInsets.symmetric(
-                      vertical: MediaQuery.of(context).viewInsets.bottom),
-                  decoration: InputDecoration(
-                    border:
-                        const OutlineInputBorder(borderSide: BorderSide.none),
-                    hintText:
-                        'Gửi thắc mắc và câu hỏi về bài học cho giáo viên',
-                    hintStyle: defaultText12.copyWith(
-                      color: rec12Marine,
+    return Scaffold(
+      body: Column(
+        children: [
+          SizedBox(height: 20.h),
+          SizedBox(
+            width: 350.w,
+            child: Row(
+              children: [
+                SizedBox(
+                  width: 320.w,
+                  child: TextField(
+                    style: defaultText16,
+                    onTapOutside: (event) {
+                      FocusManager.instance.primaryFocus?.unfocus();
+                    },
+                    minLines: 1,
+                    maxLines: 5,
+                    controller: questionController,
+                    scrollPadding: EdgeInsets.symmetric(
+                        vertical: MediaQuery.of(context).viewInsets.bottom),
+                    decoration: InputDecoration(
+                      border:
+                          const OutlineInputBorder(borderSide: BorderSide.none),
+                      hintText:
+                          'Gửi thắc mắc và câu hỏi về bài học cho giáo viên',
+                      hintStyle: defaultText12.copyWith(
+                        color: rec12Marine,
+                      ),
                     ),
                   ),
                 ),
-              ),
-              GestureDetector(
-                onTap: () async {
-                  await LessonRepo().sendQuestion(
-                      id: widget.id, content: questionController.text);
-                  questionController.clear();
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return CupertinoAlertDialog(
-                        title: const Text('Gửi thành công'),
-                        content: const Text('Thắc mắc đã được gửi đi'),
-                        actions: <Widget>[
-                          CupertinoDialogAction(
-                            isDefaultAction: true,
-                            child: const Text(
-                              'Yes',
-                              style:
-                                  TextStyle(fontSize: 20, color: kPrimaryColor),
-                            ),
-                            onPressed: () {
-                              Navigator.of(context, rootNavigator: true).pop(
-                                (_) => false,
-                              );
-                            },
-                          )
-                        ],
-                      );
-                    },
-                  );
-                },
-                child: SvgPicture.asset('assets/icons/plane.svg'),
-              ),
-            ],
+                GestureDetector(
+                  onTap: () async {
+                    await LessonRepo().sendQuestion(
+                        id: widget.id, content: questionController.text);
+
+                    // setState(() {
+                    //   widget.listQuestions.insert(
+                    //     0,
+                    //     QuestionModel(
+                    //         question: questionController.text,
+                    //         answer: '',
+                    //         createdAt: '',
+                    //         updateAt: ''),
+                    //   );
+                    // });
+                    questionController.clear();
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return CupertinoAlertDialog(
+                          title: const Text('Gửi thành công'),
+                          content: const Text('Thắc mắc đã được gửi đi'),
+                          actions: <Widget>[
+                            CupertinoDialogAction(
+                              isDefaultAction: true,
+                              child: const Text(
+                                'Yes',
+                                style: TextStyle(
+                                    fontSize: 20, color: kPrimaryColor),
+                              ),
+                              onPressed: () {
+                                Navigator.of(context, rootNavigator: true).pop(
+                                  (_) => false,
+                                );
+                                Navigator.of(context).pop();
+                              },
+                            )
+                          ],
+                        );
+                      },
+                    );
+                  },
+                  child: SvgPicture.asset('assets/icons/plane.svg'),
+                ),
+              ],
+            ),
           ),
-        ),
-        Divider(
-          color: Colors.black,
-          indent: 20.w,
-          endIndent: 20.w,
-        )
-      ],
+          Divider(
+            color: Colors.black,
+            indent: 20.w,
+            endIndent: 20.w,
+          ),
+          Expanded(
+            child: ListView.builder(
+              itemCount: listQuestions.length,
+              shrinkWrap: true,
+              padding: EdgeInsets.only(bottom: 50.h),
+              physics: const ClampingScrollPhysics(),
+              //reverse: true,
+              //physics: const NeverScrollableScrollPhysics(),
+              itemBuilder: (context, index) {
+                return Container(
+                  padding: const EdgeInsets.only(
+                      left: 14, right: 14, top: 6, bottom: 6),
+                  child: Column(
+                    children: [
+                      Align(
+                        alignment: Alignment.topRight,
+                        child: Container(
+                          constraints: const BoxConstraints(maxWidth: 300),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(12),
+                              color: kPrimaryColor),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 16, vertical: 12),
+                          child: Column(
+                            children: [
+                              Text(
+                                listQuestions[index].question,
+                                style: defaultText14.copyWith(color: keyWhite),
+                              ),
+                              Text(
+                                listQuestions[index].createdAt.substring(5, 16),
+                                style: defaultText14.copyWith(
+                                  color: keyWhite,
+                                ),
+                                textAlign: TextAlign.right,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      listQuestions[index].answer == ''
+                          ? const SizedBox()
+                          : Align(
+                              alignment: Alignment.bottomLeft,
+                              child: Container(
+                                constraints:
+                                    const BoxConstraints(maxWidth: 300),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(12),
+                                  color: rec14Marine,
+                                ),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 16, vertical: 12),
+                                child: Text(
+                                  listQuestions[index].answer,
+                                  style: defaultText14.copyWith(
+                                    color: keyBlack,
+                                  ),
+                                ),
+                              ),
+                            ),
+                    ],
+                  ),
+                );
+              },
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

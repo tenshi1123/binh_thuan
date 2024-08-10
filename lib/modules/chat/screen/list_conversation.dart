@@ -168,8 +168,8 @@ class ConversationItem extends StatelessWidget {
                     children: [
                       Text(
                         (model.createdAt.day == DateTime.now().day)
-                            ? DateFormat("hh:mm").format(model.createdAt)
-                            : DateFormat("dd/MM/yyyy").format(model.createdAt),
+                            ? DateFormat("HH:mm").format(model.createdAt)
+                            : DateFormat("dd/MM").format(model.createdAt),
                         style: defaultText12.copyWith(color: kPrimaryColor),
                       ),
                       SizedBox(

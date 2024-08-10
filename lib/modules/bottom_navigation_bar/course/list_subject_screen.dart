@@ -116,7 +116,7 @@ class NestedScroll extends StatelessWidget {
               style: defaultText16.copyWith(fontFamily: 'Nunito-Bold'),
             ),
             SizedBox(
-              height: 2.h,
+              height: 4.h,
             ),
             SizedBox(
               height: 570.h,

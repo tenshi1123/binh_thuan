@@ -56,6 +56,8 @@ dependencies:
   crypto: ^3.0.3
   url_launcher: ^6.3.0
   camera_camera: ^3.0.0
+  webview_flutter: ^4.8.0
+  flutter_widget_from_html_core: ^0.15.1
 dev_dependencies:
   flutter_test:
     sdk: flutter

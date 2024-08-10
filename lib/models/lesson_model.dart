@@ -88,3 +88,24 @@ class ChiTietBuoiHocModel {
     );
   }
 }
+
+class QuestionModel {
+  final String question;
+  final String answer;
+  final String createdAt;
+  final String updateAt;
+  QuestionModel({
+    required this.question,
+    required this.answer,
+    required this.createdAt,
+    required this.updateAt,
+  });
+  factory QuestionModel.fromJson(Map<String, dynamic> json) {
+    return QuestionModel(
+      question: json['question'] ?? '',
+      answer: json['answer'] ?? '',
+      createdAt: json['created_at'] ?? '',
+      updateAt: json['update_at'] ?? '',
+    );
+  }
+}

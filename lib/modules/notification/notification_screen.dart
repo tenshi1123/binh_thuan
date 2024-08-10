@@ -8,6 +8,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
+import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
 
 class NotificationScreen extends StatelessWidget {
   const NotificationScreen({super.key});
@@ -104,7 +105,7 @@ class NotiItem extends StatelessWidget {
               width: 12.w,
             ),
             SizedBox(
-              width: 250,
+              width: 240,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -115,13 +116,21 @@ class NotiItem extends StatelessWidget {
                     softWrap: false,
                     style: defaultBoldText,
                   ),
-                  Text(
-                    notification.contents,
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 1,
-                    softWrap: false,
-                    style: defaultText12,
+                  Expanded(
+                    child: HtmlWidget(
+                      notification.contents.length > 80
+                          ? '${notification.contents.substring(0, 80)}...'
+                          : notification.contents,
+                      textStyle: defaultText12,
+                    ),
                   ),
+                  // Text(
+                  //   notification.contents,
+                  //   overflow: TextOverflow.ellipsis,
+                  //   maxLines: 1,
+                  //   softWrap: false,
+                  //   style: defaultText12,
+                  // ),
                 ],
               ),
             ),
@@ -130,7 +139,7 @@ class NotiItem extends StatelessWidget {
             ),
             Text(
               (notification.completedAt.day == DateTime.now().day)
-                  ? DateFormat("hh:mm").format(notification.completedAt)
+                  ? DateFormat("HH:mm").format(notification.completedAt)
                   : DateFormat("dd-MM").format(notification.completedAt),
               style: defaultText12,
             ),

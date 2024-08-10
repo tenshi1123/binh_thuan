@@ -25,6 +25,7 @@ class LoginRepo {
       SpUtil.putString(
           ConstString.refreshToken, response.data["refresh_token"]);
       SpUtil.putString('id_user', response.data["student_id"]);
+      SpUtil.putString('school_id', response.data["school_id"]);
       SpUtil.putString(ConstString.idStudent, code);
       SpUtil.putString(ConstString.md5Pass, password);
     } on DioException {
