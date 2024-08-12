@@ -23,6 +23,26 @@ class LessonRepo {
     return ChiTietBuoiHocModel.fromJson(response.data);
   }
 
+  Future<List<QuestionModel>> getListQuestion(String id) async {
+    Dio dio = Dio();
+    dio.options.headers['Authorization'] =
+        'Bearer ${SpUtil.getString(ConstString.token)}';
+    Response response;
+    response = await dio.post(
+      ApiPath.listQuestion,
+      data: jsonEncode(
+        {
+          'id': int.parse(id),
+        },
+      ),
+    );
+    return List<QuestionModel>.from(
+      (response.data).map(
+        (model) => QuestionModel.fromJson(model),
+      ),
+    );
+  }
+
   Future sendQuestion({required String id, required String content}) async {
     Dio dio = Dio();
     dio.options.headers['Authorization'] =

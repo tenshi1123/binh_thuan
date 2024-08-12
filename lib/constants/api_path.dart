@@ -10,12 +10,15 @@ class ApiPath {
   static const String detailSubject = '$baseUrl/detail_subject';
   static const String lesson = '$baseUrl/chi_tiet_buoi_hoc';
   static const String thacMac = '$baseUrl/thac_mac';
+  static const String listQuestion = '$baseUrl/chi-tiet-thac_mac';
   //api về phần chat
   static const String chat = '$baseUrl/chat';
   static const String chatMessage = '$baseUrl/chat_messages';
   static const String loadMessage = '$baseUrl/load_content_chat_messages';
   static const String sendMessage = '$baseUrl/send_chat_messages';
   static const String sendImg = '$baseUrl/send_chat_messages_img';
+  // api danh sach thong bao
+  static const String listNotification = '$baseUrl/danh_sach_thong_bao';
   //api về thời khóa biểu
   static const String calender = '$baseUrl/lich_hoc';
   //api do oneSignal cung cấp

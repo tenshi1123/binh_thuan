@@ -43,7 +43,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
       //do nothing :v
     }
 
-    sendUserTag(userId);
+    // sendUserTag(userId);
   }
 
   List<PersistentTabConfig> _tabs() => [

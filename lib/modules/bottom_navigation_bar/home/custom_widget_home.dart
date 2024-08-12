@@ -78,6 +78,7 @@ class ComingLesson extends StatelessWidget {
                 chiTiet: lessonModels,
                 document: const [],
                 id: id,
+                listQuestion: const [],
               ),
             ),
           );
@@ -189,6 +190,8 @@ class CompleteLesson extends StatelessWidget {
         onTap: () async {
           ChiTietBuoiHocModel lessonModels =
               await LessonRepo().lessonDetails(id: lichHoc.id);
+          List<QuestionModel> listQuestion =
+              await LessonRepo().getListQuestion(lichHoc.id);
           pushWithoutNavBar(
             context,
             MaterialPageRoute(
@@ -196,6 +199,7 @@ class CompleteLesson extends StatelessWidget {
                 chiTiet: lessonModels,
                 document: document,
                 id: lichHoc.id,
+                listQuestion: listQuestion,
               ),
             ),
           );

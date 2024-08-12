@@ -1,6 +1,8 @@
 import 'package:binh_thuan/constants/api_path.dart';
+import 'package:binh_thuan/constants/string.dart';
 import 'package:binh_thuan/modules/notification/noti_model.dart';
 import 'package:dio/dio.dart';
+import 'package:sp_util/sp_util.dart';
 
 class NotificationRepo {
   Future<List<NotiModel>> getAllNotification() async {
@@ -18,5 +20,20 @@ class NotificationRepo {
         .map((e) => NotiModel.fromJson(e))
         .toList();
     return result;
+  }
+
+  Future<List<NotificationModel>> getListMessages() async {
+    Dio dio = Dio();
+    dio.options.headers['Authorization'] =
+        'Bearer ${SpUtil.getString(ConstString.token)}';
+    Response response;
+    response = await dio.get(
+      ApiPath.listNotification,
+    );
+    return List<NotificationModel>.from(
+      (response.data ?? []).map(
+        (model) => NotiModel.fromJson(model),
+      ),
+    );
   }
 }

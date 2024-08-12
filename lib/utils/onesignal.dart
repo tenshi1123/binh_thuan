@@ -20,8 +20,9 @@ void registerOneSignalEventListener({
 
 const tagName = "userId";
 
-void sendUserTag(int userId) {
-  OneSignal.User.addTagWithKey("userId", userId);
+void sendUserTag(int schoolId) {
+  OneSignal.User.addTagWithKey("schoolId", schoolId);
+
   // OneSignal.shared.sendTag(tagName, userId.toString()).then((response) {
   //   vLog("Successfully sent tags with response: $response");
   // }).catchError((error) {
