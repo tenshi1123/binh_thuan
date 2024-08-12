@@ -5,7 +5,6 @@ import 'package:binh_thuan/models/login_model.dart';
 import 'package:binh_thuan/modules/auth/forgor_password/change_password_screen.dart';
 import 'package:binh_thuan/modules/auth/login/login_screen.dart';
 import 'package:binh_thuan/modules/bottom_navigation_bar/home/custom_widget_home.dart';
-import 'package:binh_thuan/modules/notification/local_notification.dart';
 import 'package:binh_thuan/router/app_pages.dart';
 import 'package:binh_thuan/router/app_router.dart';
 import 'package:binh_thuan/utils/onesignal.dart';
