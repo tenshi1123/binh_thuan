@@ -33,11 +33,11 @@ class _SplashScreenAppState extends State<SplashScreenApp> {
   }
 
   Future<Widget> checkToken() async {
-    main.listNotification = await NotificationRepo().getAllNotification();
     String token = SpUtil.getString(ConstString.token, defValue: '') ?? '';
     sendUserTag(1);
 
     if (token != '') {
+      main.listNotification = await NotificationRepo().getListMessages();
       HomeModel info = await HomeRepo().home(token: token);
       List<SubjectModels> listSubjectModels =
           await SubjectRepo().subject(token: token);
