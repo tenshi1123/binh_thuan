@@ -58,6 +58,7 @@ dependencies:
   camera_camera: ^3.0.0
   webview_flutter: ^4.8.0
   flutter_widget_from_html_core: ^0.15.1
+  youtube_player_flutter: ^8.1.2
 dev_dependencies:
   flutter_test:
     sdk: flutter
