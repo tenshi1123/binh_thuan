@@ -15,6 +15,8 @@ class LoginRepo {
     //String type = response.data['type'];
     //if (type == 'success') {
     //}
+    // "code": "2302682572",
+    // "password": "123456"
     try {
       response = await dio.post(ApiPath.login,
           data: jsonEncode({
