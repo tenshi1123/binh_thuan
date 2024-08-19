@@ -22,7 +22,7 @@ class NotificationRepo {
     return result;
   }
 
-  Future<List<NotificationModel>> getListMessages() async {
+  Future<List<NotiModel>> getListMessages() async {
     Dio dio = Dio();
     dio.options.headers['Authorization'] =
         'Bearer ${SpUtil.getString(ConstString.token)}';
@@ -30,7 +30,7 @@ class NotificationRepo {
     response = await dio.get(
       ApiPath.listNotification,
     );
-    return List<NotificationModel>.from(
+    return List<NotiModel>.from(
       (response.data ?? []).map(
         (model) => NotiModel.fromJson(model),
       ),

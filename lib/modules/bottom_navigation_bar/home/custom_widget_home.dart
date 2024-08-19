@@ -17,6 +17,7 @@ import 'package:binh_thuan/router/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
 
 import '../../lesson_details/screen/lesson_details_screen.dart';
@@ -444,11 +445,11 @@ class NotificationItem extends StatelessWidget {
                       color: keyBlack,
                     ),
                   ),
-                  Text(
-                    '${noti.contents} ',
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 2,
-                    style: defaultText14,
+                  HtmlWidget(
+                    noti.contents.length > 120
+                        ? '${noti.contents.substring(0, 120)}...'
+                        : noti.contents,
+                    textStyle: defaultText12,
                   ),
                 ],
               ),

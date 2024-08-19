@@ -68,5 +68,7 @@
 		<string>processing</string>
 		<string>remote-notification</string>
 	</array>
+	<key>NSUserNotificationsUsageDescription</key>
+		<string>Turn on notifications to receive the latest news from the school.</string>
 </dict>
 </plist>

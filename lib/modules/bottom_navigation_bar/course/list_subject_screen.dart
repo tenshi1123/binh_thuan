@@ -119,7 +119,7 @@ class NestedScroll extends StatelessWidget {
               height: 4.h,
             ),
             SizedBox(
-              height: 570.h,
+              height: info.comming.isEmpty ? 640.h : 570.h,
               child: ListView.builder(
                   itemCount: listSubjectModel.length,
                   shrinkWrap: true,
