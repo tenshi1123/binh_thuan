@@ -5,6 +5,7 @@ import 'package:binh_thuan/constants/string.dart';
 import 'package:binh_thuan/constants/styles.dart';
 import 'package:binh_thuan/models/login_model.dart';
 import 'package:binh_thuan/models/subject_models.dart';
+import 'package:binh_thuan/modules/notification/noti_repo.dart';
 import 'package:binh_thuan/repo/repo/home_repo.dart';
 import 'package:binh_thuan/repo/repo/login_repo.dart';
 import 'package:binh_thuan/repo/repo/subject_repo.dart';
@@ -16,6 +17,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:crypto/crypto.dart';
 import 'package:sp_util/sp_util.dart';
+import 'package:binh_thuan/main.dart' as main;
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -205,6 +207,8 @@ class _LoginScreenState extends State<LoginScreen> {
                               token: SpUtil.getString(ConstString.token,
                                       defValue: null) ??
                                   '');
+                      main.listNotification =
+                          await NotificationRepo().getListMessages();
                       AppRouter.toPage(context, AppPages.NavigationBar,
                           arguments: {
                             'info': info,
