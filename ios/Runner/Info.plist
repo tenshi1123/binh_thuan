@@ -66,9 +66,7 @@
 	<array>
 		<string>fetch</string>
 		<string>processing</string>
-		<string>push-to-talk</string>
 		<string>remote-notification</string>
-		<string>voip</string>
 	</array>
 	<key>NSUserNotificationsUsageDescription</key>
 		<string>Turn on notifications to receive the latest news from the school.</string>
