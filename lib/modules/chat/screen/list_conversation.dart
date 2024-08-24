@@ -69,7 +69,22 @@ class ListConversation extends StatelessWidget {
             //   ),
             // ),
             SizedBox(
-              height: 20.h,
+              height: 10.h,
+            ),
+            Row(
+              children: [
+                const Spacer(),
+                Text(
+                  'Danh sách giáo viên',
+                  style: defaultBoldText.copyWith(fontSize: 14.sp),
+                ),
+                SizedBox(
+                  width: 10.h,
+                )
+              ],
+            ),
+            SizedBox(
+              height: 10.h,
             ),
             ListView.builder(
               scrollDirection: Axis.vertical,

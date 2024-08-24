@@ -281,9 +281,12 @@ class ItemDetails extends StatelessWidget {
                 'assets/icons/teacher_icon.svg',
                 color: keyBlack,
               ),
-              Text(
-                ' ${chiTiet.info.teacherName}',
-                style: defaultText14,
+              Flexible(
+                child: Text(
+                  ' ${chiTiet.info.teacherName}',
+                  style: defaultText14,
+                  maxLines: 2,
+                ),
               ),
             ],
           ),
@@ -494,15 +497,24 @@ class DocumentItem extends StatelessWidget {
     return GestureDetector(
       onTap: () async {
         if (taiLieu != null) {
-          if (taiLieu!.fileType == 'Word Document') {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const WebViewExample(),
-              ),
-            );
-          } else if (!await launchUrl(Uri.parse(taiLieu!.urlFile))) {
-            throw Exception('Could not launch ');
+          // if (taiLieu!.fileType == 'Word Document') {
+          //   Navigator.push(
+          //     context,
+          //     MaterialPageRoute(
+          //       builder: (context) => const WebViewExample(),
+          //     ),
+          //   );
+          // } else
+          if (taiLieu!.urlFile.contains('pdf')) {
+            if (!await launchUrl(Uri.parse(
+                'https://drive.google.com/viewerng/viewer?embedded=true&url=${taiLieu!.urlFile}'))) {
+              throw Exception('Could not launch ');
+            }
+          } else {
+            if (!await launchUrl(Uri.parse(
+                'https://view.officeapps.live.com/op/embed.aspx?src=${taiLieu!.urlFile}'))) {
+              throw Exception('Could not launch ');
+            }
           }
         } else {
           Navigator.push(
