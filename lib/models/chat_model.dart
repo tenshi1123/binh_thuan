@@ -70,3 +70,23 @@ class MessageModel {
     );
   }
 }
+
+class TeacherModel {
+  final String id;
+  final String fullName;
+  final String phone;
+  final String avatar;
+  TeacherModel(
+      {required this.id,
+      required this.fullName,
+      required this.phone,
+      required this.avatar});
+  factory TeacherModel.fromJson(Map<String, dynamic> json) {
+    return TeacherModel(
+      id: json['id'] ?? '',
+      fullName: json['full_name'] ?? '',
+      phone: json['phone'] ?? '',
+      avatar: json['avatar'] ?? '',
+    );
+  }
+}

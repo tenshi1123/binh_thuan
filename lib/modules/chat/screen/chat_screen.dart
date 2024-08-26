@@ -119,9 +119,9 @@ class _ChatScreenState extends State<ChatScreen> {
               widget.groupName,
               style: defaultBoldText.copyWith(color: Colors.white),
             ),
-            SizedBox(
-              width: 150.w,
-            ),
+            // SizedBox(
+            //   width: 150.w,
+            // ),
             //SvgPicture.asset('assets/icons/group.svg')
           ],
         ),
@@ -213,6 +213,7 @@ class _ChatScreenState extends State<ChatScreen> {
             alignment: Alignment.bottomLeft,
             child: Container(
               padding: const EdgeInsets.only(left: 10, bottom: 10, top: 10),
+              margin: EdgeInsets.only(bottom: 6.h),
               height: 60,
               width: double.infinity,
               color: Colors.white,

@@ -103,7 +103,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   // ),
                   Positioned(
                     top: 71.h,
-                    left: 320.w,
+                    right: 20.w,
                     child: GestureDetector(
                       onTap: () async {
                         main.listNotification =

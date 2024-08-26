@@ -45,9 +45,7 @@ class NestedScroll extends StatelessWidget {
                   context: context,
                   icon: 'assets/icons/message_icon_blue.svg',
                 ),
-                SizedBox(
-                  width: 240.w,
-                ),
+                const Spacer(),
                 GestureDetector(
                   onTap: () async {
                     main.listNotification =
@@ -77,6 +75,9 @@ class NestedScroll extends StatelessWidget {
                       ],
                     ),
                   ),
+                ),
+                SizedBox(
+                  width: 20.w,
                 ),
               ],
             ),

@@ -2,6 +2,7 @@ import 'package:binh_thuan/constants/colors.dart';
 import 'package:binh_thuan/constants/styles.dart';
 import 'package:binh_thuan/models/chat_model.dart';
 import 'package:binh_thuan/modules/chat/screen/chat_screen.dart';
+import 'package:binh_thuan/modules/chat/screen/list_teacher_screen.dart';
 import 'package:binh_thuan/repo/repo/chat_repo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -74,12 +75,26 @@ class ListConversation extends StatelessWidget {
             Row(
               children: [
                 const Spacer(),
-                Text(
-                  'Danh sách giáo viên',
-                  style: defaultBoldText.copyWith(fontSize: 14.sp),
+                GestureDetector(
+                  onTap: () async {
+                    List<TeacherModel> listTeacher =
+                        await ChatRepo().getTeacher();
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ListTeacher(
+                          listTeacher: listTeacher,
+                        ),
+                      ),
+                    );
+                  },
+                  child: Text(
+                    'Danh sách giáo viên',
+                    style: defaultBoldText.copyWith(fontSize: 14.sp),
+                  ),
                 ),
                 SizedBox(
-                  width: 10.h,
+                  width: 20.h,
                 )
               ],
             ),
@@ -133,6 +148,7 @@ class ConversationItem extends StatelessWidget {
         width: 390.w,
         height: 68.h,
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
           children: [
             Row(
               children: [
