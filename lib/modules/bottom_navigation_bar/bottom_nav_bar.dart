@@ -98,35 +98,35 @@ class _BottomNavBarState extends State<BottomNavBar> {
   @override
   Widget build(BuildContext context) {
     return PersistentTabView(
-      controller: _controller,
-      tabs: _tabs(),
-      navBarBuilder: (navBarConfig) => Style2BottomNavBar(
-        itemPadding: EdgeInsets.all(5.h),
-        navBarConfig: navBarConfig,
-        navBarDecoration: NavBarDecoration(
-          color: const Color(0xff4659B9),
-          borderRadius: BorderRadius.circular(38.r),
-        ),
-        //itemAnimationProperties: const ItemAnimation(),
-      ),
-      backgroundColor: Colors.white,
-      navBarHeight: (Platform.isAndroid) ? 50.h : 30.h,
-      // onWillPop: (context) async {
-      //   await showDialog(
-      //     context: context,
-      //     builder: (context) => Dialog(
-      //       child: Center(
-      //         child: ElevatedButton(
-      //           child: const Text("Close"),
-      //           onPressed: () {
-      //             Navigator.pop(context);
-      //           },
-      //         ),
-      //       ),
-      //     ),
-      //   );
-      //   return false;
-      // },
-    );
+        controller: _controller,
+        tabs: _tabs(),
+        navBarBuilder: (navBarConfig) => Style2BottomNavBar(
+              itemPadding: EdgeInsets.all(5.h),
+              navBarConfig: navBarConfig,
+              navBarDecoration: NavBarDecoration(
+                color: const Color(0xff4659B9),
+                borderRadius: BorderRadius.circular(25.r),
+              ),
+              //itemAnimationProperties: const ItemAnimation(),
+            ),
+        backgroundColor: Colors.white,
+        navBarHeight: 50.h
+        // onWillPop: (context) async {
+        //   await showDialog(
+        //     context: context,
+        //     builder: (context) => Dialog(
+        //       child: Center(
+        //         child: ElevatedButton(
+        //           child: const Text("Close"),
+        //           onPressed: () {
+        //             Navigator.pop(context);
+        //           },
+        //         ),
+        //       ),
+        //     ),
+        //   );
+        //   return false;
+        // },
+        );
   }
 }

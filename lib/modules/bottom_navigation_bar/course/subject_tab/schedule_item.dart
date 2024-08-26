@@ -174,8 +174,8 @@ class _TaiLieuTabBarState extends State<TaiLieuTabBar>
           labelColor: keyBlack,
           controller: _tabController,
           tabs: <Widget>[
-            homeTab(title: 'Sắp tới', isSeprator: false),
-            homeTab(title: 'Đã hoàn thành'),
+            homeTab(title: 'video', isSeprator: false),
+            homeTab(title: 'pdf'),
           ],
         ),
         Expanded(
