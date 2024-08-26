@@ -17,6 +17,8 @@ class ApiPath {
   static const String loadMessage = '$baseUrl/load_content_chat_messages';
   static const String sendMessage = '$baseUrl/send_chat_messages';
   static const String sendImg = '$baseUrl/send_chat_messages_img';
+  static const String listTeachers = '$baseUrl/danh_sach_giao_vien';
+  static const String chatTeacher = '$baseUrl/chat_teachers_students';
   // api danh sach thong bao
   static const String listNotification = '$baseUrl/danh_sach_thong_bao';
   //api về thời khóa biểu

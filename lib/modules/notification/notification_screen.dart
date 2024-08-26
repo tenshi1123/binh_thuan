@@ -1,8 +1,8 @@
 import 'package:binh_thuan/constants/colors.dart';
 import 'package:binh_thuan/constants/styles.dart';
 import 'package:binh_thuan/main.dart';
+import 'package:binh_thuan/modules/notification/detail_notification.dart';
 import 'package:binh_thuan/modules/notification/noti_model.dart';
-import 'package:binh_thuan/modules/tuition/tuition_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -89,8 +89,12 @@ class NotiItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        pushWithoutNavBar(context,
-            MaterialPageRoute(builder: (context) => const TuitionScreen()));
+        pushWithoutNavBar(
+            context,
+            MaterialPageRoute(
+                builder: (context) => DetailNotification(
+                      notification: notification,
+                    )));
       },
       child: SizedBox(
         width: 390.w,

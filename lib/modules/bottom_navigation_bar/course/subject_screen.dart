@@ -1,7 +1,9 @@
 import 'package:binh_thuan/constants/colors.dart';
 import 'package:binh_thuan/constants/styles.dart';
 import 'package:binh_thuan/models/detail_subject_models.dart';
+import 'package:binh_thuan/modules/bottom_navigation_bar/course/subject_tab/tab_exercise.dart';
 import 'package:binh_thuan/modules/bottom_navigation_bar/home/custom_widget_home.dart';
+import 'package:binh_thuan/modules/notification/noti_repo.dart';
 import 'package:binh_thuan/router/app_pages.dart';
 import 'package:binh_thuan/router/app_router.dart';
 import "package:flutter/material.dart";
@@ -10,6 +12,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:tab_container/tab_container.dart';
 import 'subject_tab/tab_infomation.dart';
 import 'subject_tab/tab_schedule.dart';
+import 'package:binh_thuan/main.dart' as main;
 
 class SubjectScreen extends StatefulWidget {
   const SubjectScreen(
@@ -26,7 +29,7 @@ class _SubjectScreenState extends State<SubjectScreen>
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 2,
+      length: 3,
       child: NestedScrollView(
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return <Widget>[
@@ -59,37 +62,18 @@ class _SubjectScreenState extends State<SubjectScreen>
                     ),
                     Positioned(
                       top: 50.h,
-                      left: 300.w,
+                      left: 320.w,
                       child: GestureDetector(
-                        onTap: () {
+                        onTap: () async {
+                          main.listNotification =
+                              await NotificationRepo().getListMessages();
                           AppRouter.toPage(
                             context,
                             AppPages.NotificationScreen,
                             arguments: {},
                           );
                         },
-                        child: Container(
-                            height: 32.h,
-                            width: 65.w,
-                            decoration: BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(30.r)),
-                                color: Colors.transparent,
-                                border:
-                                    Border.all(color: Colors.white, width: 1)),
-                            child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    '  04',
-                                    style: defaultText12.copyWith(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.w700,
-                                        fontFamily: 'Nunito-Bold'),
-                                  ),
-                                  SvgPicture.asset('assets/icons/noti_icon.svg')
-                                ])),
+                        child: SvgPicture.asset('assets/icons/noti_icon.svg'),
                       ),
                     ),
                     Positioned(
@@ -136,7 +120,7 @@ class _SubjectScreenState extends State<SubjectScreen>
             aspectRatio: 12 / 8,
             child: TabContainer(
               controller: TabController(
-                length: 2,
+                length: 3,
                 vsync: this,
               ),
               borderRadius: BorderRadius.circular(20),
@@ -184,6 +168,9 @@ List<Widget> _getTabs1() {
       'Lịch học',
     ),
     const Text(
+      'Bài tập',
+    ),
+    const Text(
       'Thông tin',
     )
   ];
@@ -195,9 +182,9 @@ List<Widget> getChildren2(DetailSubjectModels detailSubject) {
       lichHoc: detailSubject.lichHoc,
       document: detailSubject.document,
     ),
-    // TabExercise(
-    //   name: _tabs[1],
-    // ),
+    const TabExercise(
+      name: 'Bài tập',
+    ),
     TabInfomation(
       detailSubject: detailSubject,
     )

@@ -8,8 +8,8 @@ import 'package:dio/dio.dart';
 import 'package:sp_util/sp_util.dart';
 
 class ChatRepo {
+  Dio dio = Dio();
   Future<List<ConversationModel>> getListChat() async {
-    Dio dio = Dio();
     dio.options.headers['Authorization'] =
         'Bearer ${SpUtil.getString(ConstString.token)}';
     Response response;
@@ -23,8 +23,36 @@ class ChatRepo {
     );
   }
 
+  Future<List<TeacherModel>> getTeacher() async {
+    dio.options.headers['Authorization'] =
+        'Bearer ${SpUtil.getString(ConstString.token)}';
+    Response response;
+    response = await dio.post(
+      ApiPath.listTeachers,
+    );
+    return List<TeacherModel>.from(
+      (response.data ?? []).map(
+        (e) => TeacherModel.fromJson(e),
+      ),
+    );
+  }
+
+  Future<String> getChatTeacherStudent({required String teacherId}) async {
+    dio.options.headers['Authorization'] =
+        'Bearer ${SpUtil.getString(ConstString.token)}';
+    Response response;
+    response = await dio.post(
+      ApiPath.chatTeacher,
+      data: jsonEncode(
+        {
+          'teachers_id': teacherId,
+        },
+      ),
+    );
+    return response.data['chat_id'];
+  }
+
   Future<List<MessageModel>> getListMessage(String id) async {
-    Dio dio = Dio();
     dio.options.headers['Authorization'] =
         'Bearer ${SpUtil.getString(ConstString.token)}';
     Response response;
@@ -44,7 +72,6 @@ class ChatRepo {
   }
 
   Future sendTextMessage(String id, String content) async {
-    Dio dio = Dio();
     dio.options.headers['Authorization'] =
         'Bearer ${SpUtil.getString(ConstString.token)}';
     Response response;
@@ -61,7 +88,6 @@ class ChatRepo {
   }
 
   Future sendImageMessage(String id, List<File> photo) async {
-    Dio dio = Dio();
     dio.options.headers['Authorization'] =
         'Bearer ${SpUtil.getString(ConstString.token)}';
     var formData = FormData.fromMap({

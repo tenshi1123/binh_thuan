@@ -5,6 +5,7 @@ import 'package:binh_thuan/models/login_model.dart';
 import 'package:binh_thuan/models/subject_models.dart';
 import 'package:binh_thuan/modules/bottom_navigation_bar/course/subject_screen.dart';
 import 'package:binh_thuan/modules/bottom_navigation_bar/home/custom_widget_home.dart';
+import 'package:binh_thuan/modules/notification/noti_repo.dart';
 import 'package:binh_thuan/router/app_pages.dart';
 import 'package:binh_thuan/router/app_router.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +13,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
 import '../../../repo/repo/subject_repo.dart';
+import 'package:binh_thuan/main.dart' as main;
 
 class NestedScroll extends StatelessWidget {
   const NestedScroll({
@@ -43,11 +45,11 @@ class NestedScroll extends StatelessWidget {
                   context: context,
                   icon: 'assets/icons/message_icon_blue.svg',
                 ),
-                SizedBox(
-                  width: 240.w,
-                ),
+                const Spacer(),
                 GestureDetector(
-                  onTap: () {
+                  onTap: () async {
+                    main.listNotification =
+                        await NotificationRepo().getListMessages();
                     AppRouter.toPage(
                       context,
                       AppPages.NotificationScreen,
@@ -62,10 +64,10 @@ class NestedScroll extends StatelessWidget {
                       color: kPrimaryColor,
                     ),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          '  04',
+                          '',
                           style: defaultText12.copyWith(
                               color: Colors.white, fontWeight: FontWeight.w700),
                         ),
@@ -73,6 +75,9 @@ class NestedScroll extends StatelessWidget {
                       ],
                     ),
                   ),
+                ),
+                SizedBox(
+                  width: 20.w,
                 ),
               ],
             ),

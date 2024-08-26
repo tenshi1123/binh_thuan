@@ -4,6 +4,7 @@ import 'package:binh_thuan/main.dart';
 import 'package:binh_thuan/models/calender_model.dart';
 import 'package:binh_thuan/models/login_model.dart';
 import 'package:binh_thuan/modules/bottom_navigation_bar/home/custom_widget_home.dart';
+import 'package:binh_thuan/modules/exercise/exercise_screen.dart';
 import 'package:binh_thuan/modules/notification/local_notification.dart';
 import 'package:binh_thuan/modules/schedule/table_calender.dart';
 import 'package:binh_thuan/repo/repo/calender_repo.dart';
@@ -15,6 +16,9 @@ import "package:flutter_screenutil/flutter_screenutil.dart";
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import "package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart";
+import 'package:binh_thuan/main.dart' as main;
+
+import '../../notification/noti_repo.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key, this.useRouter = false, required this.info});
@@ -99,36 +103,18 @@ class _HomeScreenState extends State<HomeScreen> {
                   // ),
                   Positioned(
                     top: 71.h,
-                    left: 300.w,
+                    right: 20.w,
                     child: GestureDetector(
-                      onTap: () {
+                      onTap: () async {
+                        main.listNotification =
+                            await NotificationRepo().getListMessages();
                         AppRouter.toPage(
                           context,
                           AppPages.NotificationScreen,
                           arguments: {},
                         );
                       },
-                      child: Container(
-                          height: 32.h,
-                          width: 65.w,
-                          decoration: BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(30.r)),
-                              color: Colors.transparent,
-                              border:
-                                  Border.all(color: Colors.white, width: 1)),
-                          child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  '  04',
-                                  style: defaultText12.copyWith(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w700,
-                                      fontFamily: 'Nunito-Bold'),
-                                ),
-                                SvgPicture.asset('assets/icons/noti_icon.svg')
-                              ])),
+                      child: SvgPicture.asset('assets/icons/noti_icon.svg'),
                     ),
                   ),
                   Positioned(
@@ -140,11 +126,13 @@ class _HomeScreenState extends State<HomeScreen> {
                         Container(
                           width: 72.w,
                           height: 72.h,
-                          decoration: const BoxDecoration(
+                          decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             image: DecorationImage(
                                 image: AssetImage(
-                                  'assets/images/placeholder_avatar.png',
+                                  student.gender == 'Nam'
+                                      ? 'assets/images/avatar_nam.jpg'
+                                      : 'assets/images/avatar_nu.jpg',
                                 ),
                                 scale: 3),
                           ),
@@ -166,7 +154,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               height: 20.h,
                             ),
                             Text(
-                              student.code,
+                              "Mã học sinh : ${student.code}",
                               style: defaultBoldText.copyWith(
                                 color: Colors.white,
                                 fontWeight: FontWeight.w100,
@@ -228,24 +216,33 @@ class _HomeScreenState extends State<HomeScreen> {
                               thickness: 1,
                             ),
                           ),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Bài tập chưa làm',
-                                style: defaultBoldText.copyWith(
-                                    fontWeight: FontWeight.w200,
-                                    fontSize: 12.sp,
-                                    color: color666),
-                              ),
-                              Text(
-                                '${widget.info.unfinished} bài',
-                                style: defaultBoldText.copyWith(
-                                    fontWeight: FontWeight.w200,
-                                    color: keyBlack),
-                              ),
-                            ],
+                          GestureDetector(
+                            onTap: () {
+                              pushWithoutNavBar(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const ExerciseScreen()));
+                            },
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Bài tập chưa làm',
+                                  style: defaultBoldText.copyWith(
+                                      fontWeight: FontWeight.w200,
+                                      fontSize: 12.sp,
+                                      color: color666),
+                                ),
+                                Text(
+                                  '${widget.info.unfinished} bài',
+                                  style: defaultBoldText.copyWith(
+                                      fontWeight: FontWeight.w200,
+                                      color: keyBlack),
+                                ),
+                              ],
+                            ),
                           ),
                           const Padding(
                             padding: EdgeInsets.all(8.0),
@@ -306,18 +303,18 @@ class _HomeScreenState extends State<HomeScreen> {
                     width: 20,
                   ),
                   // Bài tập
-                  // InkWell(
-                  //   onTap: () {
-                  //     pushWithoutNavBar(
-                  //         context,
-                  //         MaterialPageRoute(
-                  //             builder: (context) => const ExerciseScreen()));
-                  //   },
-                  //   child: SvgPicture.asset(
-                  //     'assets/icons/home_work.svg',
-                  //     height: 86.h,
-                  //   ),
-                  // ),
+                  InkWell(
+                    onTap: () {
+                      pushWithoutNavBar(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const ExerciseScreen()));
+                    },
+                    child: SvgPicture.asset(
+                      'assets/icons/home_work.svg',
+                      height: 86.h,
+                    ),
+                  ),
                   // Điểm số
                   // SvgPicture.asset(
                   //   'assets/icons/score.svg',

@@ -5,6 +5,7 @@ import 'package:binh_thuan/models/login_model.dart';
 import 'package:binh_thuan/modules/auth/forgor_password/change_password_screen.dart';
 import 'package:binh_thuan/modules/auth/login/login_screen.dart';
 import 'package:binh_thuan/modules/bottom_navigation_bar/home/custom_widget_home.dart';
+import 'package:binh_thuan/modules/notification/noti_repo.dart';
 import 'package:binh_thuan/router/app_pages.dart';
 import 'package:binh_thuan/router/app_router.dart';
 import 'package:binh_thuan/utils/onesignal.dart';
@@ -13,6 +14,7 @@ import "package:flutter_screenutil/flutter_screenutil.dart";
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
 import 'package:sp_util/sp_util.dart';
+import 'package:binh_thuan/main.dart' as main;
 
 class InfoScreen extends StatefulWidget {
   const InfoScreen({super.key, this.useRouter = false, required this.info});
@@ -64,35 +66,18 @@ class _InfoScreenState extends State<InfoScreen> {
                     )),
                 Positioned(
                   top: 60.h,
-                  left: 300.w,
+                  left: 320.w,
                   child: GestureDetector(
-                    onTap: () {
+                    onTap: () async {
+                      main.listNotification =
+                          await NotificationRepo().getListMessages();
                       AppRouter.toPage(
                         context,
                         AppPages.NotificationScreen,
                         arguments: {},
                       );
                     },
-                    child: Container(
-                        height: 32.h,
-                        width: 65.w,
-                        decoration: BoxDecoration(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(30.r)),
-                            color: Colors.transparent,
-                            border: Border.all(color: Colors.white, width: 1)),
-                        child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                '  04',
-                                style: defaultText12.copyWith(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w700,
-                                    fontFamily: 'Nunito-Bold'),
-                              ),
-                              SvgPicture.asset('assets/icons/noti_icon.svg')
-                            ])),
+                    child: SvgPicture.asset('assets/icons/noti_icon.svg'),
                   ),
                 ),
                 Positioned(
@@ -106,11 +91,13 @@ class _InfoScreenState extends State<InfoScreen> {
                         Container(
                           width: 80.w,
                           height: 80.h,
-                          decoration: const BoxDecoration(
+                          decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             image: DecorationImage(
                                 image: AssetImage(
-                                  'assets/images/placeholder_avatar.png',
+                                  widget.info.student.gender == 'Nam'
+                                      ? 'assets/images/avatar_nam.jpg'
+                                      : 'assets/images/avatar_nu.jpg',
                                 ),
                                 scale: 2),
                           ),
@@ -369,27 +356,27 @@ class _InfoScreenState extends State<InfoScreen> {
               ),
             ),
 
-            GestureDetector(
-              onTap: () {
-                AppRouter.toPage(
-                  context,
-                  AppPages.NotificationScreen,
-                  arguments: {},
-                );
-              },
-              child: Column(
-                children: [
-                  const ManagementItem(
-                    title: 'Thông báo',
-                    icon: 'assets/icons/bell_icon.svg',
-                  ),
-                  Divider(
-                    indent: 20.w,
-                    endIndent: 20.w,
-                  ),
-                ],
-              ),
-            ),
+            // GestureDetector(
+            //   onTap: () {
+            //     AppRouter.toPage(
+            //       context,
+            //       AppPages.NotificationScreen,
+            //       arguments: {},
+            //     );
+            //   },
+            //   child: Column(
+            //     children: [
+            //       const ManagementItem(
+            //         title: 'Thông báo',
+            //         icon: 'assets/icons/bell_icon.svg',
+            //       ),
+            //       Divider(
+            //         indent: 20.w,
+            //         endIndent: 20.w,
+            //       ),
+            //     ],
+            //   ),
+            // ),
 
             // const ManagementItem(
             //   title: 'Chính sách và điều khoản',

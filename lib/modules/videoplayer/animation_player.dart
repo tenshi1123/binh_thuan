@@ -78,46 +78,46 @@ class _AnimationPlayerState extends State<AnimationPlayer> {
                   ),
                 ),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  ElevatedButton(
-                    child: const Text('Bài trước'),
-                    onPressed: () => dataManager.playPreviousVideo(),
-                  ),
-                  ElevatedButton(
-                    child: const Text('Bài sau'),
-                    onPressed: () => dataManager.playNextVideo(),
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: <Widget>[
-                  Text(
-                    'Tốc độ phát',
-                    style: defaultText14,
-                  ),
-                  Row(
-                    children: [
-                      Slider(
-                        value: playBackSpeed,
-                        onChanged: (val) {},
-                        onChangeEnd: (val) {
-                          flickManager.flickVideoManager?.videoPlayerController!
-                              .setPlaybackSpeed(val);
-                          setState(() {
-                            playBackSpeed = val;
-                          });
-                        },
-                        min: 0.25,
-                        max: 2,
-                      ),
-                      Text(playBackSpeed.toStringAsFixed(2).toString()),
-                    ],
-                  )
-                ],
-              ),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.spaceAround,
+              //   children: [
+              //     ElevatedButton(
+              //       child: const Text('Bài trước'),
+              //       onPressed: () => dataManager.playPreviousVideo(),
+              //     ),
+              //     ElevatedButton(
+              //       child: const Text('Bài sau'),
+              //       onPressed: () => dataManager.playNextVideo(),
+              //     ),
+              //   ],
+              // ),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.spaceAround,
+              //   children: <Widget>[
+              //     Text(
+              //       'Tốc độ phát',
+              //       style: defaultText14,
+              //     ),
+              //     Row(
+              //       children: [
+              //         Slider(
+              //           value: playBackSpeed,
+              //           onChanged: (val) {},
+              //           onChangeEnd: (val) {
+              //             flickManager.flickVideoManager?.videoPlayerController!
+              //                 .setPlaybackSpeed(val);
+              //             setState(() {
+              //               playBackSpeed = val;
+              //             });
+              //           },
+              //           min: 0.25,
+              //           max: 2,
+              //         ),
+              //         Text(playBackSpeed.toStringAsFixed(2).toString()),
+              //       ],
+              //     )
+              //   ],
+              // ),
             ],
           ),
         ),

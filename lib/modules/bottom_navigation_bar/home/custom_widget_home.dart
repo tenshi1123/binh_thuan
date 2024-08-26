@@ -21,6 +21,8 @@ import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart
 import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
 
 import '../../lesson_details/screen/lesson_details_screen.dart';
+import '../../notification/noti_repo.dart';
+import 'package:binh_thuan/main.dart' as main;
 
 class CustomDialog extends StatelessWidget {
   const CustomDialog({super.key});
@@ -399,7 +401,8 @@ class NotificationItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
+      onTap: () async {
+        main.listNotification = await NotificationRepo().getListMessages();
         AppRouter.toPage(
           context,
           AppPages.NotificationScreen,

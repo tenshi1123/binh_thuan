@@ -22,13 +22,16 @@ class NotiModel {
   final String headings;
   final String contents;
   final DateTime completedAt;
+  final String link;
   NotiModel({
     required this.headings,
     required this.contents,
     required this.completedAt,
+    required this.link,
   });
   factory NotiModel.fromJson(Map<String, dynamic> json) {
     return NotiModel(
+      link: json['link'] ?? '',
       headings: json['title'] ?? '',
       contents: json['content'] ?? '',
       completedAt:
