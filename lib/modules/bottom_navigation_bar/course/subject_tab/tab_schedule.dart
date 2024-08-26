@@ -55,11 +55,16 @@ class TabSchedule extends StatelessWidget {
               style: defaultBoldText,
             ),
             Expanded(
-              child: ScheduleItem(
+              child: LichhocTabBar(
                 lichHocSaptoi: [...lichHoc.where((e) => e.statusValue == '0')],
                 daHoanThanh: [...lichHoc.where((e) => e.statusValue == '1')],
                 document: document,
               ),
+              // ScheduleItem(
+              //   lichHocSaptoi: [...lichHoc.where((e) => e.statusValue == '0')],
+              //   daHoanThanh: [...lichHoc.where((e) => e.statusValue == '1')],
+              //   document: document,
+              // ),
             ),
           ],
         ),

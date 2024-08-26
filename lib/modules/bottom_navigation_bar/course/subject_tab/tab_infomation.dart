@@ -74,7 +74,7 @@ class TabInfomation extends StatelessWidget {
               style: defaultBoldText,
             ),
             Expanded(
-              child: InfoItem(
+              child: TaiLieuTabBar(
                 videoLesson: detailSubject.lesson,
                 taiLieu: detailSubject.document,
               ),
