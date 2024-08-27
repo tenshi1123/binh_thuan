@@ -73,6 +73,7 @@ class _InfoItemState extends State<InfoItem> with TickerProviderStateMixin {
                             return DocumentItem(
                               videoLesson: widget.videoLesson[index],
                               isVideo: true,
+                              videoContent: '',
                             );
                           }
                           return const SizedBox();
@@ -107,6 +108,7 @@ class _InfoItemState extends State<InfoItem> with TickerProviderStateMixin {
                           if (widget.taiLieu.isNotEmpty) {
                             return DocumentItem(
                               taiLieu: widget.taiLieu[index],
+                              videoContent: '',
                             );
                           }
                           return const SizedBox();
@@ -202,6 +204,7 @@ class _TaiLieuTabBarState extends State<TaiLieuTabBar>
                                 return DocumentItem(
                                   videoLesson: widget.videoLesson[index],
                                   isVideo: true,
+                                  videoContent: '',
                                 );
                               }
                               return const SizedBox();
@@ -236,6 +239,7 @@ class _TaiLieuTabBarState extends State<TaiLieuTabBar>
                               if (widget.taiLieu.isNotEmpty) {
                                 return DocumentItem(
                                   taiLieu: widget.taiLieu[index],
+                                  videoContent: '',
                                 );
                               }
                               return const SizedBox();
@@ -302,8 +306,8 @@ class _LichhocTabBarState extends State<LichhocTabBar>
           indicator: UnderlineTabIndicator(
             borderSide: BorderSide(width: 2.w), //hight of indicator
             insets: EdgeInsets.symmetric(
-                horizontal:
-                    20.w), //give some padding to reduce the size of indicator
+              horizontal: 20.w,
+            ), //give some padding to reduce the size of indicator
           ),
           unselectedLabelColor: keyBlack.withOpacity(0.3),
           labelColor: keyBlack,

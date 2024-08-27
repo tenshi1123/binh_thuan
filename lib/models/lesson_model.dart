@@ -11,6 +11,7 @@ class InfoModel {
   final String streamingUrl;
   final String videoContent;
   final String startUrl;
+  final String videoId;
   InfoModel({
     required this.timeEnd,
     required this.hinhThuc,
@@ -24,6 +25,7 @@ class InfoModel {
     required this.timeType,
     required this.timeStart,
     required this.streamingUrl,
+    required this.videoId,
   });
   factory InfoModel.fromJson(Map<String, dynamic> json) {
     return InfoModel(
@@ -38,17 +40,20 @@ class InfoModel {
       videoType: json['video_type'] ?? '',
       videoContent: json['video_content'] ?? '',
       startUrl: json['start_url'] ?? '',
-      streamingUrl: json['streaming'] ?? '',
+      streamingUrl: json['streaming_url'] ?? '',
+      videoId: json['class_sessions_lesson_id'] ?? '',
     );
   }
 }
 
 class DocumentModel {
+  final String id;
   final String name;
   final String fileName;
   final String urlFile;
   final String fileType;
   DocumentModel({
+    required this.id,
     required this.name,
     required this.fileName,
     required this.urlFile,
@@ -56,6 +61,7 @@ class DocumentModel {
   });
   factory DocumentModel.fromJson(Map<String, dynamic> json) {
     return DocumentModel(
+      id: json['id'] ?? '',
       name: json['name'] ?? 'Không có tài liệu cần chuẩn bị',
       fileName: json['file_name'] ?? 'không tồn tại',
       urlFile: json['url_file'] ?? 'không tồn tại',

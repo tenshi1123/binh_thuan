@@ -203,10 +203,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       HomeModel info = await HomeRepo().home(
                           token: SpUtil.getString(ConstString.token) ?? '');
                       List<SubjectModels> listSubjectModels =
-                          await SubjectRepo().subject(
-                              token: SpUtil.getString(ConstString.token,
-                                      defValue: null) ??
-                                  '');
+                          await SubjectRepo().subject();
                       main.listNotification =
                           await NotificationRepo().getListMessages();
                       AppRouter.toPage(context, AppPages.NavigationBar,

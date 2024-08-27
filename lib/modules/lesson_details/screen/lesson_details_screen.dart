@@ -3,15 +3,16 @@ import 'package:binh_thuan/constants/styles.dart';
 import 'package:binh_thuan/models/detail_subject_models.dart';
 import 'package:binh_thuan/models/lesson_model.dart';
 import 'package:binh_thuan/modules/exercise/exercise_screen.dart';
-import 'package:binh_thuan/modules/lesson_details/screen/webview_screen.dart';
 import 'package:binh_thuan/modules/lesson_details/test_screen.dart';
-import 'package:binh_thuan/modules/videoplayer/animation_player.dart';
+import 'package:binh_thuan/modules/videoplayer/youtube_player.dart';
 import 'package:binh_thuan/repo/repo/lesson_repo.dart';
+import 'package:binh_thuan/repo/repo/subject_repo.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class LessonDetailsScreen extends StatefulWidget {
@@ -74,21 +75,22 @@ class _LessonDetailsScreenState extends State<LessonDetailsScreen> {
                   SizedBox(
                     width: 6.w,
                   ),
+                  IconButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    icon: const Icon(
+                      Icons.arrow_back_ios_new,
+                      color: Colors.black,
+                    ),
+                  ),
                   RichText(
                     text: TextSpan(
-                        text: '<',
-                        style: const TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.w700,
-                        ),
-                        children: [
-                          TextSpan(
-                            text: '  Chi tiết buổi học ',
-                            style: defaultBoldText.copyWith(fontSize: 14.sp),
-                            recognizer: TapGestureRecognizer()
-                              ..onTap = () => Navigator.of(context).pop(),
-                          )
-                        ]),
+                      text: '  Chi tiết buổi học ',
+                      style: defaultBoldText.copyWith(fontSize: 14.sp),
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () => Navigator.of(context).pop(),
+                    ),
                   ),
                   SizedBox(
                     width: 200.w,
@@ -126,61 +128,61 @@ class _LessonDetailsScreenState extends State<LessonDetailsScreen> {
                   ],
                 ),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return CupertinoAlertDialog(
-                            title: const Text('Chức năng đang phát triển'),
-                            content: const Text(
-                                'Đây là chức năng mở sang lớp học zoom'),
-                            actions: <Widget>[
-                              CupertinoDialogAction(
-                                isDefaultAction: true,
-                                child: const Text(
-                                  'Yes',
-                                  style: TextStyle(
-                                      fontSize: 20, color: kPrimaryColor),
-                                ),
-                                onPressed: () {
-                                  Navigator.of(context, rootNavigator: true)
-                                      .pop(
-                                    (_) => false,
-                                  );
-                                },
-                              )
-                            ],
-                          );
-                        },
-                      );
-                    },
-                    child: Container(
-                      height: 57.h,
-                      width: 350.w,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(8.r),
-                          ),
-                          border: Border.all(
-                            color: Colors.white,
-                          ),
-                          color: rec21Red),
-                      child: Center(
-                        child: Text(
-                          'Vào lớp',
-                          style: defaultBoldText.copyWith(
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                    ),
-                  )
-                ],
-              )
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              //   children: [
+              //     GestureDetector(
+              //       onTap: () {
+              //         showDialog(
+              //           context: context,
+              //           builder: (BuildContext context) {
+              //             return CupertinoAlertDialog(
+              //               title: const Text('Chức năng đang phát triển'),
+              //               content: const Text(
+              //                   'Đây là chức năng mở sang lớp học zoom'),
+              //               actions: <Widget>[
+              //                 CupertinoDialogAction(
+              //                   isDefaultAction: true,
+              //                   child: const Text(
+              //                     'Yes',
+              //                     style: TextStyle(
+              //                         fontSize: 20, color: kPrimaryColor),
+              //                   ),
+              //                   onPressed: () {
+              //                     Navigator.of(context, rootNavigator: true)
+              //                         .pop(
+              //                       (_) => false,
+              //                     );
+              //                   },
+              //                 )
+              //               ],
+              //             );
+              //           },
+              //         );
+              //       },
+              //       child: Container(
+              //         height: 57.h,
+              //         width: 350.w,
+              //         decoration: BoxDecoration(
+              //             borderRadius: BorderRadius.all(
+              //               Radius.circular(8.r),
+              //             ),
+              //             border: Border.all(
+              //               color: Colors.white,
+              //             ),
+              //             color: rec21Red),
+              //         child: Center(
+              //           child: Text(
+              //             'Vào lớp',
+              //             style: defaultBoldText.copyWith(
+              //               color: Colors.white,
+              //             ),
+              //           ),
+              //         ),
+              //       ),
+              //     )
+              //   ],
+              // ),
             ],
           ),
         ),
@@ -343,6 +345,7 @@ Widget _tabSection(
           child: TabBarView(children: [
             DocumentTab(
               taiLieu: chiTiet.document,
+              video: chiTiet.info.videoContent,
             ),
             //const MissionItem(),
             QuestionTab(
@@ -357,12 +360,16 @@ Widget _tabSection(
 }
 
 class DocumentTab extends StatelessWidget {
-  const DocumentTab({super.key, required this.taiLieu});
-
+  const DocumentTab({
+    super.key,
+    required this.taiLieu,
+    required this.video,
+  });
   final List<DocumentModel> taiLieu;
+  final String video;
   @override
   Widget build(BuildContext context) {
-    if (taiLieu.isEmpty) {
+    if (taiLieu.isEmpty && video == '') {
       return Center(
         child: Text(
           'Không có tài liệu',
@@ -370,16 +377,27 @@ class DocumentTab extends StatelessWidget {
         ),
       );
     }
-    return ListView.builder(
-        scrollDirection: Axis.vertical,
-        padding: const EdgeInsets.all(8),
-        itemCount: taiLieu.length,
-        itemBuilder: (BuildContext context, int index) {
-          return DocumentItem(
-            // videoLesson: videoLesson[index],
-            taiLieu: taiLieu[index],
-          );
-        });
+    return Column(
+      children: [
+        DocumentItem(
+          // videoLesson: videoLesson[index],
+          videoContent: video, isVideo: true,
+        ),
+        Expanded(
+          child: ListView.builder(
+            scrollDirection: Axis.vertical,
+            padding: EdgeInsets.symmetric(horizontal: 20.w),
+            itemCount: taiLieu.length,
+            itemBuilder: (BuildContext context, int index) {
+              return DocumentItem(
+                // videoLesson: videoLesson[index],
+                taiLieu: taiLieu[index], videoContent: '',
+              );
+            },
+          ),
+        ),
+      ],
+    );
   }
 }
 
@@ -487,13 +505,21 @@ class MissionItem extends StatelessWidget {
 }
 
 class DocumentItem extends StatelessWidget {
-  const DocumentItem(
-      {super.key, this.videoLesson, this.taiLieu, this.isVideo = false});
+  const DocumentItem({
+    super.key,
+    this.videoLesson,
+    this.taiLieu,
+    this.isVideo = false,
+    required this.videoContent,
+  });
   final LessonModels? videoLesson;
   final DocumentModel? taiLieu;
+  final String videoContent;
   final bool isVideo;
+
   @override
   Widget build(BuildContext context) {
+    List<String> videoValue = videoContent.split("\" title=\"");
     return GestureDetector(
       onTap: () async {
         if (taiLieu != null) {
@@ -505,6 +531,7 @@ class DocumentItem extends StatelessWidget {
           //     ),
           //   );
           // } else
+          SubjectRepo().viewDocument(id: taiLieu?.id ?? '');
           if (taiLieu!.urlFile.contains('pdf')) {
             if (!await launchUrl(Uri.parse(
                 'https://drive.google.com/viewerng/viewer?embedded=true&url=${taiLieu!.urlFile}'))) {
@@ -517,10 +544,11 @@ class DocumentItem extends StatelessWidget {
             }
           }
         } else {
-          Navigator.push(
+          pushWithoutNavBar(
             context,
             MaterialPageRoute(
-              builder: (context) => const AnimationPlayer(),
+              builder: (context) =>
+                  YoutubePlayerDemoApp(videoValue: videoValue),
             ),
           );
         }
@@ -528,8 +556,10 @@ class DocumentItem extends StatelessWidget {
       child: Container(
         width: 350.w,
         height: 83.h,
-        padding: EdgeInsets.symmetric(horizontal: 10.w),
-        margin: EdgeInsets.symmetric(vertical: 10.h, horizontal: 6.w),
+        padding: EdgeInsets.symmetric(horizontal: 20.w),
+        margin: EdgeInsets.symmetric(
+          vertical: 10.h,
+        ),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(6.r)),
             boxShadow: [
@@ -571,11 +601,15 @@ class DocumentItem extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Text(
-                  isVideo ? videoLesson!.name : taiLieu!.name,
+                  isVideo
+                      ? videoContent != ''
+                          ? videoValue[1]
+                          : videoLesson!.name
+                      : taiLieu!.name,
                   style: defaultBoldText,
                 ),
                 Text(
-                  isVideo ? videoLesson!.type : taiLieu!.fileType,
+                  isVideo ? 'video' : taiLieu!.fileType,
                   style: defaultText14.copyWith(color: color999),
                 ),
               ],
