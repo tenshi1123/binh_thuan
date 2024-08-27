@@ -1,5 +1,4 @@
 import 'package:binh_thuan/constants/mock_data.dart';
-import 'package:binh_thuan/constants/styles.dart';
 import 'package:binh_thuan/modules/videoplayer/data_manager.dart';
 import 'package:binh_thuan/modules/videoplayer/landscape_control.dart';
 import 'package:binh_thuan/modules/videoplayer/portrait_video_controls.dart';

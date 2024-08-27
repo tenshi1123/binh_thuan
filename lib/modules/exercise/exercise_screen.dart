@@ -11,7 +11,7 @@ class ExerciseScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<String> tabs = <String>['Tab 1', 'Tab 2', 'tab3'];
+    final List<String> tabs = <String>['Toàn bộ', 'Chưa làm', 'Hoàn thành'];
 
     return DefaultTabController(
       length: tabs.length,
@@ -44,9 +44,10 @@ class ExerciseScreen extends StatelessWidget {
                           child: Text(
                             'Bài tập',
                             style: defaultText20.copyWith(
-                                color: keyWhite,
-                                fontWeight: FontWeight.w800,
-                                fontFamily: 'Nunito-Bold'),
+                              color: keyWhite,
+                              fontWeight: FontWeight.w800,
+                              fontFamily: 'Nunito-Bold',
+                            ),
                           ),
                         ),
                         Positioned(
@@ -73,7 +74,7 @@ class ExerciseScreen extends StatelessWidget {
                                   return const IsComingItem(
                                     entries: ['Tự luận', 'Về nhà'],
                                     color: Color(0xff85DDE0),
-                                    title: 'Bài 3: Lorem ipsum dolor sit amet',
+                                    title: 'Bài 3: dolor sit amet',
                                     time: 'Còn: 1 giờ',
                                   );
                                 }),
@@ -146,9 +147,11 @@ class ExerciseScreen extends StatelessWidget {
                             itemExtent: 83.h,
                             delegate: SliverChildBuilderDelegate(
                               (BuildContext context, int index) {
-                                return const ExerciseItem();
+                                return ExerciseItem(
+                                  title: name,
+                                );
                               },
-                              childCount: 30,
+                              childCount: 1,
                             ),
                           ),
                         ),
@@ -273,7 +276,7 @@ Widget homeTab(
   return Tab(
     child: Container(
       // width: 130.w,
-      height: 20,
+      height: 30.h,
       decoration: isSeprator
           ? const BoxDecoration(
               border: Border(
@@ -323,8 +326,8 @@ List<Widget> _tabScroll() => [
 final _random = Random();
 
 class ExerciseItem extends StatelessWidget {
-  const ExerciseItem({super.key});
-
+  const ExerciseItem({super.key, required this.title});
+  final String title;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -371,7 +374,7 @@ class ExerciseItem extends StatelessWidget {
                   height: 6.h,
                 ),
                 Text(
-                  'Lorem ipsum',
+                  title,
                   style: defaultBoldText,
                 ),
                 Text(

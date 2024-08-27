@@ -37,8 +37,7 @@ class _SplashScreenAppState extends State<SplashScreenApp> {
 
     if (token != '') {
       HomeModel info = await HomeRepo().home(token: token);
-      List<SubjectModels> listSubjectModels =
-          await SubjectRepo().subject(token: token);
+      List<SubjectModels> listSubjectModels = await SubjectRepo().subject();
       main.listNotification = await NotificationRepo().getListMessages();
       return BottomNavBar(
         info: info,

@@ -6,8 +6,8 @@ import 'package:dio/dio.dart';
 import 'package:sp_util/sp_util.dart';
 
 class SubjectRepo {
-  Future<List<SubjectModels>> subject({required String token}) async {
-    Dio dio = Dio();
+  Dio dio = Dio();
+  Future<List<SubjectModels>> subject() async {
     dio.options.headers['Authorization'] =
         'Bearer ${SpUtil.getString(ConstString.token, defValue: null)}';
     Response response;
@@ -20,11 +20,30 @@ class SubjectRepo {
   }
 
   Future<DetailSubjectModels> detailSubject({required String id}) async {
-    Dio dio = Dio();
     dio.options.headers['Authorization'] =
         'Bearer ${SpUtil.getString(ConstString.token)}';
     Response response;
     response = await dio.get(ApiPath.detailSubject, data: {"id": id});
+    DetailSubjectModels detailSubjects =
+        DetailSubjectModels.fromJson(response.data);
+    return detailSubjects;
+  }
+
+  Future<DetailSubjectModels> viewDocument({required String id}) async {
+    dio.options.headers['Authorization'] =
+        'Bearer ${SpUtil.getString(ConstString.token)}';
+    Response response;
+    response = await dio.get(ApiPath.viewDocument, data: {"id": id});
+    DetailSubjectModels detailSubjects =
+        DetailSubjectModels.fromJson(response.data);
+    return detailSubjects;
+  }
+
+  Future<DetailSubjectModels> viewVideo({required String id}) async {
+    dio.options.headers['Authorization'] =
+        'Bearer ${SpUtil.getString(ConstString.token)}';
+    Response response;
+    response = await dio.get(ApiPath.viewVideo, data: {"id": id});
     DetailSubjectModels detailSubjects =
         DetailSubjectModels.fromJson(response.data);
     return detailSubjects;

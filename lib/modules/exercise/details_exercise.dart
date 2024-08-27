@@ -52,7 +52,6 @@ class _DetailsExerciseState extends State<DetailsExercise> {
                   SizedBox(
                     width: 240.w,
                   ),
-                  SvgPicture.asset('assets/icons/three_dots_icon.svg'),
                 ],
               ),
               SizedBox(
@@ -263,7 +262,7 @@ class InfoEssayExcercise extends StatelessWidget {
                 SizedBox(
                   width: 253.w,
                   child: Text(
-                    'Tiết 8: Lorem ipsum dolor sit amet  ',
+                    'Tiết 8:  ',
                     style: defaultBoldText.copyWith(fontSize: 20),
                     overflow: TextOverflow.ellipsis,
                     maxLines: 2,
@@ -286,7 +285,7 @@ class InfoEssayExcercise extends StatelessWidget {
                 SizedBox(
                   width: 320.w,
                   child: Text(
-                    'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ',
+                    'Bất đẳng thức Cosi là một trong những kiến thức toán học phổ biến, được sử dụng để giải nhiều dạng toán về phương trình và bất phương trình khác nhau cũng như tìm giá trị lớn nhất và giá trị nhỏ nhất của biểu thức. Trong bài viết này,',
                     style: defaultText14,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 3,

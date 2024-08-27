@@ -168,7 +168,7 @@ Widget _infoTest({required bool isComplete}) {
               SizedBox(
                 width: 253.w,
                 child: Text(
-                  'Tiết 8: Lorem ipsum dolor sit amet  ',
+                  'Tiết 8: dolor sit amet  ',
                   style: defaultBoldText.copyWith(fontSize: 20),
                   overflow: TextOverflow.ellipsis,
                   maxLines: 2,
@@ -197,7 +197,7 @@ Widget _infoTest({required bool isComplete}) {
               SizedBox(
                 width: 320.w,
                 child: Text(
-                  'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ',
+                  'dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ',
                   style: defaultText14,
                   overflow: TextOverflow.ellipsis,
                   maxLines: 3,

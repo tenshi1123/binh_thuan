@@ -41,7 +41,7 @@ class TabExercise extends StatelessWidget {
                         return const IsComingItem(
                           entries: ['Tự luận'],
                           color: kPrimaryColor,
-                          title: 'Bài 3: Lorem ipsum dolor sit amet',
+                          title: 'Bài 3: Tự luận ',
                           time: 'Còn: 1 giờ',
                         );
                       }),
@@ -90,9 +90,11 @@ class TabExercise extends StatelessWidget {
                         itemExtent: 83.h,
                         delegate: SliverChildBuilderDelegate(
                           (BuildContext context, int index) {
-                            return const ExerciseItem();
+                            return ExerciseItem(
+                              title: name,
+                            );
                           },
-                          childCount: 30,
+                          childCount: 1,
                         ),
                       ),
                     ),
@@ -112,4 +114,4 @@ List<Widget> _tabScroll() => [
       homeTab(title: "Chưa làm"),
       homeTab(title: "Hoàn thành"),
     ];
-const List<String> _tabs = <String>['Tất cả', 'Đang học', 'Chờ'];
+const List<String> _tabs = <String>['Toàn bộ', 'Chưa làm', 'Hoàn thành'];
