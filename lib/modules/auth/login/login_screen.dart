@@ -44,7 +44,7 @@ class _LoginScreenState extends State<LoginScreen> {
             },
             child: Stack(children: <Widget>[
               Positioned(
-                top: 452.h - MediaQuery.of(context).viewInsets.bottom,
+                top: 442.h - MediaQuery.of(context).viewInsets.bottom,
                 left: 52.w,
                 child: Text(
                   'Mã học sinh',
@@ -68,18 +68,19 @@ class _LoginScreenState extends State<LoginScreen> {
                     //focusNode: _focusNode,
                     scrollPadding: EdgeInsets.symmetric(
                         vertical: MediaQuery.of(context).viewInsets.bottom),
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(borderSide: BorderSide.none),
+                    decoration: InputDecoration(
+                      border:
+                          const OutlineInputBorder(borderSide: BorderSide.none),
                       hintStyle: TextStyle(
-                        fontSize: 16.0,
-                        color: Color(0xff999999),
+                        fontSize: 16.0.sp,
+                        color: const Color(0xff999999),
                       ),
                     ),
                   ),
                 ),
               ),
               Positioned(
-                top: 542.h - MediaQuery.of(context).viewInsets.bottom,
+                top: 532.h - MediaQuery.of(context).viewInsets.bottom,
                 left: 52.w,
                 child: Text(
                   'Mật khẩu',
@@ -107,9 +108,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     decoration: InputDecoration(
                       border:
                           const OutlineInputBorder(borderSide: BorderSide.none),
-                      hintStyle: const TextStyle(
-                        fontSize: 16.0,
-                        color: Color(0xff999999),
+                      hintStyle: TextStyle(
+                        fontSize: 16.sp,
+                        color: const Color(0xff999999),
                       ),
                       suffix: IconButton(
                         padding: const EdgeInsets.all(0),

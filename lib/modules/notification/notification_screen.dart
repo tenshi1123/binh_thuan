@@ -104,12 +104,16 @@ class NotiItem extends StatelessWidget {
             SizedBox(
               width: 20.w,
             ),
-            SvgPicture.asset('assets/icons/wallet.svg'),
+            SvgPicture.asset(
+              'assets/icons/wallet.svg',
+              height: 49.h,
+              width: 49.w,
+            ),
             SizedBox(
               width: 12.w,
             ),
             SizedBox(
-              width: 240,
+              width: 240.w,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
