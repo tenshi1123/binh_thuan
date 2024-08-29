@@ -35,17 +35,18 @@ class _SplashScreenAppState extends State<SplashScreenApp> {
     String token = SpUtil.getString(ConstString.token, defValue: '') ?? '';
     //sendUserTag(1);
 
-    if (token != '') {
-      HomeModel info = await HomeRepo().home(token: token);
-      List<SubjectModels> listSubjectModels = await SubjectRepo().subject();
-      main.listNotification = await NotificationRepo().getListMessages();
-      return BottomNavBar(
-        info: info,
-        listSubjectModel: listSubjectModels,
-      );
-    } else {
-      return const LoginScreen();
-    }
+    // if (token != '') {
+    //   HomeModel info = await HomeRepo().home(token: token);
+    //   List<SubjectModels> listSubjectModels = await SubjectRepo().subject();
+    //   main.listNotification = await NotificationRepo().getListMessages();
+    //   return BottomNavBar(
+    //     info: info,
+    //     listSubjectModel: listSubjectModels,
+    //   );
+    // } else {
+
+    return const LoginScreen();
+    //}
   }
 
   @override

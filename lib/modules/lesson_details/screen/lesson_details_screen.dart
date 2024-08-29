@@ -324,7 +324,7 @@ Widget _tabSection(
   List<QuestionModel> listQuestion,
 ) {
   return DefaultTabController(
-    length: 2,
+    length: 3,
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -336,7 +336,7 @@ Widget _tabSection(
             indicatorColor: keyBlack,
             tabs: [
               homeTab(title: "Tài liệu", isSeprator: false, hasNumber: false),
-              //homeTab(title: "Nhiệm vụ", hasNumber: false),
+              homeTab(title: "Nhiệm vụ", hasNumber: false),
               homeTab(title: "Thắc mắc", hasNumber: false),
             ]),
         SizedBox(
@@ -347,7 +347,7 @@ Widget _tabSection(
               taiLieu: chiTiet.document,
               video: chiTiet.info.videoContent,
             ),
-            //const MissionItem(),
+            const MissionItem(),
             QuestionTab(
               id: id,
               listQuestions: listQuestion,
@@ -410,7 +410,7 @@ class MissionItem extends StatelessWidget {
       crossAxisCount: 2,
       childAspectRatio: (169.w / 98.h),
       children: List.generate(
-        5,
+        1,
         (i) {
           return GestureDetector(
             onTap: () {
