@@ -5,7 +5,6 @@ import 'package:binh_thuan/router/app_router.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
 class TestScreen extends StatelessWidget {
@@ -23,29 +22,45 @@ class TestScreen extends StatelessWidget {
             ),
             Row(
               children: [
-                SizedBox(
-                  width: 6.w,
+                IconButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  icon: const Icon(
+                    Icons.arrow_back_ios_new,
+                    color: Colors.black,
+                  ),
                 ),
                 RichText(
                   text: TextSpan(
-                      text: '<  Chi tiết buổi học ',
-                      style: defaultBoldText.copyWith(
-                        fontSize: 14.sp,
-                        color: keyBlack.withOpacity(0.5),
-                      ),
-                      recognizer: TapGestureRecognizer()
-                        ..onTap = () => Navigator.of(context).pop(),
-                      children: [
-                        TextSpan(
-                          text: ' <  Kiểm tra',
-                          style: defaultBoldText.copyWith(fontSize: 14.sp),
-                        )
-                      ]),
+                    text: 'Bài tập',
+                    style: defaultBoldText.copyWith(fontSize: 14.sp),
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = () => Navigator.of(context).pop(),
+                  ),
                 ),
                 SizedBox(
-                  width: 120.w,
+                  width: 10.w,
                 ),
-                SvgPicture.asset('assets/icons/three_dots_icon.svg'),
+
+                // RichText(
+                //   text: TextSpan(
+                //       text: '<  Chi tiết buổi học ',
+                //       style: defaultBoldText.copyWith(
+                //         fontSize: 14.sp,
+                //         color: keyBlack.withOpacity(0.5),
+                //       ),
+                //       recognizer: TapGestureRecognizer()
+                //         ..onTap = () => Navigator.of(context).pop(),
+                //       children: [
+                //         TextSpan(
+                //           text: ' <  Kiểm tra',
+                //           style: defaultBoldText.copyWith(fontSize: 14.sp),
+                //         )
+                //       ]),
+                // ),
+
+                //  SvgPicture.asset('assets/icons/three_dots_icon.svg'),
               ],
             ),
             SizedBox(
@@ -60,6 +75,36 @@ class TestScreen extends StatelessWidget {
               style: defaultBoldText.copyWith(fontSize: 20.sp),
             ),
             _resultTest(),
+            SizedBox(
+              height: 16.h,
+            ),
+            Container(
+              width: 350.w,
+              height: 51.h,
+              decoration: BoxDecoration(
+                color: const Color(0xffDEE4ED),
+                borderRadius: BorderRadius.all(Radius.circular(10.r)),
+              ),
+              child: Row(children: [
+                SizedBox(
+                  width: 20.w,
+                ),
+                Text(
+                  'Xem chi tiết bài làm',
+                  style: defaultBoldText,
+                ),
+                const Spacer(),
+                Icon(
+                  Icons.keyboard_arrow_right,
+                  color: keyBlack,
+                  size: 30.dm,
+                  semanticLabel: 'Text to announce in accessibility modes',
+                ),
+                SizedBox(
+                  width: 20.w,
+                ),
+              ]),
+            )
           ],
         ),
       ),
@@ -92,11 +137,11 @@ class _InfoTest extends StatelessWidget {
       child: GestureDetector(
         onTap: () {
           //comment qua dot review apple
-          // AppRouter.toPage(
-          //   context,
-          //   AppPages.TestDetailPage,
-          //   arguments: {},
-          // );
+          AppRouter.toPage(
+            context,
+            AppPages.TestDetailPage,
+            arguments: {},
+          );
         },
         child: Stack(
           children: [
@@ -280,21 +325,25 @@ Widget _resultTest() {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(
-                height: 30.h,
+                height: 60.h,
               ),
+              // Text(
+              //   "35      ",
+              //   style: defaultBoldText.copyWith(fontSize: 30.sp),
+              // ),
+              // Divider(
+              //   thickness: 2,
+              //   color: keyBlack,
+              //   indent: 30.w,
+              //   endIndent: 30.w,
+              // ),
+              // Text(
+              //   "      40",
+              //   style: defaultBoldText.copyWith(fontSize: 20.sp),
+              // ),
               Text(
-                "35      ",
-                style: defaultBoldText.copyWith(fontSize: 30.sp),
-              ),
-              Divider(
-                thickness: 2,
-                color: keyBlack,
-                indent: 30.w,
-                endIndent: 30.w,
-              ),
-              Text(
-                "      40",
-                style: defaultBoldText.copyWith(fontSize: 20.sp),
+                '85%',
+                style: defaultBoldText.copyWith(fontSize: 25.sp),
               ),
             ],
           ),

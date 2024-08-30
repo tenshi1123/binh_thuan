@@ -22,7 +22,9 @@ class ApiPath {
   // api doc tai lieu
   static const String viewVideo = '$baseUrl/view_video';
   static const String viewDocument = '$baseUrl/view_document';
-
+  //api danh sach bai tap
+  static const String listExcercise = '$baseUrl/danh_sach_bai_tap';
+  static const String listQuiz = '$baseUrl/quiz';
   // api danh sach thong bao
   static const String listNotification = '$baseUrl/danh_sach_thong_bao';
   //api về thời khóa biểu

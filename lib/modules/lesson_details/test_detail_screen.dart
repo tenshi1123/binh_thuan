@@ -2,7 +2,6 @@ import 'package:binh_thuan/constants/colors.dart';
 import 'package:binh_thuan/constants/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:pager/pager.dart';
 import 'package:number_paginator/number_paginator.dart';
 
 class TestDetailScreen extends StatefulWidget {
@@ -51,15 +50,76 @@ class _TestDetailScreenState extends State<TestDetailScreen> {
   // }
   final int _numPages = 10;
   int _currentPage = 0;
-
+  bool? isChecked = false;
   @override
   Widget build(BuildContext context) {
     var pages = List.generate(
       _numPages,
-      (index) => Center(
-        child: Text(
-          "Page ${index + 1}",
-          style: defaultText16,
+      (index) => SizedBox(
+        height: 500.h,
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Container(
+                  height: 21.h,
+                  width: 21.w,
+                  decoration: const BoxDecoration(
+                    color: keyBlack,
+                    shape: BoxShape.circle,
+                  ),
+                  child: Center(
+                    child: Text(
+                      "${index + 1}",
+                      style: defaultText16.copyWith(color: Colors.white),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  width: 304.w,
+                  child: Text(
+                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do?",
+                    style: defaultText16,
+                  ),
+                ),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Checkbox(
+                  //tristate: true,
+                  value: isChecked,
+                  shape: const CircleBorder(),
+                  onChanged: (bool? value) {
+                    setState(() {
+                      isChecked = value;
+                    });
+                  },
+                ),
+                SizedBox(
+                  width: 304.w,
+                  child: Text(
+                    "A. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.",
+                    style: defaultText16,
+                  ),
+                ),
+              ],
+            ),
+            const Answer(
+              title:
+                  'B. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.',
+            ),
+            const Answer(
+              title:
+                  'C. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.',
+            ),
+            const Answer(
+              title:
+                  'D. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.',
+            ),
+          ],
         ),
       ),
     );
@@ -78,20 +138,27 @@ class _TestDetailScreenState extends State<TestDetailScreen> {
         ),
       ),
       body: Column(children: [
+        SizedBox(
+          height: 10.h,
+        ),
         Row(
           children: [
             SizedBox(
               width: 20.w,
             ),
             Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   'Thời gian còn lại',
-                  style: defaultText14,
+                  style: defaultBoldText,
                 ),
                 Text(
                   '12:34',
-                  style: defaultText20,
+                  style: defaultBoldText.copyWith(
+                    color: rec21Red,
+                    fontSize: 20.sp,
+                  ),
                 )
               ],
             ),
@@ -120,6 +187,47 @@ class _TestDetailScreenState extends State<TestDetailScreen> {
             ),
           ],
         ),
+        SizedBox(
+          height: 10.h,
+        ),
+        Container(
+          width: 350.w,
+          height: 110.h,
+          padding: EdgeInsets.symmetric(horizontal: 10.w),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(8.r),
+              topRight: Radius.circular(8.r),
+              bottomLeft: Radius.circular(8.r),
+              bottomRight: Radius.circular(8.r),
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: kPrimaryColor.withOpacity(0.2),
+                spreadRadius: 5,
+                blurRadius: 7,
+                offset: const Offset(4, 7), // changes position of shadow
+              ),
+            ],
+            color: Colors.white,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Đề bài:',
+                style: defaultBoldText,
+              ),
+              Text(
+                'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. eiusmod tempor incididunt ut labore et dolore magna aliqua. ',
+                style: defaultText14,
+              ),
+            ],
+          ),
+        ),
+        SizedBox(
+          height: 20.h,
+        ),
         pages[_currentPage],
       ]),
       // card for elevation
@@ -136,6 +244,42 @@ class _TestDetailScreenState extends State<TestDetailScreen> {
           },
         ),
       ),
+    );
+  }
+}
+
+class Answer extends StatefulWidget {
+  const Answer({super.key, required this.title});
+  final String title;
+  @override
+  State<Answer> createState() => _AnswerState();
+}
+
+class _AnswerState extends State<Answer> {
+  bool? isChecked = false;
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        Checkbox(
+          //tristate: true,
+          value: isChecked,
+          shape: const CircleBorder(),
+          onChanged: (bool? value) {
+            setState(() {
+              isChecked = value;
+            });
+          },
+        ),
+        SizedBox(
+          width: 304.w,
+          child: Text(
+            widget.title,
+            style: defaultText16,
+          ),
+        ),
+      ],
     );
   }
 }

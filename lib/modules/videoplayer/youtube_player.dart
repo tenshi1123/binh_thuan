@@ -20,7 +20,6 @@ class _YoutubePlayerDemoAppState extends State<YoutubePlayerDemoApp> {
   late TextEditingController _seekToController;
 
   bool _isPlayerReady = false;
-  late String _videoid2;
   final List<String> _ids = [
     videoId,
     'gQDByCdjUXw',
@@ -50,7 +49,6 @@ class _YoutubePlayerDemoAppState extends State<YoutubePlayerDemoApp> {
     )..addListener(listener);
     _idController = TextEditingController();
     _seekToController = TextEditingController();
-    _videoid2 = YoutubePlayer.convertUrlToId(widget.videoValue?[1] ?? '') ?? '';
   }
 
   void listener() {

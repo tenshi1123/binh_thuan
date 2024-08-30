@@ -1,3 +1,5 @@
+import '../modules/exercise/exercise_model.dart';
+
 class InfoModel {
   final String name;
   final String teacherName;
@@ -74,11 +76,13 @@ class ChiTietBuoiHocModel {
   final String libraryId;
   final InfoModel info;
   final List<DocumentModel> document;
+  final List<ExcerciseModel> listExcercise;
 
   ChiTietBuoiHocModel({
     required this.libraryId,
     required this.info,
     required this.document,
+    required this.listExcercise,
   });
   factory ChiTietBuoiHocModel.fromJson(Map<String, dynamic> json) {
     return ChiTietBuoiHocModel(
@@ -88,6 +92,13 @@ class ChiTietBuoiHocModel {
           ? List<DocumentModel>.from(
               (json['document'] ?? []).map(
                 (model) => DocumentModel.fromJson(model),
+              ),
+            )
+          : [],
+      listExcercise: (json['bai_tap'] != [])
+          ? List<ExcerciseModel>.from(
+              (json['bai_tap'] ?? []).map(
+                (model) => ExcerciseModel.fromJson(model),
               ),
             )
           : [],
