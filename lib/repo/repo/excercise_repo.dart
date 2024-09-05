@@ -20,24 +20,21 @@ class ExcerciseRepo {
         },
       ),
     );
+    Map result = (response.data['question'][0]['value']);
+    List newList = result.entries.map((e) => e.value).toList();
     return List<QuizModel>.from(
-      (response.data).map(
+      newList.map(
         (model) => QuizModel.fromJson(model),
       ),
     );
   }
 
-  Future<List<ExcerciseModel>> getListEcercise(String id) async {
+  Future<List<ExcerciseModel>> getListEcercise() async {
     dio.options.headers['Authorization'] =
         'Bearer ${SpUtil.getString(ConstString.token)}';
     Response response;
     response = await dio.post(
       ApiPath.listExcercise,
-      data: jsonEncode(
-        {
-          'id': int.parse(id),
-        },
-      ),
     );
     return List<ExcerciseModel>.from(
       (response.data).map(

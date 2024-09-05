@@ -1,11 +1,14 @@
 import 'package:binh_thuan/constants/colors.dart';
 import 'package:binh_thuan/constants/styles.dart';
+import 'package:binh_thuan/repo/repo/excercise_repo.dart';
 import 'package:binh_thuan/router/app_pages.dart';
 import 'package:binh_thuan/router/app_router.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:percent_indicator/percent_indicator.dart';
+
+import '../exercise/exercise_model.dart';
 
 class TestScreen extends StatelessWidget {
   const TestScreen({super.key});
@@ -135,12 +138,13 @@ class _InfoTest extends StatelessWidget {
         ],
       ),
       child: GestureDetector(
-        onTap: () {
+        onTap: () async {
           //comment qua dot review apple
+          List<QuizModel> listQuiz = await ExcerciseRepo().getListQuestion('1');
           AppRouter.toPage(
             context,
             AppPages.TestDetailPage,
-            arguments: {},
+            arguments: {'listQuiz': listQuiz},
           );
         },
         child: Stack(

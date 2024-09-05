@@ -32,8 +32,8 @@ class ExcerciseModel {
       name: json['name'] ?? '',
       totalQuestion: json['total_questions'] ?? '',
       totalTime: json['total_time'] ?? '',
-      timeDeadline:
-          DateFormat("yyyy-MM-dd hh:mm:ss").parse(json['time_deadline'] ?? ''),
+      timeDeadline: DateFormat("yyyy-MM-dd hh:mm:ss")
+          .parse(json['time_deadline'] ?? '0000-00-00 00:00:00'),
       urlFile: json['url_file'] ?? '',
       type: json['type'] ?? '',
       typeExcercise: json['loai_bai_tap'] ?? '',

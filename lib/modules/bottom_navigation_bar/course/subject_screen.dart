@@ -120,7 +120,7 @@ class _SubjectScreenState extends State<SubjectScreen>
             aspectRatio: 12 / 8,
             child: TabContainer(
               controller: TabController(
-                length: 3,
+                length: 2,
                 vsync: this,
               ),
               borderRadius: BorderRadius.circular(20),
@@ -167,9 +167,9 @@ List<Widget> _getTabs1() {
     const Text(
       'Lịch học',
     ),
-    const Text(
-      'Bài tập',
-    ),
+    // const Text(
+    //   'Bài tập',
+    // ),
     const Text(
       'Thông tin',
     )
@@ -182,9 +182,9 @@ List<Widget> getChildren2(DetailSubjectModels detailSubject) {
       lichHoc: detailSubject.lichHoc,
       document: detailSubject.document,
     ),
-    const TabExercise(
-      name: 'Bài tập',
-    ),
+    // const TabExercise(
+    //   name: 'Bài tập',
+    // ),
     TabInfomation(
       detailSubject: detailSubject,
     )

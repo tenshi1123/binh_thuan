@@ -2,6 +2,7 @@ import 'package:binh_thuan/constants/colors.dart';
 import 'package:binh_thuan/constants/styles.dart';
 import 'package:binh_thuan/models/detail_subject_models.dart';
 import 'package:binh_thuan/models/lesson_model.dart';
+import 'package:binh_thuan/modules/exercise/exercise_model.dart';
 import 'package:binh_thuan/modules/exercise/exercise_screen.dart';
 import 'package:binh_thuan/modules/lesson_details/test_screen.dart';
 import 'package:binh_thuan/modules/videoplayer/youtube_player.dart';
@@ -347,7 +348,9 @@ Widget _tabSection(
               taiLieu: chiTiet.document,
               video: chiTiet.info.videoContent,
             ),
-            const MissionItem(),
+            MissionItem(
+              listExcercise: chiTiet.listExcercise,
+            ),
             QuestionTab(
               id: id,
               listQuestions: listQuestion,
@@ -402,15 +405,15 @@ class DocumentTab extends StatelessWidget {
 }
 
 class MissionItem extends StatelessWidget {
-  const MissionItem({super.key});
-
+  const MissionItem({super.key, required this.listExcercise});
+  final List<ExcerciseModel> listExcercise;
   @override
   Widget build(BuildContext context) {
     return GridView.count(
       crossAxisCount: 2,
-      childAspectRatio: (169.w / 98.h),
+      childAspectRatio: (169.w / 120.h),
       children: List.generate(
-        1,
+        listExcercise.length,
         (i) {
           return GestureDetector(
             onTap: () {
@@ -422,7 +425,7 @@ class MissionItem extends StatelessWidget {
             },
             child: Container(
               width: 169.w,
-              height: 98.h,
+              height: 120.h,
               padding: EdgeInsets.symmetric(horizontal: 10.w),
               margin: EdgeInsets.symmetric(vertical: 10.h, horizontal: 6.w),
               decoration: BoxDecoration(
@@ -467,22 +470,29 @@ class MissionItem extends StatelessWidget {
                           SizedBox(
                             height: 6.h,
                           ),
-                          Text(
-                            'Test 1',
-                            style: defaultBoldText,
+                          SizedBox(
+                            width: 110.w,
+                            child: Text(
+                              listExcercise[i].name,
+                              style: defaultBoldText,
+                              overflow: TextOverflow.fade,
+                            ),
                           ),
-                          Row(
-                            children: [
-                              SvgPicture.asset('assets/icons/time_icon.svg'),
-                              SizedBox(
-                                width: 6.w,
-                              ),
-                              Text(
-                                '15 phút',
-                                style: defaultText14,
-                              ),
-                            ],
-                          )
+                          listExcercise[i].type == '1'
+                              ? Row(
+                                  children: [
+                                    SvgPicture.asset(
+                                        'assets/icons/time_icon.svg'),
+                                    SizedBox(
+                                      width: 6.w,
+                                    ),
+                                    Text(
+                                      '${listExcercise[i].totalTime} phút',
+                                      style: defaultText14,
+                                    ),
+                                  ],
+                                )
+                              : const SizedBox()
                         ],
                       ),
                     ],
@@ -491,7 +501,7 @@ class MissionItem extends StatelessWidget {
                     color: rec27Teal,
                   ),
                   Text(
-                    'Trắc nghiệm',
+                    listExcercise[i].typeExcercise,
                     style: defaultText14,
                   )
                 ],
