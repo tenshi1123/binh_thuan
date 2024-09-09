@@ -7,7 +7,6 @@ import 'package:binh_thuan/modules/bottom_navigation_bar/bottom_nav_bar.dart';
 import 'package:binh_thuan/modules/notification/noti_repo.dart';
 import 'package:binh_thuan/repo/repo/home_repo.dart';
 import 'package:binh_thuan/repo/repo/subject_repo.dart';
-import 'package:binh_thuan/utils/onesignal.dart';
 import 'package:flutter/material.dart';
 
 import 'package:easy_splash_screen/easy_splash_screen.dart';

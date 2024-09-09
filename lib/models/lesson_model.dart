@@ -54,12 +54,14 @@ class DocumentModel {
   final String fileName;
   final String urlFile;
   final String fileType;
+  final String type;
   DocumentModel({
     required this.id,
     required this.name,
     required this.fileName,
     required this.urlFile,
     required this.fileType,
+    required this.type,
   });
   factory DocumentModel.fromJson(Map<String, dynamic> json) {
     return DocumentModel(
@@ -68,6 +70,7 @@ class DocumentModel {
       fileName: json['file_name'] ?? 'không tồn tại',
       urlFile: json['url_file'] ?? 'không tồn tại',
       fileType: json['file_type'] ?? 'không tồn tại',
+      type: json['type'] ?? '',
     );
   }
 }

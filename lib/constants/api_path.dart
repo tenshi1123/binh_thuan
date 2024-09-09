@@ -25,6 +25,8 @@ class ApiPath {
   //api danh sach bai tap
   static const String listExcercise = '$baseUrl/danh_sach_bai_tap';
   static const String listQuiz = '$baseUrl/quiz';
+  static const String submitTest = '$baseUrl/nop_bai_trac_nghiem';
+  static const String submitEssay = '$baseUrl/nop_bai_tu_luan';
   // api danh sach thong bao
   static const String listNotification = '$baseUrl/danh_sach_thong_bao';
   //api về thời khóa biểu

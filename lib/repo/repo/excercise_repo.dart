@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:binh_thuan/constants/api_path.dart';
 import 'package:binh_thuan/constants/string.dart';
@@ -41,5 +42,48 @@ class ExcerciseRepo {
         (model) => ExcerciseModel.fromJson(model),
       ),
     );
+  }
+
+  Future submitEssay(String id, List<File> photo) async {
+    dio.options.headers['Authorization'] =
+        'Bearer ${SpUtil.getString(ConstString.token)}';
+    var formData = FormData.fromMap({
+      'id': int.parse(id),
+      'files': [
+        await MultipartFile.fromFile(photo[0].path,
+            filename: photo[0].path.split('/').last),
+      ]
+    });
+    //này là nộp nhiều file thì mở comment ra
+    // for (var file in photo) {
+    //   formData.files.addAll([
+    //     MapEntry(
+    //         "file",
+    //         await MultipartFile.fromFile(file.path,
+    //             filename: file.path.split('/').last)),
+    //   ]);
+    // }
+    await dio.post(ApiPath.submitEssay, data: formData);
+  }
+
+  Future submitTest({
+    required String id,
+    required String statTime,
+    required List<Map<String, String>> data,
+  }) async {
+    dio.options.headers['Authorization'] =
+        'Bearer ${SpUtil.getString(ConstString.token)}';
+    Response response;
+    response = await dio.post(
+      ApiPath.submitTest,
+      data: jsonEncode(
+        {
+          'id': int.parse(id),
+          'start_time': statTime,
+          'data': data,
+        },
+      ),
+    );
+    return response.data["type"];
   }
 }

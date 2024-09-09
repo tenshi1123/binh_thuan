@@ -1,9 +1,11 @@
 import 'package:binh_thuan/constants/colors.dart';
 import 'package:binh_thuan/constants/styles.dart';
 import 'package:binh_thuan/modules/exercise/exercise_model.dart';
+import 'package:binh_thuan/repo/repo/excercise_repo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
+import 'package:intl/intl.dart';
 import 'package:number_paginator/number_paginator.dart';
 
 extension Substrings on String {
@@ -63,10 +65,18 @@ class _TestDetailScreenState extends State<TestDetailScreen> {
   final ValueNotifier<Map<int, int>> _counter =
       ValueNotifier<Map<int, int>>({});
   late List<QuizModel> _listQuiz;
+  late List<Map> _listAnswers;
   @override
   void initState() {
     // TODO: implement initState
     _listQuiz = widget.listQuiz;
+    _listAnswers = List<Map>.from(
+      widget.listQuiz.map(
+        (e) => {
+          {"id": e.id, "answer": ""},
+        },
+      ),
+    );
     super.initState();
   }
 
@@ -75,7 +85,7 @@ class _TestDetailScreenState extends State<TestDetailScreen> {
     var pages = List.generate(
       _listQuiz.length,
       (index) => SizedBox(
-        height: 500.h,
+        height: 600.h,
         child: ValueListenableBuilder(
           valueListenable: _counter,
           builder: (BuildContext context, value, Widget? child) {
@@ -111,9 +121,12 @@ class _TestDetailScreenState extends State<TestDetailScreen> {
                   SizedBox(
                     height: 10.h,
                   ),
-                  HtmlWidget(
-                    _listQuiz[index].content,
-                    textStyle: defaultText12,
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20.w),
+                    child: HtmlWidget(
+                      _listQuiz[index].content,
+                      textStyle: defaultText12,
+                    ),
                   ),
                   SizedBox(
                     height: 10.h,
@@ -122,8 +135,11 @@ class _TestDetailScreenState extends State<TestDetailScreen> {
                     width: 390.w,
                     //height: 400.h,
                     child: _listQuiz[index].questions == ''
-                        ? Text('Trả lời câu hỏi ở trang tiếp theo',
-                            style: defaultText16)
+                        ? Text(
+                            'Trả lời câu hỏi ở trang tiếp theo',
+                            style: defaultText16,
+                            textAlign: TextAlign.center,
+                          )
                         : ListView.builder(
                             shrinkWrap: true,
                             padding: EdgeInsets.fromLTRB(20.w, 0, 20.w, 20.h),
@@ -148,6 +164,12 @@ class _TestDetailScreenState extends State<TestDetailScreen> {
                                   //_counter.value[index] = answer;
                                   _counter.value.addAll({index: answer});
                                   _counter.notifyListeners();
+                                  _listAnswers.add(value);
+                                  _listAnswers[_listAnswers.indexWhere((e) =>
+                                      e['id'] == _listQuiz[index].id)] = {
+                                    "id": _listQuiz[index].id,
+                                    "answer": answer.toString()
+                                  };
                                 },
                                 child: Container(
                                   margin: EdgeInsets.only(bottom: 10.h),
@@ -271,21 +293,33 @@ class _TestDetailScreenState extends State<TestDetailScreen> {
               ],
             ),
             const Spacer(),
-            Container(
-              height: 35.h,
-              width: 74.w,
-              decoration: BoxDecoration(
+            GestureDetector(
+              onTap: () async {
+                await ExcerciseRepo().submitTest(
+                  id: '',
+                  statTime: DateFormat('yyyy-MM-dd HH:mm').format(
+                    DateTime.now(),
+                  ),
+                  data: [],
+                );
+              },
+              child: Container(
+                height: 35.h,
+                width: 74.w,
+                decoration: BoxDecoration(
                   borderRadius: BorderRadius.all(
                     Radius.circular(
                       10.r,
                     ),
                   ),
-                  color: rec21Red),
-              child: Center(
-                child: Text(
-                  'Nộp bài',
-                  style: defaultBoldText.copyWith(
-                    color: Colors.white,
+                  color: rec21Red,
+                ),
+                child: Center(
+                  child: Text(
+                    'Nộp bài',
+                    style: defaultBoldText.copyWith(
+                      color: Colors.white,
+                    ),
                   ),
                 ),
               ),
@@ -298,36 +332,32 @@ class _TestDetailScreenState extends State<TestDetailScreen> {
         SizedBox(
           height: 10.h,
         ),
-        Container(
-          width: 350.w,
-          height: 110.h,
-          padding: EdgeInsets.symmetric(horizontal: 10.w),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(8.r)),
-            boxShadow: [
-              BoxShadow(
-                color: kPrimaryColor.withOpacity(0.2),
-                spreadRadius: 5,
-                blurRadius: 7,
-                offset: const Offset(4, 7), // changes position of shadow
-              ),
-            ],
-            color: Colors.white,
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Đề bài:',
-                style: defaultBoldText,
-              ),
-              Text(
-                'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. eiusmod tempor incididunt ut labore et dolore magna aliqua. ',
-                style: defaultText14,
-              ),
-            ],
-          ),
-        ),
+        // Container(
+        //   width: 350.w,
+        //   height: 110.h,
+        //   padding: EdgeInsets.symmetric(horizontal: 10.w),
+        //   decoration: BoxDecoration(
+        //     borderRadius: BorderRadius.all(Radius.circular(8.r)),
+        //     boxShadow: [
+        //       BoxShadow(
+        //         color: kPrimaryColor.withOpacity(0.2),
+        //         spreadRadius: 5,
+        //         blurRadius: 7,
+        //         offset: const Offset(4, 7), // changes position of shadow
+        //       ),
+        //     ],
+        //     color: Colors.white,
+        //   ),
+        //   child: Column(
+        //     crossAxisAlignment: CrossAxisAlignment.start,
+        //     children: [
+        //       Text(
+        //         'Đề bài:',
+        //         style: defaultBoldText,
+        //       ),
+        //     ],
+        //   ),
+        // ),
         SizedBox(
           height: 20.h,
         ),

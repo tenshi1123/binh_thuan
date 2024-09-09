@@ -41,6 +41,39 @@ class ExcerciseModel {
   }
 }
 
+class QuestionsModel {
+  final String id;
+  final String title;
+  final String content;
+  final String videoAttachment;
+  final String audioAttachment;
+  final List<QuizModel> value;
+  QuestionsModel({
+    required this.id,
+    required this.title,
+    required this.content,
+    required this.videoAttachment,
+    required this.audioAttachment,
+    required this.value,
+  });
+  factory QuestionsModel.fromJson(Map<String, dynamic> json) {
+    Map result = json['value'] ?? {};
+    List newList = result.entries.map((e) => e.value).toList();
+    return QuestionsModel(
+      id: json['id'] ?? '',
+      title: json['title'] ?? '',
+      content: json['content'] ?? '',
+      videoAttachment: json['video_attachment'] ?? '',
+      audioAttachment: json['audio_attachment'] ?? '',
+      value: List<QuizModel>.from(
+        newList.map(
+          (model) => QuizModel.fromJson(model),
+        ),
+      ),
+    );
+  }
+}
+
 class QuizModel {
   final String id;
   final String title;

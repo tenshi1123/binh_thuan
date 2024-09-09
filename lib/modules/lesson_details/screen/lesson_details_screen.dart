@@ -557,8 +557,8 @@ class DocumentItem extends StatelessWidget {
           pushWithoutNavBar(
             context,
             MaterialPageRoute(
-              builder: (context) =>
-                  YoutubePlayerDemoApp(videoValue: videoValue),
+              builder: (context) => YoutubePlayerDemoApp(
+                  videoValue: videoLesson?.content ?? videoValue[0]),
             ),
           );
         }
@@ -598,12 +598,13 @@ class DocumentItem extends StatelessWidget {
                 ),
               ),
               child: SvgPicture.asset(
-                  isVideo
-                      ? 'assets/icons/video_icon.svg'
-                      : 'assets/icons/home_work_icon.svg',
-                  width: 18.w,
-                  height: 18.h,
-                  fit: BoxFit.fill),
+                isVideo
+                    ? 'assets/icons/video_icon.svg'
+                    : 'assets/icons/home_work_icon.svg',
+                width: 18.w,
+                height: 18.h,
+                fit: BoxFit.fill,
+              ),
             ),
             SizedBox(width: 8.w),
             Column(
