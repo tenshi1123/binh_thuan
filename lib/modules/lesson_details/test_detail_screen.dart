@@ -4,6 +4,7 @@ import 'package:binh_thuan/constants/colors.dart';
 import 'package:binh_thuan/constants/styles.dart';
 import 'package:binh_thuan/modules/exercise/exercise_model.dart';
 import 'package:binh_thuan/repo/repo/excercise_repo.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
@@ -327,6 +328,27 @@ class _TestDetailScreenState extends State<TestDetailScreen> {
                     DateTime.now(),
                   ),
                   data: _listAnswers,
+                );
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return CupertinoAlertDialog(
+                      title: const Text('Bài làm đã được gửi'),
+                      actions: <Widget>[
+                        CupertinoDialogAction(
+                          isDefaultAction: true,
+                          child: const Text(
+                            'ok',
+                            style:
+                                TextStyle(fontSize: 20, color: kPrimaryColor),
+                          ),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                        )
+                      ],
+                    );
+                  },
                 );
               },
               child: Container(
