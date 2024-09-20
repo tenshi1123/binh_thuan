@@ -351,7 +351,10 @@ class ExerciseItem extends StatelessWidget {
           AppRouter.toPage(
             context,
             AppPages.TestDetailPage,
-            arguments: {'listQuiz': listQuiz},
+            arguments: {
+              'listQuiz': listQuiz,
+              'model': model,
+            },
           );
         } else {
           Navigator.of(context).push(

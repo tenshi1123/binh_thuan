@@ -75,9 +75,11 @@ extension AppPagesExtension on AppPages {
         return PageConfig()..pageBuilder = () => const TuitionScreen();
       case AppPages.TestDetailPage:
         List<QuizModel> listQuiz = arguments?['listQuiz'];
+        ExcerciseModel model = arguments?['model'];
         return PageConfig()
           ..pageBuilder = () => TestDetailScreen(
                 listQuiz: listQuiz,
+                model: model,
               );
 
       default:

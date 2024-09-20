@@ -1,3 +1,5 @@
+import 'dart:async';
+import 'dart:io';
 import 'package:binh_thuan/constants/colors.dart';
 import 'package:binh_thuan/constants/styles.dart';
 import 'package:binh_thuan/modules/exercise/exercise_model.dart';
@@ -5,6 +7,7 @@ import 'package:binh_thuan/repo/repo/excercise_repo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:number_paginator/number_paginator.dart';
 
@@ -16,8 +19,10 @@ extension Substrings on String {
 }
 
 class TestDetailScreen extends StatefulWidget {
-  const TestDetailScreen({super.key, required this.listQuiz});
+  const TestDetailScreen(
+      {super.key, required this.listQuiz, required this.model});
   final List<QuizModel> listQuiz;
+  final ExcerciseModel model;
   @override
   State<TestDetailScreen> createState() => _TestDetailScreenState();
 }
@@ -59,25 +64,53 @@ class _TestDetailScreenState extends State<TestDetailScreen> {
   //     ),
   //   );
   // }
-
+  var countdownDuration = const Duration(minutes: 15);
+  Duration duration = const Duration();
+  Timer? timer;
+  Timer? timer1;
+  bool countDown = true;
+  bool countDown1 = true;
   int _currentPage = 0;
   bool? isChecked = false;
+  List<File> photos = <File>[];
   final ValueNotifier<Map<int, int>> _counter =
       ValueNotifier<Map<int, int>>({});
   late List<QuizModel> _listQuiz;
-  late List<Map> _listAnswers;
+  late List<Map<String, String>> _listAnswers;
   @override
   void initState() {
     // TODO: implement initState
     _listQuiz = widget.listQuiz;
-    _listAnswers = List<Map>.from(
+    _listAnswers = List<Map<String, String>>.from(
       widget.listQuiz.map(
-        (e) => {
-          {"id": e.id, "answer": ""},
-        },
+        (e) => {"id": e.id, "answer": ""},
       ),
     );
+    int hours1;
+    int mints1;
+    int secs1;
+    hours1 = int.parse("00");
+    mints1 = int.parse("15");
+    secs1 = int.parse("00");
+    countdownDuration =
+        Duration(hours: hours1, minutes: mints1, seconds: secs1);
+    startTimer();
+    reset();
     super.initState();
+  }
+
+  Future _pickImageFromGallery() async {
+    final returnedImage = await ImagePicker().pickMultiImage();
+    photos = List<File>.from(
+      (returnedImage).map(
+        (e) => File(e.path),
+      ),
+    );
+    //File(returnedImage!.path);
+    if (photos.isNotEmpty) {
+      //do something
+    }
+    setState(() {});
   }
 
   @override
@@ -164,11 +197,10 @@ class _TestDetailScreenState extends State<TestDetailScreen> {
                                   //_counter.value[index] = answer;
                                   _counter.value.addAll({index: answer});
                                   _counter.notifyListeners();
-                                  _listAnswers.add(value);
                                   _listAnswers[_listAnswers.indexWhere((e) =>
                                       e['id'] == _listQuiz[index].id)] = {
                                     "id": _listQuiz[index].id,
-                                    "answer": answer.toString()
+                                    "answer": answer.toString(),
                                   };
                                 },
                                 child: Container(
@@ -260,7 +292,7 @@ class _TestDetailScreenState extends State<TestDetailScreen> {
         automaticallyImplyLeading: false,
         backgroundColor: kPrimaryColor,
         title: Text(
-          'Test 8 : AM GM',
+          widget.model.name,
           style: defaultBoldText.copyWith(
             color: Colors.white,
             fontSize: 15.sp,
@@ -283,13 +315,7 @@ class _TestDetailScreenState extends State<TestDetailScreen> {
                   'Thời gian còn lại',
                   style: defaultBoldText,
                 ),
-                Text(
-                  '12:34',
-                  style: defaultBoldText.copyWith(
-                    color: rec21Red,
-                    fontSize: 20.sp,
-                  ),
-                )
+                buildTime1(),
               ],
             ),
             const Spacer(),
@@ -300,7 +326,7 @@ class _TestDetailScreenState extends State<TestDetailScreen> {
                   statTime: DateFormat('yyyy-MM-dd HH:mm').format(
                     DateTime.now(),
                   ),
-                  data: [],
+                  data: _listAnswers,
                 );
               },
               child: Container(
@@ -329,9 +355,7 @@ class _TestDetailScreenState extends State<TestDetailScreen> {
             ),
           ],
         ),
-        SizedBox(
-          height: 10.h,
-        ),
+
         // Container(
         //   width: 350.w,
         //   height: 110.h,
@@ -379,6 +403,73 @@ class _TestDetailScreenState extends State<TestDetailScreen> {
       ),
     );
   }
+
+  void reset() {
+    if (countDown) {
+      setState(() => duration = countdownDuration);
+    } else {
+      setState(() => duration = const Duration());
+    }
+  }
+
+  void startTimer() {
+    timer = Timer.periodic(const Duration(seconds: 1), (_) => addTime());
+  }
+
+  void addTime() {
+    const addSeconds = 1;
+    setState(() {
+      final seconds = duration.inSeconds - addSeconds;
+      if (seconds < 0) {
+        timer1?.cancel();
+      } else {
+        duration = Duration(seconds: seconds);
+      }
+    });
+  }
+
+  Widget buildTime1() {
+    String twoDigits(int n) => n.toString().padLeft(2, '0');
+    final hours = twoDigits(duration.inHours);
+    final minutes = twoDigits(duration.inMinutes.remainder(60));
+    final seconds = twoDigits(duration.inSeconds.remainder(60));
+    return Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+      buildTimeCard(
+        time: hours,
+      ),
+      Text(
+        ':',
+        style: defaultBoldText.copyWith(
+          color: rec21Red,
+          fontSize: 20.sp,
+        ),
+      ),
+      buildTimeCard(
+        time: minutes,
+      ),
+      Text(
+        ':',
+        style: defaultBoldText.copyWith(
+          color: rec21Red,
+          fontSize: 20.sp,
+        ),
+      ),
+      buildTimeCard(
+        time: seconds,
+      ),
+    ]);
+  }
+
+  Widget buildTimeCard({
+    required String time,
+  }) =>
+      Text(
+        time,
+        style: defaultBoldText.copyWith(
+          color: rec21Red,
+          fontSize: 20.sp,
+        ),
+      );
 }
 
 class Answer extends StatefulWidget {

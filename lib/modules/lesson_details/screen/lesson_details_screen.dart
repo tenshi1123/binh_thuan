@@ -87,7 +87,7 @@ class _LessonDetailsScreenState extends State<LessonDetailsScreen> {
                   ),
                   RichText(
                     text: TextSpan(
-                      text: '  Chi tiết buổi học ',
+                      text: 'Chi tiết buổi học ',
                       style: defaultBoldText.copyWith(fontSize: 14.sp),
                       recognizer: TapGestureRecognizer()
                         ..onTap = () => Navigator.of(context).pop(),
@@ -419,7 +419,9 @@ class MissionItem extends StatelessWidget {
             onTap: () {
               Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (context) => const TestScreen(),
+                  builder: (context) => TestScreen(
+                    model: listExcercise[i],
+                  ),
                 ),
               );
             },
