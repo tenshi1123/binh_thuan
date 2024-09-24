@@ -219,7 +219,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               thickness: 1,
                             ),
                           ),
-                          InkWell(
+                          GestureDetector(
                             onTap: () async {
                               List<ExcerciseModel> listExercises =
                                   await ExcerciseRepo().getListEcercise();
@@ -243,15 +243,17 @@ class _HomeScreenState extends State<HomeScreen> {
                                   Text(
                                     'Bài tập chưa làm',
                                     style: defaultBoldText.copyWith(
-                                        fontWeight: FontWeight.w200,
-                                        fontSize: 12.sp,
-                                        color: color666),
+                                      fontWeight: FontWeight.w200,
+                                      fontSize: 12.sp,
+                                      color: color666,
+                                    ),
                                   ),
                                   Text(
                                     '${widget.info.unfinished} bài',
                                     style: defaultBoldText.copyWith(
-                                        fontWeight: FontWeight.w200,
-                                        color: keyBlack),
+                                      fontWeight: FontWeight.w200,
+                                      color: keyBlack,
+                                    ),
                                   ),
                                 ],
                               ),

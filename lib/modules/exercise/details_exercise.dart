@@ -179,6 +179,17 @@ class _DetailsExerciseState extends State<DetailsExercise> {
   }
 
   void selectImages() async {
+    // final returnedImage = await ImagePicker().pickMultiImage();
+    // photos = List<File>.from(
+    //   (returnedImage).map(
+    //     (e) => File(e.path),
+    //   ),
+    // );
+    // //File(returnedImage!.path);
+    // if (photos.isNotEmpty) {
+    //   ChatRepo().sendImageMessage(widget.groupId, photos);
+    // }
+    // setState(() {});
     final List<XFile> selectedImages = await imagePicker.pickMultiImage();
     if (selectedImages.isNotEmpty) {
       imageFileList!.addAll(selectedImages);

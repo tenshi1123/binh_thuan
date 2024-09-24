@@ -347,7 +347,8 @@ class ExerciseItem extends StatelessWidget {
     return GestureDetector(
       onTap: () async {
         if (model.type == "1") {
-          List<QuizModel> listQuiz = await ExcerciseRepo().getListQuestion('1');
+          List<QuizModel> listQuiz =
+              await ExcerciseRepo().getListQuestion(model.id);
           AppRouter.toPage(
             context,
             AppPages.TestDetailPage,

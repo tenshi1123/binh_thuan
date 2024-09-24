@@ -70,7 +70,7 @@ class TestScreen extends StatelessWidget {
               height: 16.h,
             ),
             _InfoTest(
-              isComplete: true,
+              isComplete: model.checkId != '',
               model: model,
             ),
             SizedBox(
@@ -144,7 +144,9 @@ class _InfoTest extends StatelessWidget {
       child: GestureDetector(
         onTap: () async {
           //comment qua dot review apple
-          List<QuizModel> listQuiz = await ExcerciseRepo().getListQuestion('1');
+          List<QuizModel> listQuiz = await ExcerciseRepo().getListQuestion(
+            model.id,
+          );
           AppRouter.toPage(
             context,
             AppPages.TestDetailPage,

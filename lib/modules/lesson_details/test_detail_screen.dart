@@ -247,6 +247,17 @@ class _TestDetailScreenState extends State<TestDetailScreen> {
                                                 //         .split(",")[answer * 2],
                                                 //     style: defaultText16,
                                                 //   ),
+                                                // Text(
+                                                //     _listQuiz[index]
+                                                //         .questions
+                                                //         .trim()
+                                                //         .split(",")[answer * 2]
+                                                //         .replaceAll(
+                                                //             RegExp(
+                                                //                 r'"|text|{|:|\['),
+                                                //             ''),
+                                                //     style: defaultText16,
+                                                //   ),
                                                 HtmlWidget(
                                                     _listQuiz[index]
                                                         .questions
@@ -256,7 +267,8 @@ class _TestDetailScreenState extends State<TestDetailScreen> {
                                                             RegExp(
                                                                 r'"|text|{|:|\['),
                                                             '')
-                                                        .dropLast(9),
+                                                    //.dropLast(9)
+                                                    ,
                                                     textStyle: defaultText16,
                                                   ),
                                       ),
