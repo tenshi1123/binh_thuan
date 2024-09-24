@@ -8,6 +8,7 @@ import 'package:binh_thuan/modules/exercise/exercise_screen.dart';
 import 'package:binh_thuan/modules/notification/local_notification.dart';
 import 'package:binh_thuan/modules/schedule/table_calender.dart';
 import 'package:binh_thuan/repo/repo/calender_repo.dart';
+import 'package:binh_thuan/repo/repo/excercise_repo.dart';
 import 'package:binh_thuan/router/app_pages.dart';
 import 'package:binh_thuan/router/app_router.dart';
 import 'package:flutter/foundation.dart';
@@ -18,6 +19,7 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import "package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart";
 import 'package:binh_thuan/main.dart' as main;
 
+import '../../exercise/exercise_model.dart';
 import '../../notification/noti_repo.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -173,7 +175,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     top: 226.h,
                     left: 20.w,
                     child: Container(
-                      padding: const EdgeInsets.all(6),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 5.w, vertical: 5.h),
                       width: 350.w,
                       height: 100.h,
                       decoration: BoxDecoration(
@@ -217,31 +220,43 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           ),
                           GestureDetector(
-                            onTap: () {
+                            onTap: () async {
+                              List<ExcerciseModel> listExercises =
+                                  await ExcerciseRepo().getListEcercise();
                               pushWithoutNavBar(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          const ExerciseScreen()));
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => ExerciseScreen(
+                                    listExercises: listExercises,
+                                  ),
+                                ),
+                              );
                             },
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Bài tập chưa làm',
-                                  style: defaultBoldText.copyWith(
+                            child: SizedBox(
+                              height: 90.h,
+                              width: 110.w,
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Bài tập chưa làm',
+                                    style: defaultBoldText.copyWith(
                                       fontWeight: FontWeight.w200,
                                       fontSize: 12.sp,
-                                      color: color666),
-                                ),
-                                Text(
-                                  '${widget.info.unfinished} bài',
-                                  style: defaultBoldText.copyWith(
+                                      color: color666,
+                                    ),
+                                  ),
+                                  Text(
+                                    '${widget.info.unfinished} bài',
+                                    style: defaultBoldText.copyWith(
                                       fontWeight: FontWeight.w200,
-                                      color: keyBlack),
-                                ),
-                              ],
+                                      color: keyBlack,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                           const Padding(
@@ -304,11 +319,15 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   // Bài tập
                   InkWell(
-                    onTap: () {
+                    onTap: () async {
+                      List<ExcerciseModel> listExercises =
+                          await ExcerciseRepo().getListEcercise();
                       pushWithoutNavBar(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const ExerciseScreen()));
+                              builder: (context) => ExerciseScreen(
+                                    listExercises: listExercises,
+                                  )));
                     },
                     child: SvgPicture.asset(
                       'assets/icons/home_work.svg',

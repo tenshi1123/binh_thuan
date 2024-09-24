@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:binh_thuan/constants/colors.dart';
 import 'package:binh_thuan/constants/styles.dart';
 import 'package:binh_thuan/custom_widget/fullscreen_image.dart';
+import 'package:binh_thuan/modules/exercise/exercise_model.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -10,8 +11,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:image_picker/image_picker.dart';
 
 class DetailsExercise extends StatefulWidget {
-  const DetailsExercise({super.key});
-
+  const DetailsExercise({super.key, required this.model});
+  final ExcerciseModel model;
   @override
   State<DetailsExercise> createState() => _DetailsExerciseState();
 }
@@ -20,6 +21,14 @@ class _DetailsExerciseState extends State<DetailsExercise> {
   final ImagePicker imagePicker = ImagePicker();
   List<XFile>? imageFileList = [];
   ValueNotifier<bool> isSubmit = ValueNotifier(false);
+  late ExcerciseModel _model;
+  @override
+  void initState() {
+    // TODO: implement initState
+    _model = widget.model;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,7 +49,7 @@ class _DetailsExerciseState extends State<DetailsExercise> {
                   ),
                   RichText(
                     text: TextSpan(
-                      text: '<  Bài tập ',
+                      text: '<  Bài tập',
                       style: defaultBoldText.copyWith(
                         fontSize: 14.sp,
                         color: keyBlack,
@@ -57,7 +66,9 @@ class _DetailsExerciseState extends State<DetailsExercise> {
               SizedBox(
                 height: 16.h,
               ),
-              const InfoEssayExcercise(),
+              InfoEssayExcercise(
+                model: _model,
+              ),
               SizedBox(
                 height: 16.h,
               ),
@@ -168,6 +179,17 @@ class _DetailsExerciseState extends State<DetailsExercise> {
   }
 
   void selectImages() async {
+    // final returnedImage = await ImagePicker().pickMultiImage();
+    // photos = List<File>.from(
+    //   (returnedImage).map(
+    //     (e) => File(e.path),
+    //   ),
+    // );
+    // //File(returnedImage!.path);
+    // if (photos.isNotEmpty) {
+    //   ChatRepo().sendImageMessage(widget.groupId, photos);
+    // }
+    // setState(() {});
     final List<XFile> selectedImages = await imagePicker.pickMultiImage();
     if (selectedImages.isNotEmpty) {
       imageFileList!.addAll(selectedImages);
@@ -177,8 +199,8 @@ class _DetailsExerciseState extends State<DetailsExercise> {
 }
 
 class InfoEssayExcercise extends StatelessWidget {
-  const InfoEssayExcercise({super.key});
-
+  const InfoEssayExcercise({super.key, required this.model});
+  final ExcerciseModel model;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -262,7 +284,7 @@ class InfoEssayExcercise extends StatelessWidget {
                 SizedBox(
                   width: 253.w,
                   child: Text(
-                    'Tiết 8:  ',
+                    model.name,
                     style: defaultBoldText.copyWith(fontSize: 20),
                     overflow: TextOverflow.ellipsis,
                     maxLines: 2,
@@ -276,21 +298,21 @@ class InfoEssayExcercise extends StatelessWidget {
                     color: Colors.grey,
                   ),
                 ),
-                Text(
-                  'Mô tả',
-                  style: defaultBoldText.copyWith(fontSize: 20),
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 2,
-                ),
-                SizedBox(
-                  width: 320.w,
-                  child: Text(
-                    'Bất đẳng thức Cosi là một trong những kiến thức toán học phổ biến, được sử dụng để giải nhiều dạng toán về phương trình và bất phương trình khác nhau cũng như tìm giá trị lớn nhất và giá trị nhỏ nhất của biểu thức. Trong bài viết này,',
-                    style: defaultText14,
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 3,
-                  ),
-                ),
+                // Text(
+                //   'Mô tả',
+                //   style: defaultBoldText.copyWith(fontSize: 20),
+                //   overflow: TextOverflow.ellipsis,
+                //   maxLines: 2,
+                // ),
+                // SizedBox(
+                //   width: 320.w,
+                //   child: Text(
+                //     'Bất đẳng thức Cosi là một trong những kiến thức toán học phổ biến, được sử dụng để giải nhiều dạng toán về phương trình và bất phương trình khác nhau cũng như tìm giá trị lớn nhất và giá trị nhỏ nhất của biểu thức. Trong bài viết này,',
+                //     style: defaultText14,
+                //     overflow: TextOverflow.ellipsis,
+                //     maxLines: 3,
+                //   ),
+                // ),
                 SizedBox(
                   height: 20.h,
                 ),
@@ -311,7 +333,7 @@ class InfoEssayExcercise extends StatelessWidget {
                           return FullScreenPage(
                             dark: true,
                             child: Image.network(
-                              'https://kenh14cdn.com/thumb_w/660/203336854389633024/2024/6/27/edit-anh-1-1719479517726866502127.jpeg',
+                              model.urlFile,
                               width: 100.w,
                               height: 90.h,
                             ),
@@ -321,9 +343,10 @@ class InfoEssayExcercise extends StatelessWidget {
                     );
                   },
                   child: Image.network(
-                    'https://kenh14cdn.com/thumb_w/660/203336854389633024/2024/6/27/edit-anh-1-1719479517726866502127.jpeg',
-                    width: 100.w,
-                    height: 90.h,
+                    model.urlFile,
+                    width: 300.w,
+                    height: 250.h,
+                    fit: BoxFit.cover,
                   ),
                 ),
               ],

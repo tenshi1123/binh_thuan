@@ -1,16 +1,18 @@
 import 'package:binh_thuan/constants/colors.dart';
 import 'package:binh_thuan/constants/styles.dart';
+import 'package:binh_thuan/repo/repo/excercise_repo.dart';
 import 'package:binh_thuan/router/app_pages.dart';
 import 'package:binh_thuan/router/app_router.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
-class TestScreen extends StatelessWidget {
-  const TestScreen({super.key});
+import '../exercise/exercise_model.dart';
 
+class TestScreen extends StatelessWidget {
+  const TestScreen({super.key, required this.model});
+  final ExcerciseModel model;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,35 +25,54 @@ class TestScreen extends StatelessWidget {
             ),
             Row(
               children: [
-                SizedBox(
-                  width: 6.w,
+                IconButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  icon: const Icon(
+                    Icons.arrow_back_ios_new,
+                    color: Colors.black,
+                  ),
                 ),
                 RichText(
                   text: TextSpan(
-                      text: '<  Chi tiết buổi học ',
-                      style: defaultBoldText.copyWith(
-                        fontSize: 14.sp,
-                        color: keyBlack.withOpacity(0.5),
-                      ),
-                      recognizer: TapGestureRecognizer()
-                        ..onTap = () => Navigator.of(context).pop(),
-                      children: [
-                        TextSpan(
-                          text: ' <  Kiểm tra',
-                          style: defaultBoldText.copyWith(fontSize: 14.sp),
-                        )
-                      ]),
+                    text: 'Bài tập',
+                    style: defaultBoldText.copyWith(fontSize: 14.sp),
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = () => Navigator.of(context).pop(),
+                  ),
                 ),
                 SizedBox(
-                  width: 120.w,
+                  width: 10.w,
                 ),
-                SvgPicture.asset('assets/icons/three_dots_icon.svg'),
+
+                // RichText(
+                //   text: TextSpan(
+                //       text: '<  Chi tiết buổi học ',
+                //       style: defaultBoldText.copyWith(
+                //         fontSize: 14.sp,
+                //         color: keyBlack.withOpacity(0.5),
+                //       ),
+                //       recognizer: TapGestureRecognizer()
+                //         ..onTap = () => Navigator.of(context).pop(),
+                //       children: [
+                //         TextSpan(
+                //           text: ' <  Kiểm tra',
+                //           style: defaultBoldText.copyWith(fontSize: 14.sp),
+                //         )
+                //       ]),
+                // ),
+
+                //  SvgPicture.asset('assets/icons/three_dots_icon.svg'),
               ],
             ),
             SizedBox(
               height: 16.h,
             ),
-            const _InfoTest(isComplete: true),
+            _InfoTest(
+              isComplete: model.checkId != '',
+              model: model,
+            ),
             SizedBox(
               height: 16.h,
             ),
@@ -59,7 +80,37 @@ class TestScreen extends StatelessWidget {
               'Trả kết quả',
               style: defaultBoldText.copyWith(fontSize: 20.sp),
             ),
-            _resultTest(),
+            //_resultTest(),
+            SizedBox(
+              height: 16.h,
+            ),
+            Container(
+              width: 350.w,
+              height: 51.h,
+              decoration: BoxDecoration(
+                color: const Color(0xffDEE4ED),
+                borderRadius: BorderRadius.all(Radius.circular(10.r)),
+              ),
+              child: Row(children: [
+                SizedBox(
+                  width: 20.w,
+                ),
+                Text(
+                  'Xem chi tiết bài làm',
+                  style: defaultBoldText,
+                ),
+                const Spacer(),
+                Icon(
+                  Icons.keyboard_arrow_right,
+                  color: keyBlack,
+                  size: 30.dm,
+                  semanticLabel: 'Text to announce in accessibility modes',
+                ),
+                SizedBox(
+                  width: 20.w,
+                ),
+              ]),
+            )
           ],
         ),
       ),
@@ -68,13 +119,14 @@ class TestScreen extends StatelessWidget {
 }
 
 class _InfoTest extends StatelessWidget {
-  const _InfoTest({super.key, required this.isComplete});
+  const _InfoTest({super.key, required this.isComplete, required this.model});
   final bool isComplete;
+  final ExcerciseModel model;
   @override
   Widget build(BuildContext context) {
     return Container(
       width: 350.w,
-      height: 300.h,
+      height: 200.h,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.all(
@@ -90,13 +142,16 @@ class _InfoTest extends StatelessWidget {
         ],
       ),
       child: GestureDetector(
-        onTap: () {
+        onTap: () async {
           //comment qua dot review apple
-          // AppRouter.toPage(
-          //   context,
-          //   AppPages.TestDetailPage,
-          //   arguments: {},
-          // );
+          List<QuizModel> listQuiz = await ExcerciseRepo().getListQuestion(
+            model.id,
+          );
+          AppRouter.toPage(
+            context,
+            AppPages.TestDetailPage,
+            arguments: {'listQuiz': listQuiz, 'model': model},
+          );
         },
         child: Stack(
           children: [
@@ -119,7 +174,7 @@ class _InfoTest extends StatelessWidget {
                     ]),
                 child: Center(
                   child: Text(
-                    '8.5',
+                    model.finalMark,
                     style: defaultBoldText.copyWith(
                       color: rec27Teal,
                       fontSize: 20.sp,
@@ -134,63 +189,63 @@ class _InfoTest extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    children: [
-                      Container(
-                        width: 90.w,
-                        height: 23.h,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(16.r)),
-                          color: kPrimaryColor,
-                        ),
-                        child: Center(
-                          child: Text(
-                            'Trắc nghiệm',
-                            style: defaultBoldText.copyWith(
-                              color: Colors.white,
-                              fontSize: 12.w,
-                            ),
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 6.w,
-                      ),
-                      Container(
-                        width: 81.w,
-                        height: 21.h,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(16.r)),
-                          color: kPrimaryColor,
-                        ),
-                        child: Center(
-                          child: Text(
-                            '15 phút',
-                            style: defaultBoldText.copyWith(
-                              color: Colors.white,
-                              fontSize: 12.w,
-                            ),
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
+                  // Row(
+                  //   children: [
+                  //     Container(
+                  //       width: 90.w,
+                  //       height: 23.h,
+                  //       decoration: BoxDecoration(
+                  //         borderRadius: BorderRadius.all(Radius.circular(16.r)),
+                  //         color: kPrimaryColor,
+                  //       ),
+                  //       child: Center(
+                  //         child: Text(
+                  //           'Trắc nghiệm',
+                  //           style: defaultBoldText.copyWith(
+                  //             color: Colors.white,
+                  //             fontSize: 12.w,
+                  //           ),
+                  //           textAlign: TextAlign.center,
+                  //         ),
+                  //       ),
+                  //     ),
+                  //     SizedBox(
+                  //       width: 6.w,
+                  //     ),
+                  //     Container(
+                  //       width: 81.w,
+                  //       height: 21.h,
+                  //       decoration: BoxDecoration(
+                  //         borderRadius: BorderRadius.all(Radius.circular(16.r)),
+                  //         color: kPrimaryColor,
+                  //       ),
+                  //       child: Center(
+                  //         child: Text(
+                  //           '15 phút',
+                  //           style: defaultBoldText.copyWith(
+                  //             color: Colors.white,
+                  //             fontSize: 12.w,
+                  //           ),
+                  //           textAlign: TextAlign.center,
+                  //         ),
+                  //       ),
+                  //     )
+                  //   ],
+                  // ),
                   SizedBox(
                     height: 10.h,
                   ),
                   SizedBox(
                     width: 253.w,
                     child: Text(
-                      'Tiết 8: dolor sit amet  ',
+                      model.name,
                       style: defaultBoldText.copyWith(fontSize: 20),
                       overflow: TextOverflow.ellipsis,
                       maxLines: 2,
                     ),
                   ),
                   Text(
-                    'Thời lượng: 15 phút',
+                    'Thời lượng: ${model.totalTime} phút',
                     style: defaultText14,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 2,
@@ -204,20 +259,20 @@ class _InfoTest extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    'Mô tả',
+                    model.typeExcercise,
                     style: defaultBoldText.copyWith(fontSize: 20),
                     overflow: TextOverflow.ellipsis,
                     maxLines: 2,
                   ),
-                  SizedBox(
-                    width: 320.w,
-                    child: Text(
-                      'dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ',
-                      style: defaultText14,
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 3,
-                    ),
-                  ),
+                  // SizedBox(
+                  //   width: 320.w,
+                  //   child: Text(
+                  //     'dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ',
+                  //     style: defaultText14,
+                  //     overflow: TextOverflow.ellipsis,
+                  //     maxLines: 3,
+                  //   ),
+                  // ),
                   SizedBox(
                     height: 20.h,
                   ),
@@ -280,21 +335,25 @@ Widget _resultTest() {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(
-                height: 30.h,
+                height: 60.h,
               ),
+              // Text(
+              //   "35      ",
+              //   style: defaultBoldText.copyWith(fontSize: 30.sp),
+              // ),
+              // Divider(
+              //   thickness: 2,
+              //   color: keyBlack,
+              //   indent: 30.w,
+              //   endIndent: 30.w,
+              // ),
+              // Text(
+              //   "      40",
+              //   style: defaultBoldText.copyWith(fontSize: 20.sp),
+              // ),
               Text(
-                "35      ",
-                style: defaultBoldText.copyWith(fontSize: 30.sp),
-              ),
-              Divider(
-                thickness: 2,
-                color: keyBlack,
-                indent: 30.w,
-                endIndent: 30.w,
-              ),
-              Text(
-                "      40",
-                style: defaultBoldText.copyWith(fontSize: 20.sp),
+                '85%',
+                style: defaultBoldText.copyWith(fontSize: 25.sp),
               ),
             ],
           ),

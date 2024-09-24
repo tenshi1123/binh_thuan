@@ -245,7 +245,7 @@ class _ChatScreenState extends State<ChatScreen> {
                       child: TextField(
                         controller: messageController,
                         decoration: const InputDecoration(
-                            hintText: "Write message...",
+                            hintText: "Nhập tin nhắn...",
                             hintStyle: TextStyle(color: Colors.black54),
                             border: InputBorder.none),
                         style: defaultText14,

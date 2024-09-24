@@ -5,11 +5,13 @@ class DetailSubjectModels {
   final List<LichHocModels> lichHoc;
   final List<LessonModels> lesson;
   final List<DocumentModel> document;
+  final List<SubjectChapterModels> subjectsChapters;
   DetailSubjectModels({
     required this.info,
     required this.lichHoc,
     required this.lesson,
     required this.document,
+    required this.subjectsChapters,
   });
   factory DetailSubjectModels.fromJson(Map<String, dynamic> json) {
     return DetailSubjectModels(
@@ -27,6 +29,11 @@ class DetailSubjectModels {
       document: List<DocumentModel>.from(
         (json['document'] ?? []).map(
           (e) => DocumentModel.fromJson(e),
+        ),
+      ),
+      subjectsChapters: List<SubjectChapterModels>.from(
+        (json['subjectChapter'] ?? []).map(
+          (e) => SubjectChapterModels.fromJson(e),
         ),
       ),
     );
@@ -50,6 +57,34 @@ class InfoModels {
       subjectName: json['subject_name'] ?? 'không xác định',
       classSubjectId: json['class_subject_id'] ?? 'không xác định',
       subjectId: json['subject_id'] ?? 'không xác định',
+    );
+  }
+}
+
+class SubjectChapterModels {
+  final String id;
+  final String name;
+  final String stt;
+  final String totalLesson;
+  final List<LessonModels> lesson;
+  SubjectChapterModels({
+    required this.id,
+    required this.name,
+    required this.stt,
+    required this.totalLesson,
+    required this.lesson,
+  });
+  factory SubjectChapterModels.fromJson(Map<String, dynamic> json) {
+    return SubjectChapterModels(
+      id: json['id'] ?? '',
+      name: json['name'] ?? '',
+      stt: json['stt'] ?? '',
+      totalLesson: json['total_lesson'] ?? '',
+      lesson: List<LessonModels>.from(
+        (json['lesson'] ?? []).map(
+          (model) => LessonModels.fromJson(model),
+        ),
+      ),
     );
   }
 }
@@ -102,7 +137,7 @@ class LessonModels {
   final String streamingUrl;
   final String content;
   final String type;
-
+  final List<DocumentModel> document;
   LessonModels({
     required this.id,
     required this.name,
@@ -110,6 +145,7 @@ class LessonModels {
     required this.streamingUrl,
     required this.content,
     required this.type,
+    required this.document,
   });
   factory LessonModels.fromJson(Map<String, dynamic> json) {
     return LessonModels(
@@ -119,27 +155,11 @@ class LessonModels {
       content: json['content'] ?? 'không xác định',
       type: json['type'] ?? '',
       time: json['time'] ?? '',
-    );
-  }
-}
-
-class DocumentModels {
-  final String id;
-  final String name;
-  final String urlFile;
-  final String fileType;
-  DocumentModels({
-    required this.id,
-    required this.name,
-    required this.urlFile,
-    required this.fileType,
-  });
-  factory DocumentModels.fromJson(Map<String, dynamic> json) {
-    return DocumentModels(
-      id: json['id'] ?? '',
-      name: json['name'] ?? '',
-      urlFile: json['url_file'] ?? '',
-      fileType: json['file_type'],
+      document: List<DocumentModel>.from(
+        (json['lesson'] ?? []).map(
+          (model) => DocumentModel.fromJson(model),
+        ),
+      ),
     );
   }
 }

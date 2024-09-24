@@ -1,3 +1,5 @@
+import '../modules/exercise/exercise_model.dart';
+
 class InfoModel {
   final String name;
   final String teacherName;
@@ -52,12 +54,14 @@ class DocumentModel {
   final String fileName;
   final String urlFile;
   final String fileType;
+  final String type;
   DocumentModel({
     required this.id,
     required this.name,
     required this.fileName,
     required this.urlFile,
     required this.fileType,
+    required this.type,
   });
   factory DocumentModel.fromJson(Map<String, dynamic> json) {
     return DocumentModel(
@@ -66,6 +70,7 @@ class DocumentModel {
       fileName: json['file_name'] ?? 'không tồn tại',
       urlFile: json['url_file'] ?? 'không tồn tại',
       fileType: json['file_type'] ?? 'không tồn tại',
+      type: json['type'] ?? '',
     );
   }
 }
@@ -74,11 +79,13 @@ class ChiTietBuoiHocModel {
   final String libraryId;
   final InfoModel info;
   final List<DocumentModel> document;
+  final List<ExcerciseModel> listExcercise;
 
   ChiTietBuoiHocModel({
     required this.libraryId,
     required this.info,
     required this.document,
+    required this.listExcercise,
   });
   factory ChiTietBuoiHocModel.fromJson(Map<String, dynamic> json) {
     return ChiTietBuoiHocModel(
@@ -88,6 +95,13 @@ class ChiTietBuoiHocModel {
           ? List<DocumentModel>.from(
               (json['document'] ?? []).map(
                 (model) => DocumentModel.fromJson(model),
+              ),
+            )
+          : [],
+      listExcercise: (json['bai_tap'] != [])
+          ? List<ExcerciseModel>.from(
+              (json['bai_tap'] ?? []).map(
+                (model) => ExcerciseModel.fromJson(model),
               ),
             )
           : [],

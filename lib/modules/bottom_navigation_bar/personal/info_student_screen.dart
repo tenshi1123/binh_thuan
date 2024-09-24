@@ -5,7 +5,10 @@ import 'package:binh_thuan/models/login_model.dart';
 import 'package:binh_thuan/modules/auth/forgor_password/change_password_screen.dart';
 import 'package:binh_thuan/modules/auth/login/login_screen.dart';
 import 'package:binh_thuan/modules/bottom_navigation_bar/home/custom_widget_home.dart';
+import 'package:binh_thuan/modules/exercise/exercise_model.dart';
+import 'package:binh_thuan/modules/exercise/exercise_screen.dart';
 import 'package:binh_thuan/modules/notification/noti_repo.dart';
+import 'package:binh_thuan/repo/repo/excercise_repo.dart';
 import 'package:binh_thuan/router/app_pages.dart';
 import 'package:binh_thuan/router/app_router.dart';
 import 'package:binh_thuan/utils/onesignal.dart';
@@ -163,24 +166,38 @@ class _InfoScreenState extends State<InfoScreen> {
                             thickness: 1,
                           ),
                         ),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Bài tập chưa làm',
-                              style: defaultText12.copyWith(
-                                fontWeight: FontWeight.w700,
-                                color: Colors.white,
+                        GestureDetector(
+                          onTap: () async {
+                            List<ExcerciseModel> listExercises =
+                                await ExcerciseRepo().getListEcercise();
+                            pushWithoutNavBar(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ExerciseScreen(
+                                  listExercises: listExercises,
+                                ),
                               ),
-                            ),
-                            Text(
-                              '${widget.info.unfinished} bài tập',
-                              style: defaultBoldText.copyWith(
-                                color: Colors.white,
+                            );
+                          },
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Bài tập chưa làm',
+                                style: defaultText12.copyWith(
+                                  fontWeight: FontWeight.w700,
+                                  color: Colors.white,
+                                ),
                               ),
-                            ),
-                          ],
+                              Text(
+                                '${widget.info.unfinished} bài tập',
+                                style: defaultBoldText.copyWith(
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                         const Padding(
                           padding: EdgeInsets.all(8.0),
@@ -389,15 +406,46 @@ class _InfoScreenState extends State<InfoScreen> {
             // ),
             GestureDetector(
               onTap: () {
-                deleteUserTag();
-                SpUtil.remove(ConstString.token);
-                Navigator.of(context, rootNavigator: true).pushAndRemoveUntil(
-                  MaterialPageRoute(
-                    builder: (BuildContext context) {
-                      return const LoginScreen();
-                    },
-                  ),
-                  (_) => false,
+                showDialog<void>(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: Text(
+                        'Bạn có chắc chắn muốn đăng xuất không ?',
+                        style: defaultText16,
+                      ),
+                      actions: <Widget>[
+                        TextButton(
+                          style: TextButton.styleFrom(
+                            textStyle: Theme.of(context).textTheme.labelLarge,
+                          ),
+                          child: const Text('Hủy'),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                        TextButton(
+                          style: TextButton.styleFrom(
+                            textStyle: Theme.of(context).textTheme.labelLarge,
+                          ),
+                          child: const Text('Đồng ý'),
+                          onPressed: () {
+                            deleteUserTag();
+                            SpUtil.remove(ConstString.token);
+                            Navigator.of(context, rootNavigator: true)
+                                .pushAndRemoveUntil(
+                              MaterialPageRoute(
+                                builder: (BuildContext context) {
+                                  return const LoginScreen();
+                                },
+                              ),
+                              (_) => false,
+                            );
+                          },
+                        ),
+                      ],
+                    );
+                  },
                 );
               },
               child: Column(

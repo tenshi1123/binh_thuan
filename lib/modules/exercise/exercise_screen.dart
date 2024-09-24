@@ -2,17 +2,32 @@ import 'dart:math';
 import 'package:binh_thuan/constants/colors.dart';
 import 'package:binh_thuan/constants/styles.dart';
 import 'package:binh_thuan/modules/exercise/details_exercise.dart';
+import 'package:binh_thuan/repo/repo/excercise_repo.dart';
+import 'package:binh_thuan/router/app_pages.dart';
+import 'package:binh_thuan/router/app_router.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:intl/intl.dart';
+
+import 'exercise_model.dart';
 
 class ExerciseScreen extends StatelessWidget {
-  const ExerciseScreen({super.key});
-
+  const ExerciseScreen({super.key, required this.listExercises});
+  final List<ExcerciseModel> listExercises;
   @override
   Widget build(BuildContext context) {
     final List<String> tabs = <String>['Toàn bộ', 'Chưa làm', 'Hoàn thành'];
-
+    List<ExcerciseModel> unfinshed =
+        listExercises.where((o) => o.checkId == '').toList();
+    List<ExcerciseModel> finshed =
+        listExercises.where((o) => o.checkId != '').toList();
+    final Map<String, List<ExcerciseModel>> mapExcercise = {
+      'Toàn bộ': listExercises,
+      'Chưa làm': unfinshed,
+      'Hoàn thành': finshed,
+    };
     return DefaultTabController(
       length: tabs.length,
       child: Scaffold(
@@ -50,36 +65,35 @@ class ExerciseScreen extends StatelessWidget {
                             ),
                           ),
                         ),
-                        Positioned(
-                          top: 150.h,
-                          child: Text(
-                            '\t    Sắp đến hạn',
-                            style: defaultText16.copyWith(
-                                fontWeight: FontWeight.bold,
-                                fontFamily: 'Nunito-Bold'),
-                          ),
-                        ),
-                        Positioned(
-                          top: 170.h,
-                          child: SizedBox(
-                            width: 380.w,
-                            height: 100.h,
-                            child: ListView.builder(
-                                scrollDirection: Axis.horizontal,
-                                padding: const EdgeInsets.all(8),
-                                itemCount: 4,
-                                itemBuilder: (BuildContext context, int index) {
-                                  //return const CommingLesson();
-
-                                  return const IsComingItem(
-                                    entries: ['Tự luận', 'Về nhà'],
-                                    color: Color(0xff85DDE0),
-                                    title: 'Bài 3: dolor sit amet',
-                                    time: 'Còn: 1 giờ',
-                                  );
-                                }),
-                          ),
-                        ),
+                        // Positioned(
+                        //   top: 150.h,
+                        //   child: Text(
+                        //     '\t    Sắp đến hạn',
+                        //     style: defaultText16.copyWith(
+                        //         fontWeight: FontWeight.bold,
+                        //         fontFamily: 'Nunito-Bold'),
+                        //   ),
+                        // ),
+                        // Positioned(
+                        //   top: 170.h,
+                        //   child: SizedBox(
+                        //     width: 380.w,
+                        //     height: 100.h,
+                        //     child: ListView.builder(
+                        //         scrollDirection: Axis.horizontal,
+                        //         padding: const EdgeInsets.all(8),
+                        //         itemCount: 4,
+                        //         itemBuilder: (BuildContext context, int index) {
+                        //           //return const CommingLesson();
+                        //           return const IsComingItem(
+                        //             entries: ['Tự luận', 'Về nhà'],
+                        //             color: Color(0xff85DDE0),
+                        //             title: 'Bài 3: dolor sit amet',
+                        //             time: 'Còn: 1 giờ',
+                        //           );
+                        //         }),
+                        //   ),
+                        // ),
                         Positioned(
                           left: 10.w,
                           top: 80.h,
@@ -101,7 +115,7 @@ class ExerciseScreen extends StatelessWidget {
                   floating: true,
                   snap: false,
                   stretch: true,
-                  toolbarHeight: 270.h,
+                  toolbarHeight: 120.h,
                   forceElevated: innerBoxIsScrolled,
                   bottom: TabBar(
                     tabAlignment: TabAlignment.start,
@@ -144,14 +158,14 @@ class ExerciseScreen extends StatelessWidget {
                         SliverPadding(
                           padding: const EdgeInsets.all(8.0),
                           sliver: SliverFixedExtentList(
-                            itemExtent: 83.h,
+                            itemExtent: 88.h,
                             delegate: SliverChildBuilderDelegate(
                               (BuildContext context, int index) {
                                 return ExerciseItem(
-                                  title: name,
+                                  model: mapExcercise[name]![index],
                                 );
                               },
-                              childCount: 1,
+                              childCount: mapExcercise[name]?.length ?? 0,
                             ),
                           ),
                         ),
@@ -184,11 +198,11 @@ class IsComingItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (context) => const DetailsExercise(),
-          ),
-        );
+        // Navigator.of(context).push(
+        //   MaterialPageRoute(
+        //     builder: (context) => const DetailsExercise(),
+        //   ),
+        // );
       },
       child: Container(
         margin: EdgeInsets.only(right: 10.h),
@@ -326,23 +340,37 @@ List<Widget> _tabScroll() => [
 final _random = Random();
 
 class ExerciseItem extends StatelessWidget {
-  const ExerciseItem({super.key, required this.title});
-  final String title;
+  const ExerciseItem({super.key, required this.model});
+  final ExcerciseModel model;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (context) => const DetailsExercise(),
-          ),
-        );
+      onTap: () async {
+        if (model.type == "1") {
+          List<QuizModel> listQuiz =
+              await ExcerciseRepo().getListQuestion(model.id);
+          AppRouter.toPage(
+            context,
+            AppPages.TestDetailPage,
+            arguments: {
+              'listQuiz': listQuiz,
+              'model': model,
+            },
+          );
+        } else {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => DetailsExercise(
+                model: model,
+              ),
+            ),
+          );
+        }
       },
       child: Container(
         width: 350.w,
-        height: 83.h,
         padding: EdgeInsets.symmetric(horizontal: 10.w),
-        margin: EdgeInsets.symmetric(vertical: 10.h, horizontal: 6.w),
+        margin: EdgeInsets.symmetric(vertical: 8.h, horizontal: 6.w),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(6.r)),
             boxShadow: [
@@ -363,8 +391,13 @@ class ExerciseItem extends StatelessWidget {
               decoration: BoxDecoration(
                   color: listColor[_random.nextInt(listColor.length)],
                   shape: BoxShape.circle),
-              child: SvgPicture.asset('assets/icons/home_work_icon.svg',
-                  width: 18.w, height: 18.h, fit: BoxFit.fill),
+              child: (model.finalMark == '')
+                  ? SvgPicture.asset('assets/icons/home_work_icon.svg',
+                      width: 18.w, height: 18.h, fit: BoxFit.fill)
+                  : Text(
+                      model.finalMark,
+                      style: defaultText14,
+                    ),
             ),
             SizedBox(width: 8.w),
             Column(
@@ -373,12 +406,34 @@ class ExerciseItem extends StatelessWidget {
                 SizedBox(
                   height: 6.h,
                 ),
-                Text(
-                  title,
-                  style: defaultBoldText,
+                SizedBox(
+                  width: 200.w,
+                  child: Text(
+                    model.name,
+                    style: defaultBoldText,
+                  ),
                 ),
                 Text(
-                  'Hạn nộp: 20 tháng 4, 2024',
+                  DateFormat("yyyy").format(model.timeDeadline) == '0001'
+                      ? 'Không có thời hạn'
+                      : DateFormat("dd-MM-yyyy HH:mm")
+                          .format(model.timeDeadline),
+                  style: defaultText14,
+                )
+              ],
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: 6.h,
+                ),
+                Text(
+                  model.typeExcercise,
+                  style: defaultText14,
+                ),
+                Text(
+                  '${model.totalTime}phút',
                   style: defaultText14,
                 )
               ],

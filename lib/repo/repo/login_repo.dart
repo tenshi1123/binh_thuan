@@ -62,7 +62,7 @@ class LoginRepo {
           'password': SpUtil.getString(ConstString.md5Pass),
         }));
     SpUtil.putString(ConstString.token, response.data["token"]);
-    sendUserTag(response.data["school_id"]);
+    //sendUserTag(response.data["school_id"]);
     return response.data["token"];
   }
 

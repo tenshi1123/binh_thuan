@@ -11,6 +11,7 @@ import 'package:binh_thuan/modules/notification/notification_screen.dart';
 import 'package:binh_thuan/modules/tuition/tuition_screen.dart';
 
 import '../modules/auth/login/login_screen.dart';
+import '../modules/exercise/exercise_model.dart';
 import 'page_config.dart';
 
 enum AppPages {
@@ -73,7 +74,13 @@ extension AppPagesExtension on AppPages {
       case AppPages.TuitionPage:
         return PageConfig()..pageBuilder = () => const TuitionScreen();
       case AppPages.TestDetailPage:
-        return PageConfig()..pageBuilder = () => const TestDetailScreen();
+        List<QuizModel> listQuiz = arguments?['listQuiz'];
+        ExcerciseModel model = arguments?['model'];
+        return PageConfig()
+          ..pageBuilder = () => TestDetailScreen(
+                listQuiz: listQuiz,
+                model: model,
+              );
 
       default:
         throw StateError(

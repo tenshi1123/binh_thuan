@@ -90,9 +90,10 @@ class TabExercise extends StatelessWidget {
                         itemExtent: 83.h,
                         delegate: SliverChildBuilderDelegate(
                           (BuildContext context, int index) {
-                            return ExerciseItem(
-                              title: name,
-                            );
+                            return const SizedBox();
+                            // ExerciseItem(
+                            //   title: name,
+                            // );
                           },
                           childCount: 1,
                         ),

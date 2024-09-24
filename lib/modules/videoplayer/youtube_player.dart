@@ -5,7 +5,7 @@ import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class YoutubePlayerDemoApp extends StatefulWidget {
   const YoutubePlayerDemoApp({super.key, this.videoValue});
-  final List<String>? videoValue;
+  final String? videoValue;
   @override
   State<YoutubePlayerDemoApp> createState() => _YoutubePlayerDemoAppState();
 }
@@ -20,7 +20,6 @@ class _YoutubePlayerDemoAppState extends State<YoutubePlayerDemoApp> {
   late TextEditingController _seekToController;
 
   bool _isPlayerReady = false;
-  late String _videoid2;
   final List<String> _ids = [
     videoId,
     'gQDByCdjUXw',
@@ -37,7 +36,9 @@ class _YoutubePlayerDemoAppState extends State<YoutubePlayerDemoApp> {
   void initState() {
     super.initState();
     _controller = YoutubePlayerController(
-      initialVideoId: _ids.first,
+      initialVideoId: YoutubePlayer.convertUrlToId(widget.videoValue ??
+              "https://www.youtube.com/embed/3xcGh4KHJQc?si=a-0sDMPKAKCdPttl") ??
+          '',
       flags: const YoutubePlayerFlags(
         mute: false,
         autoPlay: true,
@@ -50,7 +51,6 @@ class _YoutubePlayerDemoAppState extends State<YoutubePlayerDemoApp> {
     )..addListener(listener);
     _idController = TextEditingController();
     _seekToController = TextEditingController();
-    _videoid2 = YoutubePlayer.convertUrlToId(widget.videoValue?[1] ?? '') ?? '';
   }
 
   void listener() {
