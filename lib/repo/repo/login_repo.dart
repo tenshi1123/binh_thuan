@@ -31,7 +31,7 @@ class LoginRepo {
       SpUtil.putString('school_id', response.data["school_id"]);
       SpUtil.putString(ConstString.idStudent, code);
       SpUtil.putString(ConstString.md5Pass, password);
-      //sendUserTag(response.data["school_id"]);
+      sendUserTag(int.parse(response.data["school_id"].toString()));
     } on DioException {
       // in case of a code that is not success, you can get it here through object 'e'
       return false;
@@ -62,7 +62,7 @@ class LoginRepo {
           'password': SpUtil.getString(ConstString.md5Pass),
         }));
     SpUtil.putString(ConstString.token, response.data["token"]);
-    //sendUserTag(response.data["school_id"]);
+    sendUserTag(int.parse(response.data["school_id"].toString()));
     return response.data["token"];
   }
 
