@@ -684,10 +684,10 @@ packages:
     dependency: "direct main"
     description:
       name: onesignal_flutter
-      sha256: "912ba6bbaf6208509372ce2c172b3cc7c5a3d08fa95001d39b4fe15c3d7e0556"
+      sha256: "55c1324a8ac9195cfe89abce66e2de69e6138fc3688ca6e57aacdfbd7a6d49cc"
       url: "https://pub.dev"
     source: hosted
-    version: "5.2.1"
+    version: "5.2.5"
   otp_pin_field:
     dependency: "direct main"
     description:
