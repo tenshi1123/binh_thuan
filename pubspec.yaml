@@ -4,7 +4,7 @@ description: "Ứng dụng dành cho ph/hs Trường liên cấp Lê Quý Đôn"
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 1.0.6+2
+version: 1.0.7+2
 
 environment:
   sdk: '>=3.4.0 <4.0.0'
