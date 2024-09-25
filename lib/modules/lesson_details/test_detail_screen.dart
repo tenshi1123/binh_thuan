@@ -335,7 +335,7 @@ class _TestDetailScreenState extends State<TestDetailScreen> {
             GestureDetector(
               onTap: () async {
                 await ExcerciseRepo().submitTest(
-                  id: '',
+                  id: widget.model.id,
                   statTime: DateFormat('yyyy-MM-dd HH:mm').format(
                     DateTime.now(),
                   ),

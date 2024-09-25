@@ -92,7 +92,7 @@ class ChatRepo {
         'Bearer ${SpUtil.getString(ConstString.token)}';
     var formData = FormData.fromMap({
       'chat_id': int.parse(id),
-      'files': [
+      'files[]': [
         await MultipartFile.fromFile(photo[0].path,
             filename: photo[0].path.split('/').last),
       ]
