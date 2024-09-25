@@ -29,7 +29,8 @@ class _BottomNavBarState extends State<BottomNavBar> {
         print('NOTIFICATION CLICK LISTENER CALLED WITH EVENT: $event');
       });
     } else {
-      //do nothing :v
+      //do nothing :v tự báo chính mình
+      OneSignal.Notifications.addClickListener((event) {});
     }
 
     promptPolicyPrivacy(userId);

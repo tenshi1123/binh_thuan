@@ -4,6 +4,7 @@ import 'package:binh_thuan/constants/colors.dart';
 import 'package:binh_thuan/constants/styles.dart';
 import 'package:binh_thuan/custom_widget/fullscreen_image.dart';
 import 'package:binh_thuan/modules/exercise/exercise_model.dart';
+import 'package:binh_thuan/repo/repo/excercise_repo.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -191,8 +192,14 @@ class _DetailsExerciseState extends State<DetailsExercise> {
     // }
     // setState(() {});
     final List<XFile> selectedImages = await imagePicker.pickMultiImage();
+    var photos = List<File>.from(
+      (selectedImages).map(
+        (e) => File(e.path),
+      ),
+    );
     if (selectedImages.isNotEmpty) {
       imageFileList!.addAll(selectedImages);
+      ExcerciseRepo().submitEssay('', photos);
     }
     setState(() {});
   }
