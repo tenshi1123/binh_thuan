@@ -97,14 +97,14 @@ class ChatRepo {
             filename: photo[0].path.split('/').last),
       ]
     });
-    for (var file in photo) {
-      formData.files.addAll([
-        MapEntry(
-            "files",
-            await MultipartFile.fromFile(file.path,
-                filename: file.path.split('/').last)),
-      ]);
-    }
+    // for (var file in photo) {
+    //   formData.files.addAll([
+    //     MapEntry(
+    //         "files[]",
+    //         await MultipartFile.fromFile(file.path,
+    //             filename: file.path.split('/').last)),
+    //   ]);
+    // }
     await dio.post(ApiPath.sendImg, data: formData);
   }
 }

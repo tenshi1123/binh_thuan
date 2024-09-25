@@ -49,7 +49,7 @@ class _SubjectScreenState extends State<SubjectScreen>
                         image: const AssetImage(
                           'assets/images/appbar_background2.png',
                         ),
-                        fit: BoxFit.fill,
+                        fit: BoxFit.fitHeight,
                       ),
                     ),
                     Positioned(
@@ -103,7 +103,7 @@ class _SubjectScreenState extends State<SubjectScreen>
                 ),
                 automaticallyImplyLeading: false,
                 pinned: false,
-                toolbarHeight: 122.h,
+                toolbarHeight: 100.h,
                 forceElevated: innerBoxIsScrolled,
                 // bottom: TabBar(
                 //   tabs: tabs.map((String name) => Tab(text: name)).toList(),
