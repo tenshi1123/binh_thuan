@@ -22,7 +22,13 @@ class BottomNavBar extends StatefulWidget {
 
 class _BottomNavBarState extends State<BottomNavBar> {
   final PersistentTabController _controller = PersistentTabController();
-  Future<void> setupOneSignal(int userId) async {
+  @override
+  void initState() {
+    super.initState();
+    setupOneSignal();
+  }
+
+  Future<void> setupOneSignal() async {
     await initOneSignal();
     if (Platform.isAndroid) {
       OneSignal.Notifications.addClickListener((event) {
@@ -33,10 +39,10 @@ class _BottomNavBarState extends State<BottomNavBar> {
       OneSignal.Notifications.addClickListener((event) {});
     }
 
-    promptPolicyPrivacy(userId);
+    promptPolicyPrivacy();
   }
 
-  Future<void> promptPolicyPrivacy(int userId) async {
+  Future<void> promptPolicyPrivacy() async {
     if (Platform.isAndroid) {
       OneSignal.consentRequired(true);
       OneSignal.consentGiven(true);
