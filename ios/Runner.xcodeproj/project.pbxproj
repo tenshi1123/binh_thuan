@@ -51,14 +51,14 @@
 		};
 		DBE48FE02CA25F4200315856 /* Embed Foundation Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 8;
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
 				DBE48FDB2CA25F4200315856 /* OneSignalNotificationServiceExtention.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
-			runOnlyForDeploymentPostprocessing = 0;
+			runOnlyForDeploymentPostprocessing = 1;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
@@ -206,7 +206,6 @@
 				1345B9B21EFD9E3E4B329186 /* Pods-OneSignalNotificationServiceExtention.release.xcconfig */,
 				0900925289AEC8B35E955C02 /* Pods-OneSignalNotificationServiceExtention.profile.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -247,7 +246,6 @@
 			buildConfigurationList = 97C147051CF9000F007C117D /* Build configuration list for PBXNativeTarget "Runner" */;
 			buildPhases = (
 				612198FD33A33E1F2FF8B0DF /* [CP] Check Pods Manifest.lock */,
-				9740EEB61CF901F6004384FC /* Run Script */,
 				97C146EA1CF9000F007C117D /* Sources */,
 				97C146EB1CF9000F007C117D /* Frameworks */,
 				97C146EC1CF9000F007C117D /* Resources */,
@@ -256,6 +254,7 @@
 				DBE48FE02CA25F4200315856 /* Embed Foundation Extensions */,
 				6C6015A080CC445311B734D9 /* [CP] Embed Pods Frameworks */,
 				A07002B99CAEB92209EDB161 /* [CP] Copy Pods Resources */,
+				9740EEB61CF901F6004384FC /* Run Script */,
 			);
 			buildRules = (
 			);
