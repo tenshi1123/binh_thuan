@@ -228,7 +228,7 @@ class _TestDetailScreenState extends State<TestDetailScreen> {
                                         },
                                       ),
                                       SizedBox(
-                                        width: 304.w,
+                                        width: 280.w,
                                         child:
                                             //check type of answer
                                             _listQuiz[index].type == '4'
@@ -247,30 +247,30 @@ class _TestDetailScreenState extends State<TestDetailScreen> {
                                                 //         .split(",")[answer * 2],
                                                 //     style: defaultText16,
                                                 //   ),
-                                                // Text(
-                                                //     _listQuiz[index]
-                                                //         .questions
-                                                //         .trim()
-                                                //         .split(",")[answer * 2]
-                                                //         .replaceAll(
-                                                //             RegExp(
-                                                //                 r'"|text|{|:|\['),
-                                                //             ''),
-                                                //     style: defaultText16,
-                                                //   ),
-                                                HtmlWidget(
-                                                    _listQuiz[index]
+                                                Text(
+                                                    (_listQuiz[index]
                                                         .questions
                                                         .trim()
                                                         .split(",")[answer * 2]
                                                         .replaceAll(
                                                             RegExp(
                                                                 r'"|text|{|:|\['),
-                                                            '')
-                                                    //.dropLast(9)
-                                                    ,
-                                                    textStyle: defaultText16,
+                                                            '')),
+                                                    style: defaultText16,
                                                   ),
+                                        // HtmlWidget(
+                                        //     _listQuiz[index]
+                                        //         .questions
+                                        //         .trim()
+                                        //         .split(",")[answer * 2]
+                                        //         .replaceAll(
+                                        //             RegExp(
+                                        //                 r'"|text|{|:|\['),
+                                        //             '')
+                                        //     //.dropLast(9)
+                                        //     ,
+                                        //     textStyle: defaultText16,
+                                        //   ),
                                       ),
                                     ],
                                   ),

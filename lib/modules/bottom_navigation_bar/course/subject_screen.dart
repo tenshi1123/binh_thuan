@@ -103,7 +103,7 @@ class _SubjectScreenState extends State<SubjectScreen>
                 ),
                 automaticallyImplyLeading: false,
                 pinned: false,
-                toolbarHeight: 100.h,
+                toolbarHeight: 98.h,
                 forceElevated: innerBoxIsScrolled,
                 // bottom: TabBar(
                 //   tabs: tabs.map((String name) => Tab(text: name)).toList(),

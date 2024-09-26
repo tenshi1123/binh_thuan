@@ -12,6 +12,7 @@ class ExcerciseRepo {
   Future<List<QuizModel>> getListQuestion(String id) async {
     dio.options.headers['Authorization'] =
         'Bearer ${SpUtil.getString(ConstString.token)}';
+    dio.options.headers['Content-Type'] = 'application/json; charset=utf-8';
     Response response;
     response = await dio.post(
       ApiPath.listQuiz,
@@ -23,11 +24,14 @@ class ExcerciseRepo {
     );
     Map result = (response.data['question'][0]['value']);
     List newList = result.entries.map((e) => e.value).toList();
-    return List<QuizModel>.from(
-      newList.map(
-        (model) => QuizModel.fromJson(model),
-      ),
-    );
+    return [
+      QuizModel.fromJson(response.data['question'][0]),
+      ...List<QuizModel>.from(
+        newList.map(
+          (model) => QuizModel.fromJson(model),
+        ),
+      )
+    ];
   }
 
   Future<List<ExcerciseModel>> getListEcercise() async {
