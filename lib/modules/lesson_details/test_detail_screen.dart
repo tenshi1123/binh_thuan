@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
 import 'package:binh_thuan/constants/colors.dart';
 import 'package:binh_thuan/constants/styles.dart';
@@ -179,18 +180,8 @@ class _TestDetailScreenState extends State<TestDetailScreen> {
                             padding: EdgeInsets.fromLTRB(20.w, 0, 20.w, 20.h),
                             //itemExtent: 90,
                             physics: const NeverScrollableScrollPhysics(),
-                            itemCount: _listQuiz[index].type == '4'
-                                ? _listQuiz[index]
-                                    .questions
-                                    .trim()
-                                    .split(",")
-                                    .length
-                                : _listQuiz[index]
-                                        .questions
-                                        .trim()
-                                        .split(",")
-                                        .length ~/
-                                    2,
+                            itemCount:
+                                _listQuiz[index].listQuestions?.length ?? 0,
                             itemBuilder: (BuildContext context, int answer) {
                               return GestureDetector(
                                 onTap: () {
@@ -201,7 +192,8 @@ class _TestDetailScreenState extends State<TestDetailScreen> {
                                   _listAnswers[_listAnswers.indexWhere((e) =>
                                       e['id'] == _listQuiz[index].id)] = {
                                     "id": _listQuiz[index].id,
-                                    "answer": answer.toString(),
+                                    "answer": _listQuiz[index]
+                                        .listQuestions?[answer]["key"],
                                   };
                                 },
                                 child: Container(
@@ -247,30 +239,25 @@ class _TestDetailScreenState extends State<TestDetailScreen> {
                                                 //         .split(",")[answer * 2],
                                                 //     style: defaultText16,
                                                 //   ),
-                                                Text(
-                                                    (_listQuiz[index]
-                                                        .questions
-                                                        .trim()
-                                                        .split(",")[answer * 2]
-                                                        .replaceAll(
-                                                            RegExp(
-                                                                r'"|text|{|:|\['),
-                                                            '')),
-                                                    style: defaultText16,
+                                                // Text(
+                                                //     _listQuiz[index]
+                                                //             .listQuestions?[
+                                                //                 answer]["text"]
+                                                //             .toString() ??
+                                                //         '',
+                                                //     style: defaultText16,
+                                                //   ),
+                                                HtmlWidget(
+                                                    _listQuiz[index]
+                                                            .listQuestions?[
+                                                                answer]["text"]
+                                                            .toString()
+                                                            .dropLast(6) ??
+                                                        '',
+                                                    //
+
+                                                    textStyle: defaultText16,
                                                   ),
-                                        // HtmlWidget(
-                                        //     _listQuiz[index]
-                                        //         .questions
-                                        //         .trim()
-                                        //         .split(",")[answer * 2]
-                                        //         .replaceAll(
-                                        //             RegExp(
-                                        //                 r'"|text|{|:|\['),
-                                        //             '')
-                                        //     //.dropLast(9)
-                                        //     ,
-                                        //     textStyle: defaultText16,
-                                        //   ),
                                       ),
                                     ],
                                   ),
@@ -299,140 +286,158 @@ class _TestDetailScreenState extends State<TestDetailScreen> {
       ),
     );
 
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        backgroundColor: kPrimaryColor,
-        title: Text(
-          widget.model.name,
-          style: defaultBoldText.copyWith(
-            color: Colors.white,
-            fontSize: 15.sp,
+    return SafeArea(
+      top: false,
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        appBar: AppBar(
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back, color: Colors.white),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
+          backgroundColor: kPrimaryColor,
+          title: Text(
+            widget.model.name,
+            style: defaultBoldText.copyWith(
+              color: Colors.white,
+              fontSize: 15.sp,
+            ),
           ),
         ),
-      ),
-      body: Column(children: [
-        SizedBox(
-          height: 10.h,
-        ),
-        Row(
-          children: [
-            SizedBox(
-              width: 20.w,
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Thời gian còn lại',
-                  style: defaultBoldText,
-                ),
-                buildTime1(),
-              ],
-            ),
-            const Spacer(),
-            GestureDetector(
-              onTap: () async {
-                await ExcerciseRepo().submitTest(
-                  id: widget.model.id,
-                  statTime: DateFormat('yyyy-MM-dd HH:mm').format(
-                    DateTime.now(),
+        body: Column(children: [
+          SizedBox(
+            height: 10.h,
+          ),
+          Row(
+            children: [
+              SizedBox(
+                width: 20.w,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Thời gian còn lại',
+                    style: defaultBoldText,
                   ),
-                  data: _listAnswers,
-                );
-                showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return CupertinoAlertDialog(
-                      title: const Text('Bài làm đã được gửi'),
-                      actions: <Widget>[
-                        CupertinoDialogAction(
-                          isDefaultAction: true,
-                          child: const Text(
-                            'ok',
-                            style:
-                                TextStyle(fontSize: 20, color: kPrimaryColor),
+                  buildTime1(),
+                ],
+              ),
+              const Spacer(),
+              GestureDetector(
+                onTap: () async {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return CupertinoAlertDialog(
+                        title: const Text('Bạn có chắc chắn muốn nộp bài'),
+                        actions: <Widget>[
+                          CupertinoDialogAction(
+                            isDefaultAction: true,
+                            child: const Text(
+                              'Đồng ý',
+                              style:
+                                  TextStyle(fontSize: 20, color: kPrimaryColor),
+                            ),
+                            onPressed: () async {
+                              await ExcerciseRepo().submitTest(
+                                id: widget.model.id,
+                                statTime: DateFormat('yyyy-MM-dd HH:mm').format(
+                                  DateTime.now(),
+                                ),
+                                data: _listAnswers,
+                              );
+                              Navigator.pop(context);
+                              Navigator.pop(context);
+                            },
                           ),
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                        )
-                      ],
-                    );
-                  },
-                );
-              },
-              child: Container(
-                height: 35.h,
-                width: 74.w,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(
-                      10.r,
+                          CupertinoDialogAction(
+                            isDefaultAction: true,
+                            child: const Text(
+                              'Hủy',
+                              style:
+                                  TextStyle(fontSize: 20, color: kPrimaryColor),
+                            ),
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                          )
+                        ],
+                      );
+                    },
+                  );
+                },
+                child: Container(
+                  height: 35.h,
+                  width: 74.w,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(
+                        10.r,
+                      ),
                     ),
+                    color: rec21Red,
                   ),
-                  color: rec21Red,
-                ),
-                child: Center(
-                  child: Text(
-                    'Nộp bài',
-                    style: defaultBoldText.copyWith(
-                      color: Colors.white,
+                  child: Center(
+                    child: Text(
+                      'Nộp bài',
+                      style: defaultBoldText.copyWith(
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-            SizedBox(
-              width: 20.w,
-            ),
-          ],
-        ),
+              SizedBox(
+                width: 20.w,
+              ),
+            ],
+          ),
 
-        // Container(
-        //   width: 350.w,
-        //   height: 110.h,
-        //   padding: EdgeInsets.symmetric(horizontal: 10.w),
-        //   decoration: BoxDecoration(
-        //     borderRadius: BorderRadius.all(Radius.circular(8.r)),
-        //     boxShadow: [
-        //       BoxShadow(
-        //         color: kPrimaryColor.withOpacity(0.2),
-        //         spreadRadius: 5,
-        //         blurRadius: 7,
-        //         offset: const Offset(4, 7), // changes position of shadow
-        //       ),
-        //     ],
-        //     color: Colors.white,
-        //   ),
-        //   child: Column(
-        //     crossAxisAlignment: CrossAxisAlignment.start,
-        //     children: [
-        //       Text(
-        //         'Đề bài:',
-        //         style: defaultBoldText,
-        //       ),
-        //     ],
-        //   ),
-        // ),
-        SizedBox(
-          height: 20.h,
-        ),
-        pages[_currentPage],
-      ]),
-      // card for elevation
-      bottomNavigationBar: Card(
-        margin: EdgeInsets.zero,
-        elevation: 4,
-        child: NumberPaginator(
-          // by default, the paginator shows numbers as center content
-          numberPages: _listQuiz.length,
-          onPageChange: (int index) {
-            setState(() {
-              _currentPage = index;
-            });
-          },
+          // Container(
+          //   width: 350.w,
+          //   height: 110.h,
+          //   padding: EdgeInsets.symmetric(horizontal: 10.w),
+          //   decoration: BoxDecoration(
+          //     borderRadius: BorderRadius.all(Radius.circular(8.r)),
+          //     boxShadow: [
+          //       BoxShadow(
+          //         color: kPrimaryColor.withOpacity(0.2),
+          //         spreadRadius: 5,
+          //         blurRadius: 7,
+          //         offset: const Offset(4, 7), // changes position of shadow
+          //       ),
+          //     ],
+          //     color: Colors.white,
+          //   ),
+          //   child: Column(
+          //     crossAxisAlignment: CrossAxisAlignment.start,
+          //     children: [
+          //       Text(
+          //         'Đề bài:',
+          //         style: defaultBoldText,
+          //       ),
+          //     ],
+          //   ),
+          // ),
+          SizedBox(
+            height: 20.h,
+          ),
+          pages[_currentPage],
+        ]),
+        // card for elevation
+        bottomNavigationBar: Card(
+          margin: EdgeInsets.zero,
+          elevation: 5,
+          child: NumberPaginator(
+            // by default, the paginator shows numbers as center content
+            numberPages: _listQuiz.length,
+            onPageChange: (int index) {
+              setState(() {
+                _currentPage = index;
+              });
+            },
+          ),
         ),
       ),
     );

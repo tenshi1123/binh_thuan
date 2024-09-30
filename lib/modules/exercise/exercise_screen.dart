@@ -5,6 +5,7 @@ import 'package:binh_thuan/modules/exercise/details_exercise.dart';
 import 'package:binh_thuan/repo/repo/excercise_repo.dart';
 import 'package:binh_thuan/router/app_pages.dart';
 import 'package:binh_thuan/router/app_router.dart';
+import 'package:flutter/cupertino.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -349,14 +350,37 @@ class ExerciseItem extends StatelessWidget {
         if (model.type == "1") {
           List<QuizModel> listQuiz =
               await ExcerciseRepo().getListQuestion(model.id);
-          AppRouter.toPage(
-            context,
-            AppPages.TestDetailPage,
-            arguments: {
-              'listQuiz': listQuiz,
-              'model': model,
-            },
-          );
+          if (listQuiz == []) {
+            AppRouter.toPage(
+              context,
+              AppPages.TestDetailPage,
+              arguments: {
+                'listQuiz': listQuiz,
+                'model': model,
+              },
+            );
+          } else {
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return CupertinoAlertDialog(
+                  title: const Text('Bạn đã làm bài tập này'),
+                  actions: <Widget>[
+                    CupertinoDialogAction(
+                      isDefaultAction: true,
+                      child: const Text(
+                        'Đồng ý',
+                        style: TextStyle(fontSize: 20, color: kPrimaryColor),
+                      ),
+                      onPressed: () async {
+                        Navigator.pop(context);
+                      },
+                    ),
+                  ],
+                );
+              },
+            );
+          }
         } else {
           Navigator.of(context).push(
             MaterialPageRoute(

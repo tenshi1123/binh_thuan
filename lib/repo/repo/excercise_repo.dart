@@ -14,24 +14,29 @@ class ExcerciseRepo {
         'Bearer ${SpUtil.getString(ConstString.token)}';
     dio.options.headers['Content-Type'] = 'application/json; charset=utf-8';
     Response response;
-    response = await dio.post(
-      ApiPath.listQuiz,
-      data: jsonEncode(
-        {
-          'id': int.parse(id),
-        },
-      ),
-    );
-    Map result = (response.data['question'][0]['value']);
-    List newList = result.entries.map((e) => e.value).toList();
-    return [
-      QuizModel.fromJson(response.data['question'][0]),
-      ...List<QuizModel>.from(
-        newList.map(
-          (model) => QuizModel.fromJson(model),
+    try {
+      response = await dio.post(
+        ApiPath.listQuiz,
+        data: jsonEncode(
+          {
+            'id': int.parse(id),
+          },
         ),
-      )
-    ];
+      );
+      Map result = (response.data['question'][0]['value']);
+      List newList = result.entries.map((e) => e.value).toList();
+      return [
+        QuizModel.fromJson(response.data['question'][0]),
+        ...List<QuizModel>.from(
+          newList.map(
+            (model) => QuizModel.fromJson(model),
+          ),
+        )
+      ];
+    } on DioException {
+      // in case of a code that is not success, you can get it here through object 'e'
+      return [];
+    }
   }
 
   Future<List<ExcerciseModel>> getListEcercise() async {
@@ -77,17 +82,15 @@ class ExcerciseRepo {
   }) async {
     dio.options.headers['Authorization'] =
         'Bearer ${SpUtil.getString(ConstString.token)}';
-    Response response;
-    response = await dio.post(
+    await dio.post(
       ApiPath.submitTest,
       data: jsonEncode(
         {
           'id': int.parse(id),
           'start_time': statTime,
-          'data': data,
+          'data': data.removeAt(0),
         },
       ),
     );
-    return response.data["type"];
   }
 }
