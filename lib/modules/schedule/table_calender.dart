@@ -238,7 +238,7 @@ AnimatedContainer buildCalendarDayMarker({
       color: backColor,
     ),
     width: 18.w,
-    height: 13.h,
+    height: 16.h,
     child: Center(
       child: Text(
         text,
