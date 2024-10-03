@@ -157,6 +157,7 @@ class _TableEventsExampleState extends State<TableEventsExample> {
                 weekendStyle: defaultText14.copyWith(
                   color: Colors.red,
                 )),
+            daysOfWeekHeight: 30.h,
             calendarFormat: _calendarFormat,
             rangeSelectionMode: _rangeSelectionMode,
             eventLoader: _getEventModels,

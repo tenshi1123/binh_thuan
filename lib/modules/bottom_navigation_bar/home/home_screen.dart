@@ -83,12 +83,13 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                   Positioned(
-                      top: 71.h,
-                      left: 30.w,
-                      child: chatIcon(
-                        context: context,
-                        icon: 'assets/icons/message_icon.svg',
-                      )),
+                    top: 71.h,
+                    left: 30.w,
+                    child: chatIcon(
+                      context: context,
+                      icon: 'assets/icons/message_icon.svg',
+                    ),
+                  ),
                   // Positioned(
                   //   top: 71.h,
                   //   left: 30.w,

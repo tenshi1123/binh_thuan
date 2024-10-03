@@ -84,10 +84,10 @@ class _InfoScreenState extends State<InfoScreen> {
                   ),
                 ),
                 Positioned(
-                  top: 120.h,
+                  top: 100.h,
                   left: 0.w,
                   child: SizedBox(
-                    width: 390.h,
+                    width: 390.w,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [

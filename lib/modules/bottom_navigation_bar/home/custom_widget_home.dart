@@ -87,7 +87,7 @@ class ComingLesson extends StatelessWidget {
           );
         },
         child: Container(
-          margin: EdgeInsets.symmetric(vertical: 10.h, horizontal: 20),
+          margin: EdgeInsets.symmetric(vertical: 10.h, horizontal: 20.w),
           width: 350.w,
           height: 100.h,
           decoration: BoxDecoration(

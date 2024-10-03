@@ -81,6 +81,7 @@ class TabInfomation extends StatelessWidget {
               child: TaiLieuTabBar(
                 videoLesson: detailSubject.lesson,
                 taiLieu: detailSubject.document,
+                listChapter: detailSubject.subjectsChapters,
               ),
               // ListView.builder(
               //     scrollDirection: Axis.vertical,
