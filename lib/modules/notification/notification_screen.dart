@@ -96,64 +96,63 @@ class NotiItem extends StatelessWidget {
                       notification: notification,
                     )));
       },
-      child: Flexible(
-        child: SizedBox(
-          width: 390.w,
-          height: 78.h,
-          child: Row(
-            children: [
-              SizedBox(
-                width: 20.w,
-              ),
-              SvgPicture.asset(
-                'assets/icons/wallet.svg',
-                height: 49.h,
-                width: 49.w,
-              ),
-              SizedBox(
-                width: 12.w,
-              ),
-              SizedBox(
-                width: 240.w,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      notification.headings,
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 2,
-                      softWrap: false,
-                      style: defaultBoldText,
+      child: SizedBox(
+        width: 390.w,
+        height: 86.h,
+        child: Row(
+          children: [
+            SizedBox(
+              width: 20.w,
+            ),
+            SvgPicture.asset(
+              'assets/icons/wallet.svg',
+              height: 49.h,
+              width: 49.w,
+            ),
+            SizedBox(
+              width: 12.w,
+            ),
+            SizedBox(
+              width: 245.w,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    notification.headings,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 2,
+                    softWrap: false,
+                    style: defaultBoldText,
+                  ),
+                  Flexible(
+                    child: HtmlWidget(
+                      notification.contents.length > 80
+                          ? '${notification.contents.substring(0, 80)}...'
+                          : notification.contents,
+                      textStyle: defaultText12,
                     ),
-                    Expanded(
-                      child: HtmlWidget(
-                        notification.contents.length > 80
-                            ? '${notification.contents.substring(0, 80)}...'
-                            : notification.contents,
-                        textStyle: defaultText12,
-                      ),
-                    ),
-                    // Text(
-                    //   notification.contents,
-                    //   overflow: TextOverflow.ellipsis,
-                    //   maxLines: 1,
-                    //   softWrap: false,
-                    //   style: defaultText12,
-                    // ),
-                  ],
-                ),
+                  ),
+                  // Text(
+                  //   notification.contents,
+                  //   overflow: TextOverflow.ellipsis,
+                  //   maxLines: 1,
+                  //   softWrap: false,
+                  //   style: defaultText12,
+                  // ),
+                ],
               ),
-              SizedBox(
-                width: 12.w,
-              ),
-              Text(
-                (notification.completedAt.day == DateTime.now().day)
-                    ? DateFormat("HH:mm").format(notification.completedAt)
-                    : DateFormat("dd-MM").format(notification.completedAt),
-                style: defaultText12,
-              ),
-            ],
-          ),
+            ),
+            SizedBox(
+              width: 12.w,
+            ),
+            Text(
+              (notification.completedAt.day == DateTime.now().day)
+                  ? DateFormat("HH:mm").format(notification.completedAt)
+                  : DateFormat("dd-MM").format(notification.completedAt),
+              style: defaultText12,
+            ),
+          ],
         ),
       ),
     );
