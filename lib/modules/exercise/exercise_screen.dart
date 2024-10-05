@@ -347,7 +347,7 @@ class ExerciseItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async {
-        if (model.type == "1") {
+        if (model.checkId != "") {
           List<QuizModel> listQuiz =
               await ExcerciseRepo().getListQuestion(model.id);
           if (listQuiz == []) {
