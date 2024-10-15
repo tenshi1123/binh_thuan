@@ -347,10 +347,10 @@ class ExerciseItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async {
-        if (model.checkId != "") {
+        if (model.checkId == "") {
           List<QuizModel> listQuiz =
               await ExcerciseRepo().getListQuestion(model.id);
-          if (listQuiz == []) {
+          if (listQuiz != []) {
             AppRouter.toPage(
               context,
               AppPages.TestDetailPage,
@@ -360,34 +360,34 @@ class ExerciseItem extends StatelessWidget {
               },
             );
           } else {
-            showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return CupertinoAlertDialog(
-                  title: const Text('Bạn đã làm bài tập này'),
-                  actions: <Widget>[
-                    CupertinoDialogAction(
-                      isDefaultAction: true,
-                      child: const Text(
-                        'Đồng ý',
-                        style: TextStyle(fontSize: 20, color: kPrimaryColor),
-                      ),
-                      onPressed: () async {
-                        Navigator.pop(context);
-                      },
-                    ),
-                  ],
-                );
-              },
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => DetailsExercise(
+                  model: model,
+                ),
+              ),
             );
           }
         } else {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) => DetailsExercise(
-                model: model,
-              ),
-            ),
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return CupertinoAlertDialog(
+                title: const Text('Bạn đã làm bài tập này'),
+                actions: <Widget>[
+                  CupertinoDialogAction(
+                    isDefaultAction: true,
+                    child: const Text(
+                      'Đồng ý',
+                      style: TextStyle(fontSize: 20, color: kPrimaryColor),
+                    ),
+                    onPressed: () async {
+                      Navigator.pop(context);
+                    },
+                  ),
+                ],
+              );
+            },
           );
         }
       },
