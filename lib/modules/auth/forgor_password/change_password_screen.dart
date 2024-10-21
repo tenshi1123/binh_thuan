@@ -171,6 +171,8 @@ class _ChangePassScreenState extends State<ChangePassScreen> {
                       newPass: newPassController.text,
                     );
                     showErrorDialog(context, 'Đổi mật khẩu thành công');
+                  } else {
+                    showErrorDialog(context, 'Xin vui Lòng kiểm tra lại');
                   }
                 },
                 child: Container(
@@ -182,7 +184,7 @@ class _ChangePassScreenState extends State<ChangePassScreen> {
                   ),
                   alignment: Alignment.center,
                   child: Text(
-                    'Lưu mật khẩu',
+                    'Đổi mật khẩu',
                     style: TextStyle(
                         color: Colors.white,
                         fontSize: 20.sp,

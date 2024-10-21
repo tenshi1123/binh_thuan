@@ -1,6 +1,6 @@
 class ApiPath {
   //baseurl
-  static const String baseUrl = 'https://lequydon.hvg.edu.vn/api';
+  static const String baseUrl = 'https://lso.lequydon.school/api';
   //api về đăng nhập, các thông tin của học sinh
   static const String refreshToken = '$baseUrl/refresh_token/';
   static const String login = '$baseUrl/login';

@@ -220,7 +220,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               thickness: 1,
                             ),
                           ),
-                          GestureDetector(
+                          InkWell(
                             onTap: () async {
                               List<ExcerciseModel> listExercises =
                                   await ExcerciseRepo().getListEcercise();
