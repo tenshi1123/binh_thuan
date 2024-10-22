@@ -350,7 +350,7 @@ class ExerciseItem extends StatelessWidget {
         if (model.checkId == "") {
           List<QuizModel> listQuiz =
               await ExcerciseRepo().getListQuestion(model.id);
-          if (listQuiz != []) {
+          if (listQuiz.isNotEmpty) {
             AppRouter.toPage(
               context,
               AppPages.TestDetailPage,
@@ -456,10 +456,12 @@ class ExerciseItem extends StatelessWidget {
                   model.typeExcercise,
                   style: defaultText14,
                 ),
-                Text(
-                  '${model.totalTime}phút',
-                  style: defaultText14,
-                )
+                (model.typeExcercise != 'Tự luận')
+                    ? Text(
+                        '${model.totalTime}phút',
+                        style: defaultText14,
+                      )
+                    : const SizedBox(),
               ],
             ),
           ],

@@ -140,38 +140,38 @@ class _DetailsExerciseState extends State<DetailsExercise> {
               SizedBox(
                 height: 10.h,
               ),
-              ValueListenableBuilder(
-                valueListenable: isSubmit,
-                builder: (BuildContext context, value, Widget? child) {
-                  return GestureDetector(
-                    onTap: () {
-                      isSubmit.value = true;
-                    },
-                    child: Container(
-                      height: 57.h,
-                      width: 350.w,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(8.r),
-                          ),
-                          border: Border.all(
-                            color: Colors.white,
-                          ),
-                          color: isSubmit.value
-                              ? const Color(0xffC1CFE4)
-                              : kPrimaryColor),
-                      child: Center(
-                        child: Text(
-                          isSubmit.value ? 'Đã nộp bài' : 'Nộp bài',
-                          style: defaultBoldText.copyWith(
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                    ),
-                  );
-                },
-              )
+              // ValueListenableBuilder(
+              //   valueListenable: isSubmit,
+              //   builder: (BuildContext context, value, Widget? child) {
+              //     return GestureDetector(
+              //       onTap: () {
+              //         isSubmit.value = true;
+              //       },
+              //       child: Container(
+              //         height: 57.h,
+              //         width: 350.w,
+              //         decoration: BoxDecoration(
+              //             borderRadius: BorderRadius.all(
+              //               Radius.circular(8.r),
+              //             ),
+              //             border: Border.all(
+              //               color: Colors.white,
+              //             ),
+              //             color: isSubmit.value
+              //                 ? const Color(0xffC1CFE4)
+              //                 : kPrimaryColor),
+              //         child: Center(
+              //           child: Text(
+              //             isSubmit.value ? 'Đã nộp bài' : 'Nộp bài',
+              //             style: defaultBoldText.copyWith(
+              //               color: Colors.white,
+              //             ),
+              //           ),
+              //         ),
+              //       ),
+              //     );
+              //   },
+              // ),
             ],
           ),
         ),
