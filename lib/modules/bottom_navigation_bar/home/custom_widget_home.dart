@@ -227,7 +227,7 @@ class CompleteLesson extends StatelessWidget {
             children: [
               Container(
                 margin: const EdgeInsets.all(6),
-                height: 76.h,
+                height: 80.dg,
                 width: 76.w,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.all(
@@ -265,7 +265,7 @@ class CompleteLesson extends StatelessWidget {
                       style: defaultText12.copyWith(
                         color: Colors.white,
                       ),
-                    )
+                    ),
                   ],
                 ),
               ),
@@ -449,8 +449,8 @@ class NotificationItem extends StatelessWidget {
                     ),
                   ),
                   HtmlWidget(
-                    noti.contents.length > 120
-                        ? '${noti.contents.substring(0, 120)}...'
+                    noti.contents.length > 50
+                        ? '${noti.contents.substring(0, 50)}...'
                         : noti.contents,
                     textStyle: defaultText12,
                   ),

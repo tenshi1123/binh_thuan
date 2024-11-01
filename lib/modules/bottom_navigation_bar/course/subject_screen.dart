@@ -48,7 +48,7 @@ class _SubjectScreenState extends State<SubjectScreen>
                         image: const AssetImage(
                           'assets/images/appbar_background2.png',
                         ),
-                        fit: BoxFit.fitHeight,
+                        fit: BoxFit.fill,
                       ),
                     ),
                     Positioned(

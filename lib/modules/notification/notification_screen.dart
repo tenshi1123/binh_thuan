@@ -98,7 +98,7 @@ class NotiItem extends StatelessWidget {
       },
       child: SizedBox(
         width: 390.w,
-        height: 86.h,
+        height: 88.h,
         child: Row(
           children: [
             SizedBox(
@@ -127,8 +127,8 @@ class NotiItem extends StatelessWidget {
                   ),
                   Flexible(
                     child: HtmlWidget(
-                      notification.contents.length > 80
-                          ? '${notification.contents.substring(0, 80)}...'
+                      notification.contents.length > 48
+                          ? '${notification.contents.substring(0, 48)}...'
                           : notification.contents,
                       textStyle: defaultText12,
                     ),
