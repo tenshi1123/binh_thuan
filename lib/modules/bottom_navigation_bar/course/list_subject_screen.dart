@@ -99,7 +99,7 @@ class NestedScroll extends StatelessWidget {
                   )
                 : SizedBox(
                     width: 380.w,
-                    height: 111.h,
+                    height: 120.h,
                     child: ListView.builder(
                       scrollDirection: Axis.horizontal,
                       shrinkWrap: true,
@@ -131,7 +131,7 @@ class NestedScroll extends StatelessWidget {
                   scrollDirection: Axis.vertical,
                   physics: const ScrollPhysics(),
                   padding: EdgeInsets.only(bottom: 10.h),
-                  reverse: true,
+                  // reverse: true,
                   //physics: const NeverScrollableScrollPhysics(),
                   itemBuilder: (context, index) {
                     return Padding(

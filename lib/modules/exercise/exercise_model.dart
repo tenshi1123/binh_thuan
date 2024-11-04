@@ -1,4 +1,5 @@
 import 'package:intl/intl.dart';
+import 'dart:convert';
 
 class ExcerciseModel {
   final String checkId;
@@ -81,7 +82,7 @@ class QuizModel {
   final String mark;
   final String questions;
   final String type;
-
+  final List<Map>? listQuestions;
   QuizModel({
     required this.id,
     required this.title,
@@ -89,15 +90,23 @@ class QuizModel {
     required this.mark,
     required this.questions,
     required this.type,
+    this.listQuestions,
   });
-  factory QuizModel.fromJson(Map<String, dynamic> json) {
+  factory QuizModel.fromJson(Map<String, dynamic> json1) {
     return QuizModel(
-      id: json['id'] ?? '',
-      title: json['title'] ?? '',
-      content: json['content'] ?? '',
-      mark: json['mark'] ?? '',
-      questions: json['questions'] ?? '',
-      type: json['type'] ?? '',
+      id: json1['id'] ?? '',
+      title: json1['title'] ?? '',
+      content: json1['content'] ?? '',
+      mark: json1['mark'] ?? '',
+      questions: json1['questions'] ?? '',
+      type: json1['type'] ?? '',
+      listQuestions: json1['questions'] == ''
+          ? []
+          : json
+                  .decode(json1['questions'].replaceAll(RegExp(r'\\'), ''))
+                  .cast<Map>()
+                  .toList() ??
+              [],
     );
   }
 }

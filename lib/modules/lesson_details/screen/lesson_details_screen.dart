@@ -382,10 +382,10 @@ class DocumentTab extends StatelessWidget {
     }
     return Column(
       children: [
-        DocumentItem(
-          // videoLesson: videoLesson[index],
-          videoContent: video, isVideo: true,
-        ),
+        // DocumentItem(
+        //   // videoLesson: videoLesson[index],
+        //   videoContent: video, isVideo: true,
+        // ),
         Expanded(
           child: ListView.builder(
             scrollDirection: Axis.vertical,
@@ -617,7 +617,7 @@ class DocumentItem extends StatelessWidget {
                   isVideo
                       ? videoContent != ''
                           ? videoValue[1]
-                          : videoLesson!.name
+                          : videoLesson?.name ?? ''
                       : taiLieu!.name,
                   style: defaultBoldText,
                 ),

@@ -4,7 +4,7 @@ description: "Ứng dụng dành cho ph/hs Trường liên cấp Lê Quý Đôn"
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 1.0.6+2
+version: 1.1.5+1
 
 environment:
   sdk: '>=3.4.0 <4.0.0'
@@ -18,7 +18,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  sentry_flutter: ^8.5.0
+  # sentry_flutter: ^8.5.0
   cupertino_icons: ^1.0.6
   flutter_screenutil: ^5.9.3
   easy_splash_screen: ^1.0.4
@@ -45,7 +45,7 @@ dependencies:
   visibility_detector: ^0.4.0+2
   intl: ^0.19.0
   image_picker: ^1.1.2
-  onesignal_flutter: 5.2.5
+  onesignal_flutter: ^5.2.1
   dio: ^5.4.3+1
   equatable: ^2.0.5
   json_annotation: ^4.9.0

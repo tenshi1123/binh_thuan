@@ -157,6 +157,7 @@ class _TableEventsExampleState extends State<TableEventsExample> {
                 weekendStyle: defaultText14.copyWith(
                   color: Colors.red,
                 )),
+            daysOfWeekHeight: 30.h,
             calendarFormat: _calendarFormat,
             rangeSelectionMode: _rangeSelectionMode,
             eventLoader: _getEventModels,
@@ -237,7 +238,7 @@ AnimatedContainer buildCalendarDayMarker({
       color: backColor,
     ),
     width: 18.w,
-    height: 13.h,
+    height: 16.h,
     child: Center(
       child: Text(
         text,

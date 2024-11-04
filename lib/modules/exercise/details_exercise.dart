@@ -4,6 +4,7 @@ import 'package:binh_thuan/constants/colors.dart';
 import 'package:binh_thuan/constants/styles.dart';
 import 'package:binh_thuan/custom_widget/fullscreen_image.dart';
 import 'package:binh_thuan/modules/exercise/exercise_model.dart';
+import 'package:binh_thuan/repo/repo/excercise_repo.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -139,38 +140,38 @@ class _DetailsExerciseState extends State<DetailsExercise> {
               SizedBox(
                 height: 10.h,
               ),
-              ValueListenableBuilder(
-                valueListenable: isSubmit,
-                builder: (BuildContext context, value, Widget? child) {
-                  return GestureDetector(
-                    onTap: () {
-                      isSubmit.value = true;
-                    },
-                    child: Container(
-                      height: 57.h,
-                      width: 350.w,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(8.r),
-                          ),
-                          border: Border.all(
-                            color: Colors.white,
-                          ),
-                          color: isSubmit.value
-                              ? const Color(0xffC1CFE4)
-                              : kPrimaryColor),
-                      child: Center(
-                        child: Text(
-                          isSubmit.value ? 'Đã nộp bài' : 'Nộp bài',
-                          style: defaultBoldText.copyWith(
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                    ),
-                  );
-                },
-              )
+              // ValueListenableBuilder(
+              //   valueListenable: isSubmit,
+              //   builder: (BuildContext context, value, Widget? child) {
+              //     return GestureDetector(
+              //       onTap: () {
+              //         isSubmit.value = true;
+              //       },
+              //       child: Container(
+              //         height: 57.h,
+              //         width: 350.w,
+              //         decoration: BoxDecoration(
+              //             borderRadius: BorderRadius.all(
+              //               Radius.circular(8.r),
+              //             ),
+              //             border: Border.all(
+              //               color: Colors.white,
+              //             ),
+              //             color: isSubmit.value
+              //                 ? const Color(0xffC1CFE4)
+              //                 : kPrimaryColor),
+              //         child: Center(
+              //           child: Text(
+              //             isSubmit.value ? 'Đã nộp bài' : 'Nộp bài',
+              //             style: defaultBoldText.copyWith(
+              //               color: Colors.white,
+              //             ),
+              //           ),
+              //         ),
+              //       ),
+              //     );
+              //   },
+              // ),
             ],
           ),
         ),
@@ -191,8 +192,14 @@ class _DetailsExerciseState extends State<DetailsExercise> {
     // }
     // setState(() {});
     final List<XFile> selectedImages = await imagePicker.pickMultiImage();
+    var photos = List<File>.from(
+      (selectedImages).map(
+        (e) => File(e.path),
+      ),
+    );
     if (selectedImages.isNotEmpty) {
       imageFileList!.addAll(selectedImages);
+      ExcerciseRepo().submitEssay('', photos);
     }
     setState(() {});
   }

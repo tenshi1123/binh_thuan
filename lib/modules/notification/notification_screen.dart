@@ -98,7 +98,7 @@ class NotiItem extends StatelessWidget {
       },
       child: SizedBox(
         width: 390.w,
-        height: 78.h,
+        height: 88.h,
         child: Row(
           children: [
             SizedBox(
@@ -113,9 +113,10 @@ class NotiItem extends StatelessWidget {
               width: 12.w,
             ),
             SizedBox(
-              width: 240.w,
+              width: 245.w,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
                     notification.headings,
@@ -124,10 +125,10 @@ class NotiItem extends StatelessWidget {
                     softWrap: false,
                     style: defaultBoldText,
                   ),
-                  Expanded(
+                  Flexible(
                     child: HtmlWidget(
-                      notification.contents.length > 80
-                          ? '${notification.contents.substring(0, 80)}...'
+                      notification.contents.length > 48
+                          ? '${notification.contents.substring(0, 48)}...'
                           : notification.contents,
                       textStyle: defaultText12,
                     ),

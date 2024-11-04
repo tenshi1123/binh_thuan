@@ -1,4 +1,5 @@
 import 'package:binh_thuan/constants/colors.dart';
+import 'package:binh_thuan/constants/styles.dart';
 import 'package:binh_thuan/models/detail_subject_models.dart';
 import 'package:binh_thuan/models/lesson_model.dart';
 import 'package:binh_thuan/modules/bottom_navigation_bar/home/custom_widget_home.dart';
@@ -129,10 +130,14 @@ class _InfoItemState extends State<InfoItem> with TickerProviderStateMixin {
 
 class TaiLieuTabBar extends StatefulWidget {
   const TaiLieuTabBar(
-      {super.key, required this.videoLesson, required this.taiLieu});
+      {super.key,
+      required this.videoLesson,
+      required this.taiLieu,
+      required this.listChapter});
 
   final List<LessonModels> videoLesson;
   final List<DocumentModel> taiLieu;
+  final List<SubjectChapterModels> listChapter;
   @override
   State<TaiLieuTabBar> createState() => _TaiLieuTabBarState();
 }
@@ -144,7 +149,7 @@ class _TaiLieuTabBarState extends State<TaiLieuTabBar>
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 2, vsync: this);
+    _tabController = TabController(length: 3, vsync: this);
   }
 
   @override
@@ -176,8 +181,18 @@ class _TaiLieuTabBarState extends State<TaiLieuTabBar>
           labelColor: keyBlack,
           controller: _tabController,
           tabs: <Widget>[
-            homeTab(title: 'video', isSeprator: false),
-            homeTab(title: 'pdf'),
+            homeTab(
+              title: 'video',
+              isSeprator: false,
+              count: widget.videoLesson.length,
+            ),
+            homeTab(
+              title: 'pdf',
+              count: widget.taiLieu.length,
+            ),
+            homeTab(
+              title: 'Phân Chương',
+            ),
           ],
         ),
         Expanded(
@@ -245,6 +260,70 @@ class _TaiLieuTabBarState extends State<TaiLieuTabBar>
                               return const SizedBox();
                             },
                             childCount: widget.taiLieu.length,
+                          ),
+                        ),
+                      ),
+                    ],
+                  );
+                },
+              ),
+            ),
+            SafeArea(
+              top: false,
+              bottom: false,
+              child: Builder(
+                builder: (BuildContext context) {
+                  return CustomScrollView(
+                    key: const PageStorageKey<String>('pdf'),
+                    slivers: <Widget>[
+                      SliverOverlapInjector(
+                        handle: NestedScrollView.sliverOverlapAbsorberHandleFor(
+                            context),
+                      ),
+                      SliverPadding(
+                        padding: const EdgeInsets.all(8.0),
+                        sliver: SliverFixedExtentList(
+                          itemExtent: 150.h,
+                          delegate: SliverChildBuilderDelegate(
+                            (BuildContext context, int index) {
+                              return Column(
+                                children: [
+                                  Text(
+                                    widget.listChapter[index].name,
+                                    style: defaultText16,
+                                  ),
+                                  Expanded(
+                                    child: ListView.builder(
+                                      scrollDirection: Axis.vertical,
+                                      shrinkWrap: true,
+                                      physics: const ScrollPhysics(),
+                                      //itemExtent: 390.0.w,
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 0, vertical: 0),
+                                      itemCount: widget
+                                          .listChapter[index].lesson.length,
+                                      itemBuilder:
+                                          (BuildContext context, int index2) {
+                                        return Text(
+                                          widget.listChapter[index]
+                                              .lesson[index2].name,
+                                          style: defaultText16,
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                ],
+                              );
+                              // if (widget.taiLieu.isNotEmpty) {
+                              //   return DocumentItem(
+                              //     taiLieu: widget
+                              //         .listChapter[0].lesson[0].document[0],
+                              //     videoContent: '',
+                              //   );
+                              // }
+                              // return const SizedBox();
+                            },
+                            childCount: widget.listChapter.length,
                           ),
                         ),
                       ),

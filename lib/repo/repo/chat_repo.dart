@@ -92,19 +92,19 @@ class ChatRepo {
         'Bearer ${SpUtil.getString(ConstString.token)}';
     var formData = FormData.fromMap({
       'chat_id': int.parse(id),
-      'files': [
+      'files[]': [
         await MultipartFile.fromFile(photo[0].path,
             filename: photo[0].path.split('/').last),
       ]
     });
-    for (var file in photo) {
-      formData.files.addAll([
-        MapEntry(
-            "files",
-            await MultipartFile.fromFile(file.path,
-                filename: file.path.split('/').last)),
-      ]);
-    }
+    // for (var file in photo) {
+    //   formData.files.addAll([
+    //     MapEntry(
+    //         "files[]",
+    //         await MultipartFile.fromFile(file.path,
+    //             filename: file.path.split('/').last)),
+    //   ]);
+    // }
     await dio.post(ApiPath.sendImg, data: formData);
   }
 }

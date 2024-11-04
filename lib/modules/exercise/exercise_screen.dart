@@ -5,6 +5,7 @@ import 'package:binh_thuan/modules/exercise/details_exercise.dart';
 import 'package:binh_thuan/repo/repo/excercise_repo.dart';
 import 'package:binh_thuan/router/app_pages.dart';
 import 'package:binh_thuan/router/app_router.dart';
+import 'package:flutter/cupertino.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -346,24 +347,47 @@ class ExerciseItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async {
-        if (model.type == "1") {
+        if (model.checkId == "") {
           List<QuizModel> listQuiz =
               await ExcerciseRepo().getListQuestion(model.id);
-          AppRouter.toPage(
-            context,
-            AppPages.TestDetailPage,
-            arguments: {
-              'listQuiz': listQuiz,
-              'model': model,
-            },
-          );
-        } else {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) => DetailsExercise(
-                model: model,
+          if (listQuiz.isNotEmpty) {
+            AppRouter.toPage(
+              context,
+              AppPages.TestDetailPage,
+              arguments: {
+                'listQuiz': listQuiz,
+                'model': model,
+              },
+            );
+          } else {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => DetailsExercise(
+                  model: model,
+                ),
               ),
-            ),
+            );
+          }
+        } else {
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return CupertinoAlertDialog(
+                title: const Text('Bạn đã làm bài tập này'),
+                actions: <Widget>[
+                  CupertinoDialogAction(
+                    isDefaultAction: true,
+                    child: const Text(
+                      'Đồng ý',
+                      style: TextStyle(fontSize: 20, color: kPrimaryColor),
+                    ),
+                    onPressed: () async {
+                      Navigator.pop(context);
+                    },
+                  ),
+                ],
+              );
+            },
           );
         }
       },
@@ -432,10 +456,12 @@ class ExerciseItem extends StatelessWidget {
                   model.typeExcercise,
                   style: defaultText14,
                 ),
-                Text(
-                  '${model.totalTime}phút',
-                  style: defaultText14,
-                )
+                (model.typeExcercise != 'Tự luận')
+                    ? Text(
+                        '${model.totalTime}phút',
+                        style: defaultText14,
+                      )
+                    : const SizedBox(),
               ],
             ),
           ],

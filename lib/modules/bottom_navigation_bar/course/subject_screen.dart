@@ -1,7 +1,6 @@
 import 'package:binh_thuan/constants/colors.dart';
 import 'package:binh_thuan/constants/styles.dart';
 import 'package:binh_thuan/models/detail_subject_models.dart';
-import 'package:binh_thuan/modules/bottom_navigation_bar/course/subject_tab/tab_exercise.dart';
 import 'package:binh_thuan/modules/bottom_navigation_bar/home/custom_widget_home.dart';
 import 'package:binh_thuan/modules/notification/noti_repo.dart';
 import 'package:binh_thuan/router/app_pages.dart';
@@ -103,7 +102,7 @@ class _SubjectScreenState extends State<SubjectScreen>
                 ),
                 automaticallyImplyLeading: false,
                 pinned: false,
-                toolbarHeight: 122.h,
+                toolbarHeight: 98.h,
                 forceElevated: innerBoxIsScrolled,
                 // bottom: TabBar(
                 //   tabs: tabs.map((String name) => Tab(text: name)).toList(),

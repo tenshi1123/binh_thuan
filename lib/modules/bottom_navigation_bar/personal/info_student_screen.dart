@@ -84,10 +84,10 @@ class _InfoScreenState extends State<InfoScreen> {
                   ),
                 ),
                 Positioned(
-                  top: 120.h,
+                  top: 100.h,
                   left: 0.w,
                   child: SizedBox(
-                    width: 390.h,
+                    width: 390.w,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
@@ -138,7 +138,7 @@ class _InfoScreenState extends State<InfoScreen> {
                   left: 36.5.w,
                   child: SizedBox(
                     width: 316.w,
-                    height: 47.h,
+                    height: 56.h,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
@@ -233,7 +233,7 @@ class _InfoScreenState extends State<InfoScreen> {
                     top: 350.h,
                     left: 20.w,
                     child: Container(
-                      height: 240.h,
+                      height: 250.h,
                       width: 350.w,
                       padding: EdgeInsets.symmetric(
                         horizontal: 20.w,

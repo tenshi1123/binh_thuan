@@ -155,11 +155,13 @@ class LessonModels {
       content: json['content'] ?? 'không xác định',
       type: json['type'] ?? '',
       time: json['time'] ?? '',
-      document: List<DocumentModel>.from(
-        (json['lesson'] ?? []).map(
-          (model) => DocumentModel.fromJson(model),
-        ),
-      ),
+      document: (json['lesson'] != [] && json['document'] != [])
+          ? List<DocumentModel>.from(
+              (json['lesson'] ?? json['document'] ?? []).map(
+                (e) => DocumentModel.fromJson(e),
+              ),
+            )
+          : [],
     );
   }
 }
