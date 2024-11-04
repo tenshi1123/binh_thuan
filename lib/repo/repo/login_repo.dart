@@ -12,7 +12,6 @@ class LoginRepo {
     Dio dio = Dio();
     dio.options.headers['Token'] = 'BT123456789';
     Response response;
-
     //String type = response.data['type'];
     //if (type == 'success') {
     //}
