@@ -97,6 +97,7 @@ class ChatRepo {
             filename: photo[0].path.split('/').last),
       ]
     });
+    // hehe thoi không cho gửi nhiều file nữa mệt vl
     // for (var file in photo) {
     //   formData.files.addAll([
     //     MapEntry(

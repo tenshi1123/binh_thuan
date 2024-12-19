@@ -38,7 +38,6 @@ class _BottomNavBarState extends State<BottomNavBar> {
       //do nothing :v tự báo chính mình
       OneSignal.Notifications.addClickListener((event) {});
     }
-
     promptPolicyPrivacy();
   }
 
@@ -49,7 +48,6 @@ class _BottomNavBarState extends State<BottomNavBar> {
     } else {
       //do nothing :v
     }
-
     // sendUserTag(userId);
   }
 

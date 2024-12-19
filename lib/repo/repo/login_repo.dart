@@ -44,9 +44,7 @@ class LoginRepo {
     // Dio dio = Dio();
     // dio.options.headers['Authorization'] =
     //     'Bearer ${SpUtil.getString(ConstString.token)}';
-
     // Response response;
-
     // response = await dio.post(
     //   ApiPath.refreshToken,
     // );
@@ -83,7 +81,6 @@ class LoginRepo {
         },
       ),
     );
-
     return response.data["type"];
   }
 }

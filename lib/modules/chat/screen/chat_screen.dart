@@ -10,7 +10,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:camera_camera/camera_camera.dart';
-import 'package:image_picker/image_picker.dart';
+//import 'package:image_picker/image_picker.dart';
+import 'package:file_picker/file_picker.dart';
 
 class ChatScreen extends StatefulWidget {
   final String groupId;
@@ -71,15 +72,47 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   Future _pickImageFromGallery() async {
-    final returnedImage = await ImagePicker().pickMultiImage();
-    photos = List<File>.from(
-      (returnedImage).map(
-        (e) => File(e.path),
-      ),
-    );
+    //final returnedImage = await ImagePicker().pickMultiImage();
+    // photos = List<File>.from(
+    //   (returnedImage).map(
+    //     (e) => File(e.path),
+    //   ),
+    // );
     //File(returnedImage!.path);
-    if (photos.isNotEmpty) {
-      ChatRepo().sendImageMessage(widget.groupId, photos);
+    // if (photos.isNotEmpty) {
+    //   ChatRepo().sendImageMessage(widget.groupId, photos);
+    // }
+    // setState(() {});
+    FilePickerResult? result = await FilePicker.platform.pickFiles();
+    if (result != null) {
+      File file = File(result.files.single.path!);
+      await ChatRepo().sendImageMessage(widget.groupId, [file]);
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text(
+              'Thông báo',
+              style: defaultText14,
+            ),
+            content: Text(
+              'Bạn đã gửi thành công',
+              style: defaultText14,
+            ),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  setState(() {
+                    //_isLoading = false;
+                  });
+                  Navigator.pop(context);
+                },
+                child: const Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
     }
     setState(() {});
   }
@@ -227,6 +260,7 @@ class _ChatScreenState extends State<ChatScreen> {
                   const SizedBox(
                     width: 15,
                   ),
+                  // pick file nhe`
                   GestureDetector(
                       onTap: () {
                         _pickImageFromGallery();

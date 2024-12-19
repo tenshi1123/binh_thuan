@@ -21,21 +21,26 @@ import 'package:intl/intl.dart';
 class NotiModel {
   final String headings;
   final String contents;
-  final DateTime completedAt;
+  final DateTime createdAt;
   final String link;
-  NotiModel({
-    required this.headings,
-    required this.contents,
-    required this.completedAt,
-    required this.link,
-  });
+  final String status;
+  final String notiId;
+  NotiModel(
+      {required this.headings,
+      required this.contents,
+      required this.createdAt,
+      required this.link,
+      required this.status,
+      required this.notiId});
   factory NotiModel.fromJson(Map<String, dynamic> json) {
     return NotiModel(
       link: json['link'] ?? '',
       headings: json['title'] ?? '',
       contents: json['content'] ?? '',
-      completedAt:
+      createdAt:
           DateFormat("yyyy-MM-dd hh:mm:ss").parse(json['created_at'] ?? ''),
+      notiId: json['notification_students_id'] ?? '',
+      status: (json['status'] ?? '').toString(),
     );
   }
 }
