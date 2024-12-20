@@ -4,7 +4,7 @@ description: "Ứng dụng dành cho ph/hs Trường liên cấp Lê Quý Đôn"
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 1.1.6+27
+version: 1.1.7+28
 
 environment:
   sdk: '>=3.4.0 <4.0.0'
@@ -27,7 +27,7 @@ dependencies:
   # firebase_core: ^3.1.1
   # cloud_firestore: ^5.0.2
   # firebase_auth: ^5.0.0
-  otp_pin_field: ^1.2.4
+  #otp_pin_field: ^1.2.4
   persistent_bottom_nav_bar_v2: ^5.2.3
   flutter_svg: ^2.0.10+1
   card_swiper: ^3.0.1
@@ -35,13 +35,13 @@ dependencies:
   sp_util: ^2.0.3
   flutter_inappwebview: ^6.1.5
   #notifications
-  flutter_local_notifications: ^17.1.2
-  flutter_timezone: ^1.0.8
-  rxdart: ^0.27.7
+  #flutter_local_notifications: ^17.1.2
+  flutter_timezone: ^4.0.0
+  rxdart: ^0.28.0
   tab_container: ^3.5.3
   table_calendar: ^3.1.2
   percent_indicator: ^4.2.3
-  flick_video_player: ^0.8.0
+  flick_video_player: ^0.9.0
   video_player: ^2.8.7
   visibility_detector: ^0.4.0+2
   intl: ^0.19.0
@@ -67,7 +67,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^3.0.0
+  flutter_lints: ^5.0.0
 flutter:
   uses-material-design: true
   assets:
