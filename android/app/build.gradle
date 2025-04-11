@@ -30,7 +30,7 @@ if (keystorePropertiesFile.exists()) {
 }
 android {
     namespace = "binh.thuan.binh_thuan"
-    compileSdk = 34
+    compileSdk = 35
     ndkVersion = flutter.ndkVersion
 
     compileOptions {
