@@ -1,60 +1,71 @@
 import 'package:flutter/material.dart';
-import 'package:youtube_player_flutter/youtube_player_flutter.dart';
+import 'package:flutter/services.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
-/// Creates list of video players
-class VideoList extends StatefulWidget {
-  const VideoList({super.key});
+class VideoPlayerPage extends StatefulWidget {
+  final String videoUrl;
+
+  const VideoPlayerPage({super.key, required this.videoUrl});
 
   @override
-  State<VideoList> createState() => _VideoListState();
+  State<VideoPlayerPage> createState() => _VideoPlayerPageState();
 }
 
-class _VideoListState extends State<VideoList> {
-  final List<YoutubePlayerController> _controllers = [
-    'gQDByCdjUXw',
-    'iLnmTe5Q2Qw',
-    '_WoCV4c6XOE',
-    'KmzdUe0RSJo',
-    '6jZDSSZZxjQ',
-    'p2lYr3vM_1w',
-    '7QUtEmBT_-w',
-    '34_PXCzGw1M',
-  ]
-      .map<YoutubePlayerController>(
-        (videoId) => YoutubePlayerController(
-          initialVideoId: videoId,
-          flags: const YoutubePlayerFlags(
-            autoPlay: false,
-          ),
+class _VideoPlayerPageState extends State<VideoPlayerPage> {
+  late final WebViewController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _controller = WebViewController()
+      ..setJavaScriptMode(JavaScriptMode.unrestricted)
+      ..setBackgroundColor(const Color(0x00000000))
+      ..setNavigationDelegate(
+        NavigationDelegate(
+          onPageFinished: (url) async {
+            // Bổ sung: Nếu là Youtube, enable fullscreen attribute cho iframe
+            if (widget.videoUrl.contains('youtube.com')) {
+              await _controller.runJavaScript('''
+                var iframes = document.querySelectorAll('iframe');
+                for (var i = 0; i < iframes.length; i++) {
+                  iframes[i].setAttribute('allowfullscreen', '');
+                }
+              ''');
+            }
+          },
         ),
       )
-      .toList();
+      ..loadRequest(
+        Uri.parse(widget.videoUrl),
+      );
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Video List Demo'),
-      ),
-      body: ListView.separated(
-        itemBuilder: (context, index) {
-          return YoutubePlayer(
-            key: ObjectKey(_controllers[index]),
-            controller: _controllers[index],
-            actionsPadding: const EdgeInsets.only(left: 16.0),
-            bottomActions: [
-              CurrentPosition(),
-              const SizedBox(width: 10),
-              ProgressBar(isExpanded: true),
-              const SizedBox(width: 10),
-              RemainingDuration(),
-              FullScreenButton(),
-            ],
-          );
-        },
-        itemCount: _controllers.length,
-        separatorBuilder: (context, _) => const SizedBox(height: 10.0),
-      ),
+    return OrientationBuilder(
+      builder: (context, orientation) {
+        bool isLandscape = orientation == Orientation.landscape;
+
+        if (isLandscape) {
+          SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+        } else {
+          SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+        }
+
+        return Scaffold(
+          appBar: isLandscape ? null : AppBar(title: const Text('Xem Video')),
+          body: SafeArea(
+            child: WebViewWidget(controller: _controller),
+          ),
+        );
+      },
     );
+  }
+
+  @override
+  void dispose() {
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+    super.dispose();
   }
 }

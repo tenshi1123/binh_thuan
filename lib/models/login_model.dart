@@ -42,7 +42,7 @@ class StudentModel {
 class HomeModel {
   final StudentModel student;
   final int unfinished;
-  final String average;
+  final double average;
   final List<ComingLessonModels> comming;
   final List<ComingLessonModels> off;
   HomeModel({

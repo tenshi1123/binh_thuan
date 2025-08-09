@@ -5,6 +5,7 @@ import 'package:binh_thuan/models/lesson_model.dart';
 import 'package:binh_thuan/modules/exercise/exercise_model.dart';
 import 'package:binh_thuan/modules/exercise/exercise_screen.dart';
 import 'package:binh_thuan/modules/lesson_details/test_screen.dart';
+import 'package:binh_thuan/modules/videoplayer/video_list.dart';
 import 'package:binh_thuan/modules/videoplayer/youtube_player.dart';
 import 'package:binh_thuan/repo/repo/lesson_repo.dart';
 import 'package:binh_thuan/repo/repo/subject_repo.dart';
@@ -559,8 +560,8 @@ class DocumentItem extends StatelessWidget {
           pushWithoutNavBar(
             context,
             MaterialPageRoute(
-              builder: (context) => YoutubePlayerDemoApp(
-                  videoValue: videoLesson?.content ?? videoValue[0]),
+              builder: (context) => VideoPlayerPage(
+                  videoUrl: videoLesson?.content ?? videoValue[0]),
             ),
           );
         }

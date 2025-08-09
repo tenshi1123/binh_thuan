@@ -134,8 +134,11 @@ class ExerciseScreen extends StatelessWidget {
                     ),
                     unselectedLabelColor: keyBlack.withOpacity(0.3),
                     labelColor: keyBlack,
-
-                    tabs: _tabScroll(), //list of tabs
+                    tabs: _tabScroll(
+                      listExercises.length,
+                      unfinshed.length,
+                      finshed.length,
+                    ), //list of tabs
                   ),
                 ),
               ),
@@ -322,7 +325,10 @@ Widget homeTab(
                   child: Center(
                     child: Text(
                       '$count',
-                      style: defaultText12.copyWith(color: Colors.white),
+                      style: defaultText12.copyWith(
+                        color: Colors.white,
+                        fontFamily: 'Nunito-Bold',
+                      ),
                     ),
                   ),
                 )
@@ -333,10 +339,10 @@ Widget homeTab(
   );
 }
 
-List<Widget> _tabScroll() => [
-      homeTab(title: "Toàn bộ", isSeprator: false),
-      homeTab(title: "Chưa làm"),
-      homeTab(title: "Hoàn thành"),
+List<Widget> _tabScroll(int length1, int length2, int length3) => [
+      homeTab(title: "Toàn bộ", isSeprator: false, count: length1),
+      homeTab(title: "Chưa làm", count: length2),
+      homeTab(title: "Hoàn thành", count: length3),
     ];
 final _random = Random();
 
