@@ -106,7 +106,7 @@ class ComingLesson extends StatelessWidget {
             children: [
               Container(
                 margin: const EdgeInsets.all(6),
-                height: 76.h,
+                height: 86.h,
                 width: 76.w,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.all(

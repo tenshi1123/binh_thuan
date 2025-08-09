@@ -10,6 +10,8 @@ import 'package:intl/intl.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
 
+import 'noti_repo.dart';
+
 class NotificationScreen extends StatelessWidget {
   const NotificationScreen({super.key});
 
@@ -89,12 +91,15 @@ class NotiItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
+        NotificationRepo().getDetailNoti(notification.notiId);
         pushWithoutNavBar(
-            context,
-            MaterialPageRoute(
-                builder: (context) => DetailNotification(
-                      notification: notification,
-                    )));
+          context,
+          MaterialPageRoute(
+            builder: (context) => DetailNotification(
+              notification: notification,
+            ),
+          ),
+        );
       },
       child: SizedBox(
         width: 390.w,
@@ -123,14 +128,21 @@ class NotiItem extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     maxLines: 2,
                     softWrap: false,
-                    style: defaultBoldText,
+                    style: defaultBoldText.copyWith(
+                        color: notification.status == '1'
+                            ? keyBlack.withOpacity(0.5)
+                            : keyBlack),
                   ),
                   Flexible(
                     child: HtmlWidget(
                       notification.contents.length > 48
                           ? '${notification.contents.substring(0, 48)}...'
                           : notification.contents,
-                      textStyle: defaultText12,
+                      textStyle: defaultBoldText.copyWith(
+                          fontSize: 12.sp,
+                          color: notification.status == '1'
+                              ? keyBlack.withOpacity(0.5)
+                              : keyBlack),
                     ),
                   ),
                   // Text(
@@ -147,10 +159,14 @@ class NotiItem extends StatelessWidget {
               width: 12.w,
             ),
             Text(
-              (notification.completedAt.day == DateTime.now().day)
-                  ? DateFormat("HH:mm").format(notification.completedAt)
-                  : DateFormat("dd-MM").format(notification.completedAt),
-              style: defaultText12,
+              (notification.createdAt.day == DateTime.now().day)
+                  ? DateFormat("HH:mm").format(notification.createdAt)
+                  : DateFormat("dd-MM").format(notification.createdAt),
+              style: notification.status == '1'
+                  ? defaultText12.copyWith(
+                      color: keyBlack.withOpacity(0.5),
+                    )
+                  : defaultText12,
             ),
           ],
         ),

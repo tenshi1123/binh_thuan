@@ -5,13 +5,11 @@ import 'package:binh_thuan/models/calender_model.dart';
 import 'package:binh_thuan/models/login_model.dart';
 import 'package:binh_thuan/modules/bottom_navigation_bar/home/custom_widget_home.dart';
 import 'package:binh_thuan/modules/exercise/exercise_screen.dart';
-import 'package:binh_thuan/modules/notification/local_notification.dart';
 import 'package:binh_thuan/modules/schedule/table_calender.dart';
 import 'package:binh_thuan/repo/repo/calender_repo.dart';
 import 'package:binh_thuan/repo/repo/excercise_repo.dart';
 import 'package:binh_thuan/router/app_pages.dart';
 import 'package:binh_thuan/router/app_router.dart';
-import 'package:flutter/foundation.dart';
 import "package:flutter/material.dart";
 import "package:flutter_screenutil/flutter_screenutil.dart";
 import 'package:flutter_svg/flutter_svg.dart';
@@ -40,17 +38,18 @@ class _HomeScreenState extends State<HomeScreen> {
     student = widget.info.student;
   }
 
-  listenToNotifications() {
-    if (kDebugMode) {
-      print("Listening to notification");
-    }
-    // LocalNotifications.onClickNotification.stream.listen((event) {
-    //   if (kDebugMode) {
-    //     print('${event}tesst');
-    //   }
-    //   Navigator.pushNamed(context, '/another', arguments: event);
-    // });
-  }
+
+  // listenToNotifications() {
+  //   if (kDebugMode) {
+  //     print("Listening to notification");
+  //   }
+  //   LocalNotifications.onClickNotification.stream.listen((event) {
+  //     if (kDebugMode) {
+  //       print('${event}tesst');
+  //     }
+  //     Navigator.pushNamed(context, '/another', arguments: event);
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {

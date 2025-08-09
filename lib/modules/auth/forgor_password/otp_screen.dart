@@ -8,7 +8,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:otp_pin_field/otp_pin_field.dart';
+//import 'package:otp_pin_field/otp_pin_field.dart';
 
 // ignore: must_be_immutable
 class OtpScreen extends StatefulWidget {
@@ -27,7 +27,7 @@ class _OtpScreenState extends State<OtpScreen> {
   late String verificationId;
   String errorMessage = '';
   //final FirebaseAuth _auth = FirebaseAuth.instance;
-  final _otpPinFieldKey = GlobalKey<OtpPinFieldState>();
+  //final _otpPinFieldKey = GlobalKey<OtpPinFieldState>();
 
   //this is method is used to initialize data
   @override
@@ -100,28 +100,28 @@ class _OtpScreenState extends State<OtpScreen> {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Container(
-                  margin: EdgeInsets.only(left: screenWidth * 0.025),
-                  padding: EdgeInsets.symmetric(horizontal: 10.w),
-                  child: OtpPinField(
-                    key: _otpPinFieldKey,
-                    textInputAction: TextInputAction.done,
-                    maxLength: 4,
-                    fieldWidth: 50.dg,
-                    fieldHeight: 50.dg,
-                    onSubmit: (text) {
-                      smsOTP = text;
-                    },
-                    otpPinFieldStyle: const OtpPinFieldStyle(
-                        defaultFieldBorderColor: kPrimaryColor,
-                        activeFieldBorderColor: kPrimaryColor,
-                        filledFieldBackgroundColor: Color(0xffE6EDFF)),
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    onChange: (text) {},
-                    otpPinFieldDecoration:
-                        OtpPinFieldDecoration.defaultPinBoxDecoration,
-                  ),
-                ),
+                // Container(
+                //   margin: EdgeInsets.only(left: screenWidth * 0.025),
+                //   padding: EdgeInsets.symmetric(horizontal: 10.w),
+                //   child: OtpPinField(
+                //     key: _otpPinFieldKey,
+                //     textInputAction: TextInputAction.done,
+                //     maxLength: 4,
+                //     fieldWidth: 50.dg,
+                //     fieldHeight: 50.dg,
+                //     onSubmit: (text) {
+                //       smsOTP = text;
+                //     },
+                //     otpPinFieldStyle: const OtpPinFieldStyle(
+                //         defaultFieldBorderColor: kPrimaryColor,
+                //         activeFieldBorderColor: kPrimaryColor,
+                //         filledFieldBackgroundColor: Color(0xffE6EDFF)),
+                //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                //     onChange: (text) {},
+                //     otpPinFieldDecoration:
+                //         OtpPinFieldDecoration.defaultPinBoxDecoration,
+                //   ),
+                // ),
                 SizedBox(
                   height: screenHeight * 0.04,
                 ),

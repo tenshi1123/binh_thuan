@@ -12,7 +12,6 @@ class LoginRepo {
     Dio dio = Dio();
     dio.options.headers['Token'] = 'BT123456789';
     Response response;
-
     //String type = response.data['type'];
     //if (type == 'success') {
     //}
@@ -45,9 +44,7 @@ class LoginRepo {
     // Dio dio = Dio();
     // dio.options.headers['Authorization'] =
     //     'Bearer ${SpUtil.getString(ConstString.token)}';
-
     // Response response;
-
     // response = await dio.post(
     //   ApiPath.refreshToken,
     // );
@@ -84,7 +81,6 @@ class LoginRepo {
         },
       ),
     );
-
     return response.data["type"];
   }
 }

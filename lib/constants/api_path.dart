@@ -29,6 +29,8 @@ class ApiPath {
   static const String submitEssay = '$baseUrl/nop_bai_tu_luan';
   // api danh sach thong bao
   static const String listNotification = '$baseUrl/danh_sach_thong_bao';
+  // api chi tiet thong bao
+  static const String detailNoti = '$baseUrl/chi_tiet_thong_bao';
   //api về thời khóa biểu
   static const String calender = '$baseUrl/lich_hoc';
   //api do oneSignal cung cấp

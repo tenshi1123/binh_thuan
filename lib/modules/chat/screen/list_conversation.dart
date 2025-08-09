@@ -119,7 +119,7 @@ class ListConversation extends StatelessWidget {
   }
 }
 
-class ConversationItem extends StatelessWidget {
+class ConversationItem extends StatefulWidget {
   final ConversationModel model;
   const ConversationItem({
     super.key,
@@ -127,108 +127,133 @@ class ConversationItem extends StatelessWidget {
   });
 
   @override
+  State<ConversationItem> createState() => _ConversationItemState();
+}
+
+class _ConversationItemState extends State<ConversationItem> {
+  bool _isLoading = false;
+  @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async {
+        setState(() {
+          _isLoading = true;
+        });
         List<MessageModel> listMessage =
-            await ChatRepo().getListMessage(model.chatId);
+            await ChatRepo().getListMessage(widget.model.chatId);
         Navigator.push(
           context,
           MaterialPageRoute(
             builder: (context) => ChatScreen(
-              groupId: model.chatId,
-              groupName: model.chatName ?? model.teacherChatName,
+              groupId: widget.model.chatId,
+              groupName: widget.model.chatName ?? widget.model.teacherChatName,
               userName: '',
               listMessage: listMessage,
             ),
           ),
         );
+        setState(() {
+          _isLoading = false;
+        });
       },
-      child: SizedBox(
-        width: 390.w,
-        height: 68.h,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            Row(
-              children: [
-                SizedBox(
-                  width: 20.w,
-                ),
-                CircleAvatar(
-                  radius: 20.r,
-                  backgroundImage: model.teacherAvatar != ''
-                      ? NetworkImage(model.teacherAvatar)
-                      : const AssetImage('assets/images/placeholder_avatar.png')
-                          as ImageProvider,
-                ),
-                SizedBox(
-                  width: 12.w,
-                ),
-                SizedBox(
-                  width: 220.w,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+      child: _isLoading
+          ? Center(
+              child: SizedBox(
+                width: 28.w,
+                height: 28.h,
+                child: const CircularProgressIndicator(),
+              ),
+            )
+          : SizedBox(
+              width: 390.w,
+              height: 68.h,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Row(
                     children: [
-                      Text(
-                        model.chatName ?? model.teacherChatName,
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 1,
-                        softWrap: false,
-                        style: defaultBoldText.copyWith(fontSize: 14.sp),
+                      SizedBox(
+                        width: 20.w,
                       ),
-                      Text(
-                        model.messageType == '0'
-                            ? model.content
-                            : 'Đã gửi hình ảnh',
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 1,
-                        softWrap: false,
-                        style: defaultText12.copyWith(
-                            color: model.unreadMessage == '0'
-                                ? keyBlack.withOpacity(0.5)
-                                : keyBlack),
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  width: 76.w,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Text(
-                        (model.createdAt.day == DateTime.now().day)
-                            ? DateFormat("HH:mm").format(model.createdAt)
-                            : DateFormat("dd/MM").format(model.createdAt),
-                        style: defaultText12.copyWith(color: kPrimaryColor),
+                      CircleAvatar(
+                        radius: 20.r,
+                        backgroundImage: widget.model.teacherAvatar != ''
+                            ? NetworkImage(widget.model.teacherAvatar)
+                            : const AssetImage(
+                                    'assets/images/placeholder_avatar.png')
+                                as ImageProvider,
                       ),
                       SizedBox(
-                        height: 8.h,
+                        width: 12.w,
                       ),
-                      model.unreadMessage == '0'
-                          ? const SizedBox()
-                          : Container(
-                              width: 8.w,
-                              height: 8.h,
-                              decoration: const BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: rec21Red,
-                              ),
+                      SizedBox(
+                        width: 220.w,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              widget.model.chatName ??
+                                  widget.model.teacherChatName,
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                              softWrap: false,
+                              style: defaultBoldText.copyWith(fontSize: 14.sp),
                             ),
+                            Text(
+                              widget.model.messageType == '0'
+                                  ? widget.model.content
+                                  : 'Đã gửi hình ảnh',
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                              softWrap: false,
+                              style: defaultText12.copyWith(
+                                  color: widget.model.unreadMessage == '0'
+                                      ? keyBlack.withOpacity(0.5)
+                                      : keyBlack),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        width: 76.w,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Text(
+                              (widget.model.createdAt.day == DateTime.now().day)
+                                  ? DateFormat("HH:mm")
+                                      .format(widget.model.createdAt)
+                                  : DateFormat("dd/MM")
+                                      .format(widget.model.createdAt),
+                              style:
+                                  defaultText12.copyWith(color: kPrimaryColor),
+                            ),
+                            SizedBox(
+                              height: 8.h,
+                            ),
+                            widget.model.unreadMessage == '0'
+                                ? const SizedBox()
+                                : Container(
+                                    width: 8.w,
+                                    height: 8.h,
+                                    decoration: const BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: rec21Red,
+                                    ),
+                                  ),
+                          ],
+                        ),
+                      ),
                     ],
                   ),
-                ),
-              ],
+                  Divider(
+                    indent: 20.w,
+                    endIndent: 20.w,
+                    thickness: 1,
+                  ),
+                ],
+              ),
             ),
-            Divider(
-              indent: 20.w,
-              endIndent: 20.w,
-              thickness: 1,
-            ),
-          ],
-        ),
-      ),
     );
   }
 }

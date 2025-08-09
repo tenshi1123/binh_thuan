@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:binh_thuan/modules/notification/local_notification.dart';
 import 'package:flutter/material.dart';
 
 /// Bootstrap is responsible for any common setup and calls

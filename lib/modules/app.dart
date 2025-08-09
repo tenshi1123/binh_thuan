@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:binh_thuan/modules/notification/notification_screen.dart';
-import 'package:binh_thuan/modules/notification/local_notification.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'auth/splash/splash_screen.dart';
