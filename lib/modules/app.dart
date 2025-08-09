@@ -34,11 +34,11 @@ class _AppState extends State<App> with WidgetsBindingObserver {
   }
 
   //  to listen to any notification clicked or not
-  listenToNotifications() {
-    LocalNotifications.onClickNotification.stream.listen((event) {
-      Navigator.pushNamed(context, '/another', arguments: event);
-    });
-  }
+  // listenToNotifications() {
+  //   LocalNotifications.onClickNotification.stream.listen((event) {
+  //     Navigator.pushNamed(context, '/another', arguments: event);
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {

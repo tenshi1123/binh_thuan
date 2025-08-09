@@ -1,20 +1,12 @@
 name: binh_thuan
 description: "Ứng dụng dành cho ph/hs Trường liên cấp Lê Quý Đôn"
-# The following line prevents the package from being accidentally published to
-# pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 1.1.5+1
+version: 1.1.8+1
 
 environment:
   sdk: '>=3.4.0 <4.0.0'
 
-# Dependencies specify other packages that your package needs in order to work.
-# To automatically upgrade your package dependencies to the latest versions
-# consider running `flutter pub upgrade --major-versions`. Alternatively,
-# dependencies can be manually updated by changing the version numbers below to
-# the latest version available on pub.dev. To see which dependencies have newer
-# versions available, run `flutter pub outdated`.
 dependencies:
   flutter:
     sdk: flutter
@@ -27,25 +19,25 @@ dependencies:
   # firebase_core: ^3.1.1
   # cloud_firestore: ^5.0.2
   # firebase_auth: ^5.0.0
-  otp_pin_field: ^1.2.4
+  otp_pin_field: ^1.4.0
   persistent_bottom_nav_bar_v2: ^5.2.3
   flutter_svg: ^2.0.10+1
   card_swiper: ^3.0.1
   smooth_page_indicator: ^1.1.0
   sp_util: ^2.0.3
   #notifications
-  flutter_local_notifications: ^17.1.2
-  flutter_timezone: ^1.0.8
+  #flutter_local_notifications: ^17.1.2
+  #flutter_timezone: ^1.0.8
   rxdart: ^0.27.7
   tab_container: ^3.5.3
   table_calendar: ^3.1.2
   percent_indicator: ^4.2.3
   flick_video_player: ^0.8.0
-  video_player: ^2.8.7
+  video_player: ^2.10.0
   visibility_detector: ^0.4.0+2
   intl: ^0.19.0
   image_picker: ^1.1.2
-  onesignal_flutter: ^5.2.1
+  onesignal_flutter: ^5.3.0
   dio: ^5.4.3+1
   equatable: ^2.0.5
   json_annotation: ^4.9.0
@@ -57,8 +49,8 @@ dependencies:
   url_launcher: ^6.3.0
   camera_camera: ^3.0.0
   webview_flutter: ^4.8.0
-  flutter_widget_from_html_core: ^0.15.1
-  youtube_player_flutter: ^8.1.2
+  flutter_widget_from_html_core: ^0.16.0
+  #youtube_player_flutter: ^8.1.2
   permission_handler: ^11.3.1
   pager: ^0.0.6
   number_paginator: ^0.4.1

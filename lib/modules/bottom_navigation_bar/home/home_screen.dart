@@ -44,12 +44,12 @@ class _HomeScreenState extends State<HomeScreen> {
     if (kDebugMode) {
       print("Listening to notification");
     }
-    LocalNotifications.onClickNotification.stream.listen((event) {
-      if (kDebugMode) {
-        print('${event}tesst');
-      }
-      Navigator.pushNamed(context, '/another', arguments: event);
-    });
+    // LocalNotifications.onClickNotification.stream.listen((event) {
+    //   if (kDebugMode) {
+    //     print('${event}tesst');
+    //   }
+    //   Navigator.pushNamed(context, '/another', arguments: event);
+    // });
   }
 
   @override
@@ -79,7 +79,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       image: const AssetImage(
                         'assets/images/home_background.png',
                       ),
-                      fit: BoxFit.fitWidth,
+                      fit: BoxFit.fill,
                     ),
                   ),
                   Positioned(
@@ -87,7 +87,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     left: 30.w,
                     child: chatIcon(
                       context: context,
-                      icon: 'assets/icons/message_icon.svg',
+                      icon:
+                          // 'assets/icons/message_icon.svg'
+                          'assets/icons/chat.svg',
                     ),
                   ),
                   // Positioned(
@@ -279,7 +281,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     color: color666),
                               ),
                               Text(
-                                '--/10 ',
+                                widget.info.average.toStringAsFixed(1),
                                 style: defaultBoldText.copyWith(
                                     fontWeight: FontWeight.w200,
                                     color: keyBlack),

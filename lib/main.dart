@@ -1,5 +1,8 @@
+import 'package:binh_thuan/modules/app.dart';
 import 'package:binh_thuan/modules/notification/noti_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:intl/date_symbol_data_local.dart';
 //import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:sp_util/sp_util.dart';
 
@@ -12,8 +15,11 @@ void main() async {
   //await Firebase.initializeApp();
   //await LocalNotifications.init();
   await SpUtil.getInstance();
-
-//  handle in terminated state
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
+      .then((_) {
+    initializeDateFormatting().then((_) => runApp(const App()));
+  });
+  //handle in terminated state
   // var initialNotification =
   //     await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
   // if (initialNotification?.didNotificationLaunchApp == true) {
